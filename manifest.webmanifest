@@ -1,0 +1,59 @@
+{
+  "id": "./",
+  "name": "Dot Sense",
+  "short_name": "Dot Sense",
+  "description": "점과 칸을 눈으로 보고 평균과 관계를 맞히는 통계 감각 게임. 무게중심 · 기댓값 · 상관계수 · 연관, 듀보이스의 1900년 도판 양식으로.",
+  "lang": "ko",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#cdbb95",
+  "theme_color": "#cdbb95",
+  "categories": [
+    "education",
+    "games"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-menu.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "도판 네 장: 무게중심 · 기댓값 · 상관계수 · 연관"
+    },
+    {
+      "src": "screenshot-plate.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "무게중심 도판: 눈으로 찍고 정답 고리와 비교"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": [
+      "focus-existing",
+      "auto"
+    ]
+  }
+}

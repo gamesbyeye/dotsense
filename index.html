@@ -1,0 +1,2190 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dot Sense</title>
+<meta name="description" content="점과 칸을 눈으로 보고 평균과 관계를 맞히는 통계 감각 게임. 무게중심 · 기댓값 · 상관계수 · 연관, 듀보이스의 1900년 도판 양식으로.">
+<meta name="theme-color" content="#cdbb95" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Dot Sense">
+<!-- 공유 카드: 링크를 붙여 넣으면 뜨는 미리보기 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dot Sense">
+<meta property="og:title" content="Dot Sense — 눈으로 푸는 통계">
+<meta property="og:description" content="점과 칸을 눈으로 보고 평균과 관계를 맞히는 통계 감각 게임. 무게중심 · 기댓값 · 상관계수 · 연관, 듀보이스의 1900년 도판 양식으로.">
+<meta property="og:image" content="https://gamesbyeye.github.io/dotsense/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DOT SENSE. 눈으로 푸는 통계. 무게중심, 기댓값, 상관계수, 연관 도판 네 장">
+<meta property="og:url" content="https://gamesbyeye.github.io/dotsense/">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dot Sense — 눈으로 푸는 통계">
+<meta name="twitter:description" content="점과 칸을 눈으로 보고 평균과 관계를 맞히는 통계 감각 게임. 무게중심 · 기댓값 · 상관계수 · 연관, 듀보이스의 1900년 도판 양식으로.">
+<meta name="twitter:image" content="https://gamesbyeye.github.io/dotsense/og.png">
+<link rel="preload" href="oswald-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Oswald';font-style:normal;font-display:swap;font-weight:400;src:url(oswald-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Public Sans';font-style:normal;font-display:swap;font-weight:400;src:url(public-sans-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:400;src:url(ibm-plex-sans-kr-latin-400-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:400;src:url(ibm-plex-sans-kr-korean-400-normal.woff2) format('woff2');unicode-range:U+1100-11FF,U+3000-303F,U+3131-318F,U+3200-32FF,U+AC00-D7A3,U+FF01-FF60}
+@font-face{font-family:'Oswald';font-style:normal;font-display:swap;font-weight:500;src:url(oswald-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Public Sans';font-style:normal;font-display:swap;font-weight:500;src:url(public-sans-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:500;src:url(ibm-plex-sans-kr-latin-500-normal.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:500;src:url(ibm-plex-sans-kr-korean-500-normal.woff2) format('woff2');unicode-range:U+1100-11FF,U+3000-303F,U+3131-318F,U+3200-32FF,U+AC00-D7A3,U+FF01-FF60}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:400;src:url(ibm-plex-sans-kr-110-400-normal.woff2) format('woff2');unicode-range:U+2192}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:400;src:url(ibm-plex-sans-kr-98-400-normal.woff2) format('woff2');unicode-range:U+221A,U+2248}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:400;src:url(ibm-plex-sans-kr-99-400-normal.woff2) format('woff2');unicode-range:U+0394}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:500;src:url(ibm-plex-sans-kr-110-500-normal.woff2) format('woff2');unicode-range:U+2192}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:500;src:url(ibm-plex-sans-kr-98-500-normal.woff2) format('woff2');unicode-range:U+221A,U+2248}
+@font-face{font-family:'IBM Plex Sans KR';font-style:normal;font-display:swap;font-weight:500;src:url(ibm-plex-sans-kr-99-500-normal.woff2) format('woff2');unicode-range:U+0394}
+</style>
+<style>
+/* Layout: desktop only. Graph paper on a darker table. The menu is one Du Bois plate (caps title, bilingual caption, four small plates on an ink staircase, credit line); in game one large paper plate sits between a top line (CONTENTS · plate · RECORDS) and a bottom line (result). */
+/* Palette after W. E. B. Du Bois's 1900 plates, edited for the game: dots in pink (×1), hot pink (×2), Du Bois crimson (×4), heavier dots on top; areas in tan–gold–brown; answers only in Du Bois blue; learning and growth (notes, good rounds, new bests, records) in a muted Du Bois green. */
+:root{
+  --bg:#cdbb95; --gridout:#b9b08a; --field:#eadcbd; --grid:#d0cca6; --ink:#2a231c; --muted:#574c3e;
+  --d1:#dc8f97; --d2:#e652a3; --d4:#dc143c; --ans:#3a6ea5; --gold:#e1b767;
+  --grow:#3d7a4f; --growl:#5f9169; --growbar:#b9c29d; --mosno:#e0c8a0;
+  --r1:#f3e7ce; --r2:#e0c8a0; --r3:#d3a959; --r4:#c38637; --r5:#a76b3a; --r6:#885233; --r7:#693d28; --r8:#4a291c;
+  color-scheme:light;
+  --f-ui:"Public Sans","IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-d:"Oswald","Arial Narrow","Roboto Condensed",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121110; --gridout:#1c1a18; --field:#23201e; --grid:#34302c; --ink:#e9dfcc; --muted:#a89d8a;
+    --d1:#8c4353; --d2:#d84497; --d4:#fe7d85; --ans:#7eaee0; --gold:#a8843f; --grow:#a9c97f; --growl:#7c9466; --growbar:#4f5a3c; --mosno:#3d362c;
+    --r1:#e2d6bf; --r2:#d3bc96; --r3:#c9a257; --r4:#be843a; --r5:#a56c3f; --r6:#8b573a; --r7:#6f4531; --r8:#543427;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121110; --gridout:#1c1a18; --field:#23201e; --grid:#34302c; --ink:#e9dfcc; --muted:#a89d8a;
+  --d1:#8c4353; --d2:#d84497; --d4:#fe7d85; --ans:#7eaee0; --gold:#a8843f; --grow:#a9c97f; --growl:#7c9466; --growbar:#4f5a3c; --mosno:#3d362c;
+  --r1:#e2d6bf; --r2:#d3bc96; --r3:#c9a257; --r4:#be843a; --r5:#a56c3f; --r6:#8b573a; --r7:#6f4531; --r8:#543427;
+  color-scheme:dark;
+}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{margin:0;color:var(--ink);font-family:var(--f-ui);word-break:keep-all;overflow-wrap:break-word;text-wrap:pretty}
+button{font-family:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+button:focus{outline:none}
+#field{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;-webkit-user-select:none;user-select:none}
+.menu,.hud,.summary,.modal,.phone{-webkit-user-select:none;user-select:none}
+
+.link{background:none;border:0;padding:2px 0;cursor:pointer;font:500 clamp(12px,.72vw,16px) var(--f-d);letter-spacing:.18em;color:var(--ink);opacity:.82;
+  text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.link:hover{opacity:1}
+.cap{margin:0;font:400 11px var(--f-d);letter-spacing:.18em;opacity:.75}
+
+/* 메뉴: 듀보이스 도판 한 장 */
+.menu{position:fixed;inset:0;z-index:3;display:flex;align-items:center;justify-content:center;
+  padding-top:calc(env(safe-area-inset-top,0px) + 56px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 92px);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.menu-in{width:min(max(960px,58vw),100%);display:flex;flex-direction:column;align-items:center;text-align:center}
+.title{margin:0;font:500 clamp(40px,4.6vw,110px)/1 var(--f-d);letter-spacing:.14em;padding-left:.14em}
+.tagline{margin:16px 0 0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.tagline .main{font-size:clamp(15px,1.2vw,26px)}
+.sub{font:400 clamp(11px,.62vw,15px) var(--f-d);letter-spacing:.2em;color:var(--muted);opacity:.85}
+.plates{margin-top:clamp(28px,5vh,50px);width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2.4vw,30px);row-gap:14px}
+/* 두 쌍 제목: 평균 | 관계 */
+.pgrp{grid-column:span 2;display:flex;flex-direction:column;align-items:center;gap:4px;padding-bottom:9px;border-bottom:1px solid var(--ink);margin-bottom:4px}
+.pgrp .gname{font-size:clamp(13px,.95vw,20px)}
+.plate{background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:stretch;gap:9px;transition:transform .18s ease}
+.plate:not(.off):hover{transform:translateY(-3px)}
+.plate.off{cursor:default}
+.plate.off svg{opacity:.4}
+.plate svg{width:100%;height:auto;display:block;overflow:visible}
+.pbar{display:block;height:5px;background:var(--ink)}
+.pname{font-size:clamp(14px,1vw,21px);line-height:1.2}
+.plate .sub{margin-top:-3px}
+.psoon{font-size:12px;color:var(--muted);min-height:15px}
+.menu-rec{margin-top:clamp(24px,4.5vh,42px)}
+/* 판권 자리: 언어와 크레딧 */
+.colophon{position:fixed;left:0;right:0;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);display:flex;flex-direction:column;align-items:center;gap:8px}
+.credit{margin:0;font:400 clamp(11px,.6vw,14px) var(--f-d);letter-spacing:.2em;opacity:.65}
+.langs{margin:0;display:flex;align-items:center;gap:10px;font:400 clamp(11px,.6vw,14px) var(--f-d);letter-spacing:.2em}
+.langs i{font-style:normal;opacity:.45}
+.langs button{background:none;border:0;padding:2px 0;cursor:pointer;font:inherit;letter-spacing:inherit;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+.langs button:hover{color:var(--ink)}
+.langs button[aria-current="true"]{color:var(--ink);font-weight:500;text-decoration:none;cursor:default}
+/* 앱 설치: 웹사이트에서 설치할 수 있을 때만 보임 (Claude 앱에서는 숨김) */
+.inst{margin:0;display:flex;align-items:center;gap:10px;font:400 clamp(11px,.6vw,14px) var(--f-d);letter-spacing:.2em}
+.inst i{font-style:normal;opacity:.45}
+.inst a{color:var(--muted);text-decoration:underline;text-underline-offset:4px;padding:2px 0}
+.inst a:hover{color:var(--ink)}
+.inst button{background:none;border:0;padding:2px 0;cursor:pointer;font:inherit;letter-spacing:inherit;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+.inst button:hover{color:var(--ink)}
+.pf{fill:var(--field);stroke:var(--ink);stroke-width:1}
+.pg{stroke:var(--grid);stroke-width:1}
+.pl{stroke:var(--ink);stroke-width:1.4;fill:none}
+.c-d1{fill:var(--d1)} .c-d2{fill:var(--d2)} .c-d4{fill:var(--d4)} .c-gold{fill:var(--gold)} .c-no{fill:var(--mosno)} .mb{stroke:var(--ink);stroke-width:.8}
+.c-r1{fill:var(--r1)} .c-r2{fill:var(--r2)} .c-r3{fill:var(--r3)} .c-r4{fill:var(--r4)} .c-r6{fill:var(--r6)} .c-r7{fill:var(--r7)}
+.plate path{stroke:var(--ink);stroke-width:1}
+.plate path.po{stroke-width:2.2}
+.c-ans{fill:none;stroke:var(--ans);stroke-width:1.4} .c-ansd{fill:var(--ans)} .pl.ansl{stroke:var(--ans)} .mo{stroke:var(--ink);stroke-width:.8}
+
+/* 휴대폰 안내 */
+.phone{position:fixed;inset:0;z-index:20;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+  padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));text-align:center}
+.phone .title{font-size:44px}
+.phone p{margin:0}
+.phone .pmsg{font-size:16px}
+
+/* 게임 글자 줄 */
+.hud{position:fixed;left:0;right:0;z-index:5;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;pointer-events:none;
+  padding-left:max(16px,2.5vw,env(safe-area-inset-left,0px));padding-right:max(16px,2.5vw,env(safe-area-inset-right,0px));transition:opacity .22s ease}
+.hud button{pointer-events:auto}
+.hud.top{top:0;padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-bottom:4px}
+.hud.bottom{bottom:0;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 14px);padding-top:4px}
+body:not(.v-game) .hud{display:none}
+body.hud-hide .hud{opacity:0}
+.crumbs{width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.crumbs .l{justify-self:start}
+.crumbs .r{justify-self:end}
+.crumbs .here{font:400 clamp(12px,.72vw,16px) var(--f-d);letter-spacing:.18em;opacity:.85;white-space:nowrap}
+.prog{display:flex;gap:3px}
+.prog i{display:block;width:clamp(15px,1vw,24px);height:4px;background:var(--ink);opacity:.16}
+.prog i:nth-child(5),.prog i:nth-child(8){margin-left:8px}
+.prog i.on{opacity:.85}
+.prog i.on.good{background:var(--grow);opacity:1}   /* 좋음 이상으로 맞힌 판 */
+.ask{margin:2px 0 0;font-size:clamp(15px,1vw,21px);line-height:1.4}
+.spec{margin:0;display:flex;flex-wrap:wrap;justify-content:center;gap:2px 14px;font-size:clamp(13px,.85vw,17px);color:var(--muted);min-height:18px;font-variant-numeric:tabular-nums}
+.spec .it{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.spec b{color:var(--ink);font-weight:500}
+.sw{width:9px;height:9px;border-radius:50%;display:inline-block;flex:none}
+.resrow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px 16px}
+.result{margin:0;font-size:clamp(14px,.9vw,18px);color:var(--muted);font-variant-numeric:tabular-nums}
+.result b{color:var(--ink);font-weight:500}
+.act{font-size:clamp(14px,.9vw,18px);padding:6px 18px;min-height:32px;border:1px solid var(--ink);background:transparent;cursor:pointer}
+.act:disabled{opacity:.3;cursor:default}
+.coach{margin:0;padding:0;list-style:none;display:grid;gap:1px;align-content:start;font-size:clamp(13px,.85vw,17px);line-height:1.5;min-height:calc(3em + 1px)}
+
+/* 판 결과 */
+.dim{position:fixed;inset:0;z-index:6;background:var(--bg);opacity:.8}
+.summary{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;width:min(max(370px,22vw),calc(100vw - 32px));
+  max-height:calc(100% - 32px);overflow:auto;background:var(--field);border:1px solid var(--ink);padding:22px 24px 20px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.s-total{margin:8px 0 6px;font:500 58px/1 var(--f-d);font-variant-numeric:tabular-nums}
+.s-total small{font-size:16px;opacity:.6;margin-left:6px}
+/* 총점: 최근 5판 평균 위면 연한 초록, 최고 기록을 넘으면 진한 초록 + 신기록. 그 판의 첫 기록은 잉크 */
+.s-total.gup{color:var(--growl)} .s-total.gbest{color:var(--grow)}
+.s-total .nb{display:inline-block;margin-left:10px;vertical-align:top;font:500 12px/1 var(--f-ui);letter-spacing:.06em;color:var(--grow);padding-top:6px}
+html[lang="en"] .s-total .nb{font-family:var(--f-d);letter-spacing:.16em}
+.s-line{margin:0;font-size:clamp(13px,.8vw,16px);color:var(--muted);line-height:1.6}
+.s-line b{color:var(--ink);font-weight:500}
+.s-coach{margin:8px 0 0;font-size:13px;line-height:1.6}
+.s-coach:empty{display:none}
+.s-strip{width:100%;max-width:300px}
+.s-strip:empty{display:none}
+.s-strip svg{display:block;width:100%;height:auto;overflow:visible}
+.s-btns{display:flex;align-items:center;flex-wrap:wrap;justify-content:center;gap:10px 20px;margin-top:14px}
+
+/* RECORDS: 어두워진 게임 위로 리포트지 한 장이 올라옴 (게임 도중에도 꺼내 읽을 수 있음) */
+.sheet{position:fixed;inset:0;z-index:8;display:flex;justify-content:center;align-items:flex-end}
+.sheet-dim{position:absolute;inset:0;background:var(--bg);opacity:.8}
+.paper{position:relative;width:min(max(760px,40vw),calc(100% - 32px));height:calc(100% - 36px);overflow:auto;background:var(--field);border:1px solid var(--ink);border-bottom:0;
+  padding:0 clamp(18px,4vw,44px) calc(env(safe-area-inset-bottom,0px) + 48px)}
+.sheet-bar{position:sticky;top:0;z-index:1;display:flex;justify-content:flex-end;background:var(--field);padding-top:14px;padding-bottom:6px}
+.focus{display:grid;gap:6px;text-align:center;padding:16px 0 14px;border-top:2px solid var(--ink);border-bottom:1px solid var(--ink)}
+.f-name{margin:0;font-size:18px}
+.f-memo{margin:4px auto 0;max-width:620px;font-size:clamp(15px,.85vw,18px);line-height:1.7}
+.sec h3 sup{font-size:9px;margin-left:2px;letter-spacing:0}
+.fn{margin:0;padding-left:20px;display:grid;gap:8px;font-size:clamp(12.5px,.72vw,15px);color:var(--muted);line-height:1.65}
+.fn li::marker{font:500 11px var(--f-d);color:var(--ink)}
+.rec{max-width:660px;margin:0 auto;display:flex;flex-direction:column;gap:38px}
+.rec-head{text-align:center;display:grid;gap:8px}
+.rec-title{margin:0;font:500 clamp(30px,5vw,42px)/1 var(--f-d);letter-spacing:.14em;padding-left:.14em}
+.rec-src{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+.empty{margin:0;text-align:center;font-size:14px;line-height:1.7;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;text-align:center}
+.stat .v{display:block;font:500 30px/1.1 var(--f-d);font-variant-numeric:tabular-nums}
+.stat .k{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+.sec{display:grid;gap:14px;min-width:0}
+.sec h3{margin:0;text-align:center;font:500 12px var(--f-d);letter-spacing:.24em;padding-left:.24em}
+.p{margin:0;font-size:clamp(13px,.78vw,16px);color:var(--muted);line-height:1.7}
+.p b{color:var(--ink);font-weight:500}
+.p.c{text-align:center}
+.locked{margin:0;text-align:center;font-size:13px;color:var(--muted)}
+.memo{margin:0;padding:0;list-style:none;display:grid;gap:12px;counter-reset:m}
+.memo li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;font-size:clamp(14px,.82vw,17px);line-height:1.65}
+.memo li::before{counter-increment:m;content:counter(m);font:500 14px/22px var(--f-d)}
+.best{display:grid;gap:10px}
+.best .row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;align-items:center;font-size:13px}
+.best .track{position:relative;height:16px}
+.best .fill{position:absolute;left:0;top:0;bottom:0;background:var(--growbar)}
+.best .fill.none{width:100%;border:1px dashed var(--grid);background:none}
+.best .val{position:absolute;top:50%;transform:translateY(-50%);font:500 12px var(--f-d);padding-left:6px;white-space:nowrap}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+.s-ink{stroke:var(--ink)} .s-grow{stroke:var(--grow)} .s-grid{stroke:var(--grid)}
+.f-ink{fill:var(--ink)} .f-dot{fill:var(--d2)}
+.t-cap{fill:var(--ink);opacity:.65;font:10px var(--f-d);letter-spacing:.06em}
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--ink)}
+.grp{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:22px;align-items:center}
+.kv{margin:0;display:grid;gap:12px}
+.kv div{display:grid;gap:2px}
+.kv dt{font-size:12px;color:var(--muted)}
+.kv dd{margin:0;font:500 17px var(--f-d);font-variant-numeric:tabular-nums}
+.kv dd small{font:400 12px var(--f-ui);color:var(--muted);margin-left:8px}
+.meters{display:grid;gap:18px}
+.mrow{display:grid;gap:6px}
+.mh{display:flex;justify-content:space-between;gap:12px;font-size:13px}
+.mv{font:500 13px var(--f-d);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mv small{font:400 12px var(--f-ui);color:var(--muted);margin-left:6px}
+.track2{position:relative;height:3px;background:var(--grid);margin:6px}
+.track2 .zone{position:absolute;top:0;bottom:0;left:42.5%;width:15%;background:var(--ink);opacity:.22}
+.track2 .mid{position:absolute;left:50%;top:-5px;bottom:-5px;width:1px;background:var(--ink);opacity:.6}
+.track2 .dot{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%)}
+.ends{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--muted)}
+.tbl-wrap{overflow-x:auto}
+.types{width:100%;border-collapse:collapse;font-size:13px}
+.types td{padding:6px 0;border-top:1px solid var(--grid);vertical-align:middle}
+.types td.n,.types td.e{text-align:right;white-space:nowrap;padding-left:10px;font:400 12px var(--f-d);letter-spacing:.04em}
+.types td.n{color:var(--muted)}
+.types td.b{width:28%;padding-left:12px}
+.types .bar{display:block;height:6px;background:var(--ink)}
+.types .weak{font:500 10px var(--f-d);letter-spacing:.14em;margin-left:8px}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px}
+.tbtn{background:none;border:0;padding:3px 0;cursor:pointer;font-size:13px;text-decoration:underline;text-underline-offset:4px}
+.tbtn:disabled{opacity:.35;cursor:default}
+.tbtn.warn{color:var(--d4)}
+.imp{display:grid;gap:8px}
+.sheet textarea{width:100%;min-height:90px;resize:vertical;border:1px solid var(--ink);padding:10px;background:var(--bg);color:var(--ink);
+  font:12px/1.5 ui-monospace,Menlo,Consolas,monospace}
+.sheet textarea:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.msg{margin:0;text-align:center;font-size:13px;color:var(--ans);min-height:1em}
+.confirm{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 18px;font-size:13px}
+
+/* 처음 하는 판 소개 */
+.intro{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:7;width:min(max(440px,26vw),calc(100vw - 32px));max-height:calc(100% - 32px);overflow:auto;
+  background:var(--field);border:1px solid var(--ink);padding:22px 28px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.i-fig{width:clamp(170px,11vw,260px)}
+.i-fig svg,.xfig svg{width:100%;height:auto;display:block;overflow:visible}
+.i-fig path,.xfig path{stroke:var(--ink);stroke-width:1}
+.i-name{margin:2px 0 0;font-size:20px}
+.i-text{margin:0;font-size:clamp(14px,.85vw,17px);line-height:1.75}
+.i-hint{margin:0;font-size:12px;color:var(--muted)}
+.intro .act{margin-top:6px}
+/* 도판 설명 창 (윗줄 도판 이름을 누르면) */
+.x-name{margin:0;font-size:clamp(26px,4vw,34px);font-weight:500}
+.xfigs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.xfig p{margin:6px 0 0;font-size:12.5px;text-align:center;line-height:1.5;color:var(--muted)}
+.x-p{margin:0 auto;max-width:31em;font-size:clamp(15px,.85vw,18px);line-height:1.75;text-align:center}
+/* 짧은 글은 줄 길이를 고르게 (한 줄만 유독 길거나 짧지 않게) */
+.x-p,.i-text,.i-hint,.xfig p,.s-coach,.coach li,.lad-cap,.note p{text-wrap:balance}
+.crumbs button.here{background:none;border:0;padding:2px 0;cursor:pointer;color:inherit}
+.crumbs button.here:hover{text-decoration:underline;text-underline-offset:4px}
+.notice{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.c-r5{fill:var(--r5)} .c-r8{fill:var(--r8)}
+.linkbox{display:grid;gap:6px}
+.linkbox input{width:100%;border:1px solid var(--ink);padding:8px 10px;background:var(--bg);color:var(--ink);font:12px/1.4 ui-monospace,Menlo,Consolas,monospace}
+.ghost{position:fixed;z-index:5;background:var(--field);border:1px solid var(--ink);pointer-events:none}
+/* 낱말 쪽지: 밑줄 친 낱말이나 계단을 누르면 그 자리에 올라오는 작은 종이 */
+.term{cursor:help;pointer-events:auto;text-decoration:underline dotted var(--grow);text-decoration-thickness:1.5px;text-underline-offset:4px}
+.term:hover,.term.on{text-decoration-style:solid;text-decoration-color:var(--grow)}
+.term.on{background:color-mix(in srgb,var(--grow) 18%,transparent)}
+.note{position:fixed;z-index:100;width:min(320px,calc(100vw - 24px));background:var(--field);border:1px solid var(--ink);border-top:4px solid var(--grow);box-shadow:5px 5px 0 rgba(0,0,0,.16);padding:14px 16px 12px;text-align:left;color:var(--ink);font-family:var(--f-ui);-webkit-user-select:none;user-select:none}
+.note::before{content:"";position:absolute;top:-9px;left:var(--ax,40px);width:12px;height:12px;background:var(--field);border-left:2px solid var(--grow);border-top:2px solid var(--grow);transform:rotate(45deg)}
+.note.up::before{top:auto;bottom:-7px;border-width:1px;border-color:var(--ink);transform:rotate(225deg)}
+.note .nh{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid var(--grow);padding-bottom:6px;margin-bottom:8px}
+.note .nh b{font-weight:500;font-size:17px;color:var(--grow)}
+.note .nh span{font:400 10px var(--f-d);letter-spacing:.22em;color:var(--muted);white-space:nowrap}
+.note p{margin:0;font-size:13.5px;line-height:1.6}
+.note p.ex{margin-top:6px;font-size:12.5px;color:var(--muted);text-align:center}
+.note svg{display:block;width:100%;height:auto;margin:8px 0 0;overflow:visible}
+.note .nt{font:400 9px var(--f-ui);fill:var(--muted);text-anchor:middle}
+.note .nq{font:400 17px var(--f-ui);fill:var(--muted);text-anchor:middle}
+.note .nx{margin-top:10px;padding-top:7px;border-top:1px dashed var(--grid);font:400 11px var(--f-d);letter-spacing:.16em;color:var(--muted)}
+html[lang="ko"] .note .nx{font-family:var(--f-ui);letter-spacing:.02em;font-size:12px}
+.note .nx button{background:none;border:0;padding:0;font:inherit;letter-spacing:inherit;color:var(--grow);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+/* 설명 창 맨 위 계단: 먼저 알아 둘 것 → 이 판 */
+.ladder{display:flex;align-items:flex-start;justify-content:center;gap:6px;margin-top:4px}
+.rung{flex:0 1 128px;min-width:0;display:flex;flex-direction:column;background:none;border:0;padding:0;cursor:pointer;color:inherit;font:inherit}
+.rung .rb{display:block;border:1px solid var(--ink);background:var(--field);padding:9px 6px 8px;text-align:center}
+.rung .rb b{display:block;font-weight:500;font-size:14px;line-height:1.3}
+.rung .rb span{display:block;margin-top:3px;font:400 9px var(--f-d);letter-spacing:.16em;color:var(--muted)}
+.rung i{display:block;height:5px;margin-top:6px;background:var(--ink)}
+.rung.here .rb{background:var(--ink);color:var(--field)} .rung.here .rb span{color:var(--bg)}
+.rung:hover .rb,.rung.on .rb{outline:2px solid var(--grow);outline-offset:2px}
+.ladder .ar{align-self:center;margin-top:-11px;font-size:14px;color:var(--muted)}
+.lad-cap{margin:10px 0 0;text-align:center;font-size:12.5px;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="field" aria-label="Dot Sense plate"></canvas>
+
+<section class="menu" id="menu">
+  <div class="menu-in">
+    <h1 class="title">DOT SENSE.</h1>
+    <p class="tagline"><span class="main" id="tagMain">눈으로 푸는 통계.</span><span class="sub" id="tagSub">STATISTICS BY EYE.</span></p>
+    <div class="plates">
+      <div class="pgrp"><span class="gname" data-g="avg"></span><span class="sub" data-gs="avg"></span></div>
+      <div class="pgrp"><span class="gname" data-g="rel"></span><span class="sub" data-gs="rel"></span></div>
+      <button class="plate" data-mode="centroid" tabindex="-1">
+        <svg viewBox="0 0 120 84" aria-hidden="true"><rect class="pf" x=".5" y=".5" width="119" height="83"/><line class="pg" x1="60" y1="1" x2="60" y2="83"/><line class="pg" x1="1" y1="42" x2="119" y2="42"/>
+          <circle class="c-d1" cx="26" cy="32" r="3.2"/><circle class="c-d1" cx="36" cy="56" r="3.2"/><circle class="c-d1" cx="72" cy="40" r="3.2"/><circle class="c-d1" cx="84" cy="58" r="3.2"/>
+          <circle class="c-d2" cx="50" cy="26" r="3.2"/><circle class="c-d2" cx="44" cy="44" r="3.2"/><circle class="c-d4" cx="58" cy="60" r="3.2"/><circle class="c-d4" cx="94" cy="30" r="3.2"/>
+          <circle class="c-ans" cx="63.4" cy="42.9" r="3.4"/><circle class="c-ansd" cx="63.4" cy="42.9" r="1"/></svg>
+        <i class="pbar"></i><span class="pname"></span><span class="sub"></span><span class="psoon"></span>
+      </button>
+      <button class="plate" data-mode="expect" tabindex="-1">
+        <svg viewBox="0 0 120 84" aria-hidden="true"><rect class="pf" x=".5" y=".5" width="119" height="83"/><line class="pl" x1="18.0" y1="26" x2="18.0" y2="34" style="stroke-width:.8"/><circle class="c-r1 mb" cx="18.0" cy="43.9" r="9.9"/><line class="pl" x1="42.0" y1="26" x2="42.0" y2="50" style="stroke-width:.8"/><circle class="c-r3 mb" cx="42.0" cy="55.7" r="5.7"/><line class="pl" x1="54.0" y1="26" x2="54.0" y2="30" style="stroke-width:.8"/><circle class="c-r4 mb" cx="54.0" cy="39.0" r="9.0"/><line class="pl" x1="78.0" y1="26" x2="78.0" y2="42" style="stroke-width:.8"/><circle class="c-r6 mb" cx="78.0" cy="47.7" r="5.7"/><line class="pl" x1="102.0" y1="26" x2="102.0" y2="32" style="stroke-width:.8"/><circle class="c-r8 mb" cx="102.0" cy="41.0" r="9.0"/><line class="pl" x1="12" y1="26" x2="108" y2="26" style="stroke-width:2.2"/><line class="pl ansl" x1="56.4" y1="1" x2="56.4" y2="26" style="stroke-width:1"/><circle class="c-ans" cx="56.4" cy="26" r="2.6" style="fill:var(--field)"/></svg>
+        <i class="pbar"></i><span class="pname"></span><span class="sub"></span><span class="psoon"></span>
+      </button>
+      <button class="plate" data-mode="corr" tabindex="-1">
+        <svg viewBox="0 0 120 84" aria-hidden="true"><rect class="pf" x=".5" y=".5" width="119" height="83"/><line class="pg" x1="60" y1="1" x2="60" y2="83"/><line class="pg" x1="1" y1="42" x2="119" y2="42"/>
+          <circle class="c-d1" cx="34" cy="56" r="3"/><circle class="c-d1" cx="44" cy="54" r="3"/><circle class="c-d1" cx="52" cy="44" r="3"/><circle class="c-d1" cx="60" cy="46" r="3"/>
+          <circle class="c-d1" cx="68" cy="36" r="3"/><circle class="c-d1" cx="76" cy="38" r="3"/><circle class="c-d1" cx="86" cy="28" r="3"/><circle class="c-d1" cx="48" cy="60" r="3"/>
+          <line class="pl ansl" x1="6" y1="62" x2="114" y2="22"/></svg>
+        <i class="pbar"></i><span class="pname"></span><span class="sub"></span><span class="psoon"></span>
+      </button>
+      <button class="plate" data-mode="assoc" tabindex="-1">
+        <svg viewBox="0 0 120 84" aria-hidden="true"><rect class="pf" x=".5" y=".5" width="119" height="83"/><rect class="c-no" x="16" y="8" width="52.6" height="22.5"/><rect class="c-gold" x="16" y="30.5" width="52.6" height="27.5"/><rect class="pl" x="16" y="8" width="52.6" height="50" style="stroke-width:1"/><rect class="c-no" x="70.6" y="8" width="33.4" height="39"/><rect class="c-gold" x="70.6" y="47" width="33.4" height="11"/><rect class="pl" x="70.6" y="8" width="33.4" height="50" style="stroke-width:1"/><line class="pl" x1="14" y1="72" x2="106" y2="72" style="stroke-width:1"/><circle class="c-ans" cx="43.8" cy="72" r="3"/></svg>
+        <i class="pbar"></i><span class="pname"></span><span class="sub"></span><span class="psoon"></span>
+      </button>
+    </div>
+    <button class="link menu-rec" id="recFromMenu" tabindex="-1">RECORDS</button>
+    <p class="notice" id="notice" hidden></p>
+  </div>
+  <div class="colophon">
+    <p class="langs"><button data-lang="ko" tabindex="-1">KOREAN</button><i>·</i><button data-lang="en" tabindex="-1">ENGLISH</button></p>
+    <p class="inst" id="instRow" hidden><button id="instBtn" tabindex="-1" hidden>BROWSER APP</button><i id="instSep" hidden>·</i><a id="winDl" target="_blank" rel="noopener" hidden>WINDOWS (.EXE)</a></p>
+    <p class="credit">AFTER W. E. B. DU BOIS, 1900.</p>
+  </div>
+</section>
+
+<header class="hud top" id="hudTop">
+  <nav class="crumbs">
+    <button class="link l" id="toMenu" tabindex="-1">CONTENTS</button>
+    <button class="here" id="plateLab" tabindex="-1">PLATE 01 · CENTROID</button>
+    <button class="link r" id="recFromGame" tabindex="-1">RECORDS</button>
+  </nav>
+  <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <p class="ask" id="prompt"></p>
+  <p class="spec" id="spec"></p>
+</header>
+
+<footer class="hud bottom" id="hudBot">
+  <div class="resrow"><p class="result" id="result"></p><button class="act" id="act" tabindex="-1" disabled>제출</button></div>
+  <ul class="coach" id="coach"></ul>
+</footer>
+
+<div class="dim" id="dim" hidden></div>
+<div class="summary" id="summary" hidden>
+  <p class="cap" id="sPlate">PLATE 01 · RESULT</p>
+  <p class="s-total" id="sTotal">0</p>
+  <p class="s-line" id="sLine1"></p>
+  <p class="s-line" id="sLine2"></p>
+  <div class="s-strip" id="sStrip"></div>
+  <p class="s-coach" id="sCoach"></p>
+  <div class="s-btns">
+    <button class="act" id="again" tabindex="-1">한 판 더</button>
+    <button class="link" id="sToMenu" tabindex="-1">CONTENTS</button>
+    <button class="link" id="sToRec" tabindex="-1">RECORDS</button>
+  </div>
+</div>
+
+<div class="intro" id="intro" hidden>
+  <p class="cap" id="iPlate"></p>
+  <div class="i-fig" id="iFig"></div>
+  <p class="i-name" id="iName"></p>
+  <p class="i-text" id="iText"></p>
+  <p class="i-hint" id="iHint"></p>
+  <button class="act" id="iGo" tabindex="-1">시작</button>
+</div>
+
+<section class="sheet" id="records" hidden aria-label="RECORDS">
+  <div class="sheet-dim"></div>
+  <div class="paper">
+    <div class="sheet-bar"><button class="link" id="recClose" data-close tabindex="-1">CLOSE</button></div>
+    <div class="rec" id="recIn"></div>
+  </div>
+</section>
+
+<section class="sheet" id="explain" hidden aria-label="NOTES">
+  <div class="sheet-dim"></div>
+  <div class="paper">
+    <div class="sheet-bar"><button class="link" data-close tabindex="-1">CLOSE</button></div>
+    <div class="rec" id="expIn"></div>
+  </div>
+</section>
+
+<div class="phone" id="phone" hidden>
+  <p class="title">DOT SENSE.</p>
+  <p class="pmsg">컴퓨터에서 할 수 있어요.</p>
+  <p class="sub">PLEASE OPEN IT ON A COMPUTER.</p>
+</div>
+
+<div class="ghost" id="ghost" hidden></div>
+
+<script>
+(() => {
+  const ROUNDS = 10;
+  // 메뉴 순서 = 배우는 순서. 평균 둘(무게중심 · 기댓값) | 관계 둘(상관계수 · 연관)
+  const MODES = ['centroid', 'expect', 'corr', 'assoc'];
+  const READY = { centroid: true, expect: true, corr: true, assoc: true };    // 2-b: 네 판 모두
+  const PLATE = { centroid: '01', expect: '02', corr: '03', assoc: '04' };
+  const NAMES = {
+    centroid: { ko: '무게중심', en: 'Centroid', fr: 'Barycentre' },
+    expect: { ko: '기댓값', en: 'Expectation', fr: 'Espérance' },
+    corr: { ko: '상관계수', en: 'Correlation', fr: 'Corrélation' },
+    assoc: { ko: '연관', en: 'Association', fr: 'Association' }
+  };
+  const GROUPS = { avg: { ko: '평균', en: 'Averages', fr: 'Moyennes' }, rel: { ko: '관계', en: 'Relations', fr: 'Relations' } };
+  const STEP = { centroid: 0.28, expect: 0.5, corr: 0.72, assoc: 1 };          // 잉크 계단: 개념이 어려울수록 진하게
+  // 점수: 오차가 기준 오차(E80)면 80점, 그 4배면 60점, 4분의 1이면 91점.
+  // E80은 4-b에서 '처음 하는 사람' 모형으로 맞춤: 그 사람이 어느 판에서든 평균 60점쯤 받도록 (무게중심은 판 높이 대비)
+  const E80 = { centroid: 0.007, expect: 0.1, corr: 0.03, assoc: 0.022 };
+  // 첫 자리에서 기준 오차의 절반 넘게 옮기면 '고친' 라운드. 오차가 그만큼 줄거나 늘면 '좋아짐/나빠짐'
+  const ADJ = 0.5;
+  const KEY_HIST = 'dotsense2-history', KEY_MODE = 'dotsense2-mode', KEY_LANG = 'dotsense2-lang', KEY_SEEN = 'dotsense2-seen';
+  const tierOf = round => round <= 4 ? 1 : round <= 7 ? 2 : 3;                    // 난이도 4 · 3 · 3
+  const $ = id => document.getElementById(id);
+  const cv = $('field'), ctx = cv.getContext('2d');
+  const els = {
+    menu: $('menu'), tagMain: $('tagMain'), tagSub: $('tagSub'), recFromMenu: $('recFromMenu'),
+    hudTop: $('hudTop'), hudBot: $('hudBot'), toMenu: $('toMenu'), recFromGame: $('recFromGame'), plateLab: $('plateLab'),
+    prog: $('prog'), prompt: $('prompt'), spec: $('spec'), result: $('result'), act: $('act'), coach: $('coach'),
+    dim: $('dim'), summary: $('summary'), sPlate: $('sPlate'), sTotal: $('sTotal'), sLine1: $('sLine1'), sLine2: $('sLine2'), sCoach: $('sCoach'), sStrip: $('sStrip'),
+    again: $('again'), sToMenu: $('sToMenu'), sToRec: $('sToRec'),
+    rec: $('records'), recIn: $('recIn'), recClose: $('recClose'), ghost: $('ghost'), phone: $('phone'),
+    intro: $('intro'), iPlate: $('iPlate'), iFig: $('iFig'), iName: $('iName'), iText: $('iText'), iHint: $('iHint'), iGo: $('iGo'),
+    exp: $('explain'), expIn: $('expIn'), notice: $('notice'), instRow: $('instRow'), inst: $('instBtn')
+  };
+  // 기록 링크가 열릴 주소. 웹사이트 주소가 정해지면 여기에 적기 (Claude 앱에서 만든 링크도 웹사이트로 열리게). 비어 있으면 지금 페이지 주소
+  const HOME = 'https://gamesbyeye.github.io/dotsense/';
+  // Windows 설치 파일: GitHub Releases의 최신 판 (파일 이름은 늘 DotSense-Setup.exe)
+  const WIN_EXE = 'https://github.com/gamesbyeye/dotsense/releases/latest/download/DotSense-Setup.exe';
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isPhone = matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 700;
+
+  // ───────── 말: 한 줄 지시는 명사형, 문장은 해요체 ─────────
+  let lang = 'ko';
+  const I = {
+    ko: {
+      tagMain: '눈으로 푸는 통계.', tagSub: 'STATISTICS BY EYE.', soon: '준비 중',
+      'prompt.centroid': '평균 위치 찍기', 'prompt.centroidW': '가중 평균 위치 찍기', 'prompt.corr': '선의 기울기를 상관계수 r에 맞추기',
+      'spec.dots': n => `점 <b>${n}</b>개`, 'spec.diag': '점선 = r ±1',
+      'hint.click': '클릭해서 찍기', 'hint.keys': 'Enter 제출 · 다시 클릭해 옮기기',
+      'hint.cNone': '가장자리 쪽을 클릭해 선 돌리기', 'hint.cKeys': r => `r = <b>${r}</b> · Enter 제출`,
+      'prompt.expect': '기댓값 찍기', 'spec.cells': n => `칸 <b>${n}</b>개`, 'spec.circles': n => `원 <b>${n}</b>개`, 'spec.area': '원의 넓이 = 확률', 'spec.hang': '수평이 되게 매달기',
+      'hint.eNone': '클릭해서 찍기', 'hint.eKeys': v => `기댓값 = <b>${v}</b> · Enter 제출`,
+      'res.exp': (g, a, b, s) => `<b>${g}</b> · 실제 ${a} · 내 답 ${b} · +${s}`,
+      'fb.aLow': p => `넓이 반영 ${p} · 큰 원을 가볍게 봤어요`, 'fb.aHigh': p => `넓이 반영 ${p} · 큰 원에 너무 끌려갔어요`,
+      'm.aLow': p => `기댓값에서 넓이를 ${p}만 반영하고 있어요. 큰 원의 숫자는 그만큼 자주 나와서 평균을 더 끌어당겨요.`,
+      'm.aHigh': p => `기댓값에서 넓이를 ${p} 반영하고 있어요. 큰 원에 너무 끌려가요.`,
+      'r.m.ai': '넓이 반영률', 'r.e.ai': ['숫자만 평균', '딱 맞음', '큰 원에 끌림'],
+      'ty.e5': '기댓값 · 원 5개', 'ty.e6': '기댓값 · 원 6개', 'ty.e7': '기댓값 · 원 7개', 'ty.rMid': '상관계수 · 애매한 구름',
+      'prompt.assoc': '관계의 세기 찍기', 'spec.share': '넓이 = 비율', 'hint.aKeys': v => `세기 = <b>${v}</b> · Enter 제출`, 'assoc.none': '전체 비율',
+      'fb.bLow': p => `폭 반영 ${p} · 칸 폭을 가볍게 봤어요`, 'fb.bHigh': p => `폭 반영 ${p} · 칸 폭에 너무 끌려갔어요`,
+      'fb.vWeak': (a, b) => `실제보다 약하게 봤어요 · ${a} → ${b}`, 'fb.vStrong': (a, b) => `실제보다 강하게 봤어요 · ${a} → ${b}`,
+      'm.bLow': p => `연관에서 칸 폭을 ${p}만 반영하고 있어요. 좁은 칸은 무리가 작아서, 높이가 많이 달라도 관계를 조금만 만들어요.`,
+      'm.bHigh': p => `연관에서 칸 폭을 ${p} 반영하고 있어요. 칸 폭에 너무 끌려가요.`,
+      'r.m.bi': '폭 반영률', 'r.e.bi': ['폭 무시', '딱 맞음', '폭에 끌림'],
+      'ty.a1': '연관 · 폭 비슷한 두 칸', 'ty.a2': '연관 · 폭 다른 두 칸', 'ty.a3': '연관 · 칸 세 개',
+      'btn.submit': '제출', 'btn.next': '다음', 'btn.result': '결과', 'btn.again': '한 판 더',
+      grade: ['정확', '좋음', '근접', '빗나감'],
+      'res.err': (g, e, s) => `<b>${g}</b> · 오차 ${e} · +${s}`, 'res.corr': (g, a, b, s) => `<b>${g}</b> · 실제 r ${a} · 내 답 ${b} · +${s}`,
+      'res.total': n => `합계 <b>${n}</b>`,
+      'sum.newBest': '신기록', 'sum.err': '평균 오차', 'sum.bias': (d, p) => `${d} <b>${p}</b> 쏠림`, 'sum.noBias': '쏠림 거의 없음', 'sum.best': v => `최고 <b>${v}</b>`, 'sum.first': '첫 판', 'sum.strip': '이 도판에서 끝낸 판들의 합계',
+      'fb.wLow': p => `무게 반영 ${p} · 진한 점을 가볍게 봤어요`, 'fb.wHigh': p => `무게 반영 ${p} · 진한 점 쪽으로 너무 갔어요`,
+      'fb.tLow': p => `이상치 반영 ${p} · 멀리 있는 점을 가볍게 봤어요`, 'fb.tHigh': p => `이상치 반영 ${p} · 멀리 있는 점에 너무 끌려갔어요`,
+      'fb.cSign': '부호가 반대예요 · 오른쪽 위로 뻗으면 +',
+      'fb.cOutIgn': (a, b) => `이상치를 무시했어요 · 이상치를 빼면 r ${a}, 넣으면 ${b}`, 'fb.cOutOver': '이상치에 너무 흔들렸어요',
+      'fb.cWeak': (a, b) => `실제보다 약하게 봤어요 · ${a} → ${b}`, 'fb.cStrong': '실제보다 강하게 봤어요 · 선은 구름보다 눕혀야 해요',
+      'fb.adjBetter': (a, b) => `고쳐서 좋아졌어요 · ${a} → ${b}`, 'fb.adjWorse': (a, b) => `첫 감이 더 정확했어요 · ${a} → ${b}`,
+      'fb.habit': d => `평소처럼 ${d} 쏠렸어요`, 'fb.good': '정확해요 · 이 느낌 그대로!',
+      'm.bias': (d, p, s, o) => `찍는 위치가 평균 ${p}만큼 ${d} 쏠려 있어요. 오차의 ${s}%가 이 습관에서 나와요. 찍은 뒤 ${o} 살짝 옮겨 보세요.`,
+      'm.wLow': p => `가중 평균에서 무게를 ${p}만 반영하고 있어요. 진한 점 하나를 연한 점 여러 개로 세어 보세요.`,
+      'm.wHigh': p => `가중 평균에서 무게를 ${p} 반영하고 있어요. 진한 점 쪽으로 너무 끌려가요.`,
+      'm.tLow': p => `멀리 떨어진 점(이상치)을 ${p}만 반영하고 있어요. 점이 몰린 곳에 끌리는 편이에요. 이상치 하나는 '거리 ÷ 점 개수'만큼 평균을 끌어당겨요.`,
+      'm.tHigh': p => `멀리 떨어진 점에 ${p}로 반응하고 있어요. 이상치에 너무 끌려가요.`,
+      'm.cbLow': p => `상관을 실제의 ${p} 세기로 약하게 보는 편이에요. 구름이 얇을수록 r이 커요.`,
+      'm.cbHigh': p => `상관을 실제의 ${p} 세기로 강하게 보는 편이에요. 답이 되는 선은 구름보다 눕혀져 있어요.`,
+      'm.oiLow': p => `상관계수에서 이상치를 ${p}만 반영하고 있어요. r은 멀리 떨어진 점 하나에도 크게 흔들려요.`,
+      'm.oiHigh': p => `상관계수에서 이상치에 ${p}로 너무 흔들려요.`,
+      'm.sign': p => `상관계수 라운드의 ${p}에서 부호를 반대로 골랐어요. 기울기보다 방향부터 정해 보세요.`,
+      'm.adjWorse': (n, w) => `첫 감이 더 정확해요. 고친 ${n}라운드 중 ${w}라운드가 오히려 나빠졌어요. 처음 찍은 데서 크게 옮기지 마세요.`,
+      'm.adjBetter': p => `다듬는 게 효과가 있어요. 고친 라운드에서 오차가 평균 ${p}% 줄었어요.`,
+      'm.weak': (n, e, b, p) => `가장 약한 유형은 '${n}' 문제예요. 평균 오차 ${e}로 같은 도판 평균(${b})보다 ${p}% 커요.`,
+      'r.src': '기록은 이 브라우저에 남아요. 게임 도중에도 꺼내 읽을 수 있어요.',
+      'r.empty': '아직 기록이 없어요. 한 판을 끝내면 이곳에 쌓여요.',
+      'r.k.games': '끝낸 판', 'r.k.recent10': '최근 10판 평균', 'r.k.best': '최고 점수', 'r.k.avg': n => `최근 ${n}라운드 평균`,
+      'r.locked': '5판 후 열림',
+      'r.n1': '코치 메모와 지표는 그 도판을 5판 끝낸 뒤에 열려요. 끝내지 않은 판은 어디에도 남지 않아요.',
+      'r.n2': "라운드마다 100점이에요. 오차가 '잘하는 사람의 오차'와 같으면 80점, 그 4배면 60점, 4분의 1이면 91점이 되도록 매겨요. 기준 오차는 '처음 하는 사람' 모형으로 맞춰서, 처음 하는 사람이 어느 판에서든 평균 60점쯤 받도록 했어요.",
+      'r.n3': '무게중심 판에서 정답을 가운데 두고 내가 찍은 자리를 모은 그림이에요. 치우침은 늘 같은 쪽으로 빗나가는 양, 흩어짐은 라운드마다 들쭉날쭉한 양이고, 거리는 판 높이의 %예요.',
+      'r.n4': '반영률은 아무 생각 없이 찍었을 자리에서 정답까지 몇 %를 움직였는지예요. 무게는 무게를 무시한 평균, 이상치는 중앙값, 넓이는 숫자들의 단순 평균, 폭은 칸을 모두 같은 폭으로 봤을 때의 세기에서 출발해요. 100%면 정확하고 가운데 띠 안이면 충분해요. 상관 세기 감각은 내가 고른 r이 실제 r의 몇 배 세기인지예요(이상치 판은 빼요).',
+      'r.n5': '최근 100라운드를 문제 유형별로 나눈 평균 오차예요. 같은 도판 평균보다 25% 넘게 크고 3라운드 이상 쌓이면 약점으로 표시해요.',
+      'r.n6': "처음 찍은 자리와 마지막 자리만 비교해요. 기준 오차의 절반 넘게 옮겼으면 고친 라운드로 세요. '첫 감 → 다듬은 뒤'는 같은 반영률을 첫 자리와 마지막 자리에서 각각 잰 거예요.",
+      'r.f.none': '아직 이 도판 기록이 없어요.', 'r.f.lock': n => `지표는 5판 후 열림 · 지금 ${n}판`, 'r.f.line': (b, a, n) => `최고 ${b} · 최근 ${n}판 평균 ${a}`,
+      'btn.start': '시작', 'i.hint': '위의 도판 이름을 누르면 설명을 언제든 다시 볼 수 있어요.',
+      'i.centroid': '점들이 판 위에 흩어져 있고, 진한 점일수록 무거워요. 판이 기울지 않고 버티는 한 점, 평균 위치를 찾아 보세요. 클릭해서 찍고 Enter를 누르면 돼요.',
+      'i.expect': '막대에 원이 매달려 있고, 원이 클수록 그 숫자가 잘 나와요(실 길이는 상관없어요). 막대가 수평으로 매달리는 자리, 기댓값을 찾아 보세요. 클릭해서 매다는 자리를 놓고 Enter를 누르면 돼요.',
+      'i.corr': '점구름은 두 값이 함께 움직이는 정도를 보여줘요. 가운데를 지나는 선의 기울기를 상관계수 r에 맞춰 보세요. 가장자리 쪽을 클릭해 선을 돌리고(멀리 잡을수록 섬세해요) Enter를 누르면 돼요.',
+      'i.assoc': "칸 폭은 무리의 크기, 금색 높이는 그 무리에서 '예'의 비율이에요. 칸마다 금색 높이가 어긋날수록 두 성질의 관계가 세요. 그 세기를 아래 눈금(0~1)에 찍고 Enter를 누르면 돼요.",
+      'x.h1': '재는 것', 'x.h2': '그림 읽기', 'x.h3': '눈이 속는 지점', 'x.h4': '쓰임새',
+      'x.h0': '먼저 알아 둘 것', 'x.lad': '계단이나 밑줄 친 낱말을 누르면 풀이 쪽지가 열려요.', 'x.here': 'THIS PLATE', 'n.next': '다음 계단',
+      // 낱말 쪽지: h 제목 · s 영어 작은 제목 · p 풀이 · ex 계산 예 · fig 작은 그림
+      'n.mean': { h: '평균', s: 'MEAN', p: '모두 더해서 개수로 나눈 값이에요. 점들이 한쪽으로 기울지 않게 받쳐 주는 자리예요.', ex: '1, 3, 5 → (1 + 3 + 5) ÷ 3 = 3', fig: 'mean' },
+      'n.wmean': { h: '가중 평균', s: 'WEIGHTED MEAN', p: '값마다 무게를 곱해 더한 뒤, 무게의 합으로 나눠요. 무거운 값일수록 평균을 더 끌어당겨요.', ex: '2(×1)와 5(×2) → (2 + 10) ÷ 3 = 4', fig: 'wmean' },
+      'n.outlier': { h: '이상치', s: 'OUTLIER', p: "다른 점들과 멀리 떨어진 점이에요. 하나뿐이어도 평균을 '거리 ÷ 점 개수'만큼 끌어당겨요.", ex: '점 10개 중 하나가 5칸 떨어지면 → 평균이 0.5칸 끌려가요' },
+      'n.prob': { h: '확률', s: 'PROBABILITY', p: '아주 여러 번 했을 때 그 일이 나오는 몫이에요. 0부터 1까지이고, 모든 경우를 더하면 1이에요. 기댓값 판에서는 원의 넓이가 확률이에요.', ex: '원 넓이를 모두 더한 것의 4분의 1 → 0.25 → 100번 중 25번쯤' },
+      'n.spread': { h: '흩어짐 (표준편차)', r: '흩어짐', s: 'SPREAD', p: '점들이 평균에서 보통 얼마나 떨어져 있는지예요. 떨어진 거리를 제곱해 평균 내고 루트를 씌워요.', ex: '2, 4, 6 → 평균 4, 거리 2 · 0 · 2 → √((4 + 0 + 4) ÷ 3) ≈ 1.6' },
+      'n.z': { h: '표준점수', s: 'STANDARD SCORE', p: '평균에서 떨어진 거리를 흩어짐으로 나눈 값이에요. 수능 표준점수도 이 생각에서 나왔어요. 단위가 다른 두 값도 같은 자로 잴 수 있어요. 상관계수 판의 그림은 이 눈금으로 그려져 있어요.', ex: '2, 4, 6의 6 → (6 − 4) ÷ 1.6 ≈ 1.2' },
+      'n.together': { h: '함께 벗어나기', s: 'MOVING TOGETHER', p: '한 점의 두 값이 같은 쪽(둘 다 평균보다 크거나, 둘 다 작거나)으로 벗어나면 +, 반대쪽이면 −예요.', ex: '가운데 십자선 기준 오른쪽 위 · 왼쪽 아래는 +, 나머지는 −', fig: 'quad' },
+      'n.prop': { h: '비율', s: 'PROPORTION', p: "전체 중 '예'의 몫이에요. 연관 판에서는 칸 안 금색의 높이가 비율이에요.", ex: "10개 중 7개가 '예' → 0.7 → 칸 높이의 70%" },
+      'n.norel': { h: '전체 비율', s: 'OVERALL SHARE', p: "칸을 나누지 않고 전부 섞었을 때의 '예' 비율이에요. 연관 판의 점선 높이예요. 관계가 없으면 모든 칸의 금색이 이 높이에 붙어요.", ex: '두 칸 모두 50% → 점선도 50% → 관계 0' },
+      'n.c.centroid': { h: '무게중심의 계산', s: 'COMPUTATION', p: '점마다 좌표에 무게(×1 · ×2 · ×4)를 곱해 모두 더한 뒤, 무게의 합으로 나눈 자리예요.', ex: '가로 2(×1)와 5(×2) → (2 + 10) ÷ 3 = 4, 세로도 똑같이' },
+      'n.c.expect': { h: '기댓값의 계산', s: 'COMPUTATION', p: '원마다 숫자에 넓이(확률)를 곱해 모두 더해요. 넓이를 다 더하면 1이라서 나누기가 없어요. 원들을 매단 막대가 수평이 되는 자리와 같아요.', ex: '1이 0.25, 5가 0.75 → 0.25 + 3.75 = 4' },
+      'n.c.corr': { h: '상관계수의 계산', s: 'COMPUTATION', p: "점마다 두 값의 표준점수를 곱해 평균 낸 값이에요. 상관계수 판에서는 선의 기울기가 곧 r이에요.", ex: '한 줄로 선 세 점 → 곱 1.5 · 0 · 1.5 → 평균 1 → r = 1' },
+      'n.c.assoc': { h: '연관의 계산', s: 'COMPUTATION', p: "칸마다 금색 높이가 점선(전체를 섞었을 때의 '예' 비율)에서 얼마나 떨어져 있는지 재서, 넓은 칸일수록 크게 쳐 평균 낸 값이에요. 모두 점선에 붙으면 0, 칸마다 0%나 100%로 갈리면 1이에요.", ex: '폭이 같은 두 칸이 70%와 30% → 0.4' },
+      'x.centroid': { what: '여러 점을 한 점으로 줄인 자리, 평균 위치를 재요. 점마다 무게가 다르면 무거운 점을 그만큼 여러 번 센 평균(가중 평균)이에요.', trick: '눈은 점이 몰린 곳으로 가기 쉬운데, 평균은 멀리 떨어진 점에도 끌려가요. 진한 점 하나가 연한 점 여러 개만큼 끌어당긴다는 것도 놓치기 쉬워요.', use: '학점 평균, 물가 지수, 여론조사 보정처럼 무게를 다르게 주는 평균은 어디에나 있어요.', cap: ['무게가 같으면 점들의 가운데', '진한 점은 그만큼 여러 번 세요', '멀리 있는 점도 평균을 끌어당겨요'] },
+      'x.expect': { what: '같은 일을 아주 여러 번 했을 때 나오는 숫자의 평균이에요. 원의 넓이가 그 숫자가 나올 확률이고, 원들을 매단 막대가 수평이 되는 자리가 기댓값이에요.', trick: '숫자들만 보고 가운데를 고르기 쉬운데, 큰 원의 숫자가 더 자주 나와서 평균을 더 끌어당겨요. 눈은 원의 넓이 차이를 실제보다 작게 느끼기 쉬워요.', use: '보험료, 복권의 기대 수익, 게임 보상처럼 운이 섞인 결과를 미리 따질 때 써요.', cap: ['원 크기가 같으면 숫자들의 가운데', '가운데에 매달면 큰 원 쪽으로 기울어요', '막대가 수평이 되는 자리가 기댓값'] },
+      'x.corr': { what: '두 값이 함께 움직이는 정도를 −1부터 1까지로 나타내요. 오른쪽 위로 뻗으면 +, 오른쪽 아래로 뻗으면 −예요.', trick: '애매한 구름은 실제보다 약하게 보기 쉬워요. 그리고 멀리 떨어진 점 하나가 r을 크게 바꿀 수 있어요.', use: '키와 몸무게, 공부 시간과 점수처럼 두 가지가 얼마나 같이 가는지 볼 때 써요. 함께 움직인다고 해서 한쪽이 원인이라는 뜻은 아니에요.', cap: ['동그란 구름: r = 0', '길쭉할수록 r이 커져요', '거의 한 줄: r ≈ 1'] },
+      'x.assoc': { what: "'예/아니오'로 나뉘는 두 성질이 얼마나 함께 나타나는지 0부터 1까지로 재요. 칸으로 된 자료의 상관계수예요.", trick: '계단 높이만 보기 쉬운데, 좁은 칸은 무리가 작아서 높이가 많이 달라도 관계를 조금만 만들어요.', use: '백신을 맞았는지와 감염됐는지, 광고를 봤는지와 샀는지처럼 둘로 나뉘는 자료에서 써요. 카이제곱 검정과 같은 표를 써요.', cap: ['높이가 같으면 관계 0', '어긋날수록 세요', '좁은 칸은 적게 쳐요'] },
+      'd.link': '기록 링크 만들기', 'd.linkNote': '이 링크를 열면 지금까지의 기록이 이어져요.', 'd.linked': n => `링크로 받은 기록 ${n}판을 이어 붙였어요`, 'd.linkBad': '링크의 기록을 읽지 못했어요.', 'inst': 'BROWSER APP', 'inst.safari': 'Safari 메뉴의 파일 → Dock에 추가로 설치할 수 있어요', 'inst.done': '앱으로 설치했어요','r.noMemo': '아직 뚜렷한 약점이 보이지 않아요.', 'r.trendFew': '두 판을 끝내면 흐름이 그려져요.', 'r.none': '아직 없음', 'r.ma': '최근 5판 이동평균',
+      'r.g.bias': '치우침 · 늘 같은 쪽으로 빗나가는 양', 'r.g.scatter': '흩어짐 · 라운드마다 들쭉날쭉한 양', 'r.g.share': '오차 중 치우침의 몫',
+      'r.g.big': '습관만 고쳐도 크게 줄어요', 'r.g.small': '대부분 무작위 오차예요', 'r.g.none': '거의 없음',
+      'r.g.cap': '가운데가 정답이고, 점 하나가 한 라운드에서 빗나간 방향과 거리예요. 선은 평균적으로 쏠린 방향이에요. 거리 단위는 판 높이의 %예요.',
+      'r.m.wi': '무게 반영률', 'r.m.ti': '이상치 반영률', 'r.m.cb': '상관 세기 감각', 'r.m.oi': '상관 이상치 반영률',
+      'r.e.wi': ['덜 반영', '딱 맞음', '과하게'], 'r.e.ti': ['몰린 곳에 끌림', '딱 맞음', '먼 점에 끌림'],
+      'r.e.cb': ['약하게 봄', '딱 맞음', '강하게 봄'], 'r.e.oi': ['이상치 무시', '딱 맞음', '이상치에 휘둘림'],
+      'r.m.n': n => `${n}라운드`,
+      'r.m.cap': '반영률은 아무 생각 없이 찍었을 자리에서 정답까지 몇 %를 움직였는지예요. 무게는 무게를 무시한 평균에서, 이상치는 중앙값에서, 넓이는 숫자들의 단순 평균에서, 폭은 칸을 모두 같은 폭으로 봤을 때의 세기에서 출발해요. 100%면 정확하고, 가운데 띠 안이면 충분해요.',
+      'r.m.sign': (p, n) => ` 상관계수에서 부호를 반대로 고른 비율은 ${p}(${n}라운드)예요.`,
+      'r.weak': '약점',
+      'r.proc.adj': (s, b, w, r, up) => `<b>미세조정</b> · ${s}%의 라운드에서 첫 위치를 고쳤고, ${b}라운드는 좋아지고 ${w}라운드는 나빠졌어요. 고친 라운드의 오차는 첫 위치보다 평균 ${r}% ${up ? '줄었어요' : '늘었어요'}.`,
+      'r.proc.noAdj': '<b>미세조정</b> · 아직 첫 위치를 고친 라운드가 없어요.', 'r.proc.first': x => `<b>첫 감 → 다듬은 뒤</b> · ${x}`,
+      'd.copySum': '요약 복사', 'd.copyAll': '기록 전체 복사', 'd.import': '기록 가져오기', 'd.wipe': '기록 지우기', 'd.merge': '합치기', 'd.close': '닫기',
+      'd.wipeQ': n => `기록 ${n}판이 모두 사라져요. 지울까요?`, 'd.wipeGo': '지우기', 'd.wipeCancel': '취소',
+      'd.cap': "'요약 복사'를 Claude 대화창에 붙여넣으면 더 자세한 해석을 받을 수 있어요.",
+      'd.copied': '복사 완료', 'd.copiedAll': n => `복사 완료 · ${n}판`, 'd.blocked': '자동 복사가 막혀 있어요. 아래 글을 직접 복사해 주세요.',
+      'd.bad': "형식이 맞지 않아요. '기록 전체 복사'로 받은 글이나 기록 링크 전체를 붙여넣어 주세요.", 'd.merged': n => `${n}판을 합쳤어요.`, 'd.nothing': '새로 합칠 판이 없어요.', 'd.wiped': '기록을 모두 지웠어요.',
+      'd.ph': "'기록 전체 복사'로 받은 글이나 기록 링크를 붙여넣기",
+      'ty.c1': '무게중심 · 한 무리', 'ty.c2': '무게중심 · 두 무리', 'ty.cOut': '무게중심 · 이상치 있음', 'ty.cW': '무게중심 · 가중',
+      'ty.rPlain': '상관계수 · 뚜렷한 구름', 'ty.rSparse': '상관계수 · 점 적음', 'ty.rOut': '상관계수 · 이상치', 'ty.rClus': '상관계수 · 두 덩어리',
+      'x.head': (g, r, n) => `Dot Sense 기록 요약 (끝낸 판 ${g}, 라운드 ${r}개, 지표는 최근 ${n}라운드 기준)`,
+      'x.recent': (a, b) => `최근 10판 평균 합계: ${a}점 / 최고 ${b}점`, 'x.bias': (d, p, s) => `치우침: ${d} ${p} / 흩어짐: ${s}`,
+      'x.kind': (m, e, n) => `${m} 평균 오차: ${e} (${n}라운드)`, 'x.adj': (n, b, w, r) => `미세조정: 고친 ${n}라운드 중 좋아짐 ${b}, 나빠짐 ${w}, 첫 오차 대비 평균 ${r}`,
+      'x.types': '유형별 평균 오차', 'x.memo': '코치 메모', 'x.none': '표본 없음', 'x.sign': '부호 틀림'
+    },
+    en: {
+      tagMain: 'Statistics by eye.', tagSub: "LES STATISTIQUES À L'ŒIL NU.", soon: 'Coming soon',
+      'prompt.centroid': 'Mark the mean position', 'prompt.centroidW': 'Mark the weighted mean position', 'prompt.corr': 'Tilt the line to the correlation r',
+      'spec.dots': n => `<b>${n}</b> dots`, 'spec.diag': 'dotted = r ±1',
+      'hint.click': 'Click to mark', 'hint.keys': 'Enter to submit · click again to move',
+      'hint.cNone': 'Click toward the edge to turn the line', 'hint.cKeys': r => `r = <b>${r}</b> · Enter to submit`,
+      'prompt.expect': 'Mark the expected value', 'spec.cells': n => `<b>${n}</b> cells`, 'spec.circles': n => `<b>${n}</b> circles`, 'spec.area': 'circle area = probability', 'spec.hang': 'hang it level',
+      'hint.eNone': 'Click to mark', 'hint.eKeys': v => `EV = <b>${v}</b> · Enter to submit`,
+      'res.exp': (g, a, b, s) => `<b>${g}</b> · actual ${a} · yours ${b} · +${s}`,
+      'fb.aLow': p => `Area reflected ${p} · you took the big circles too lightly`, 'fb.aHigh': p => `Area reflected ${p} · the big circles pulled you too much`,
+      'm.aLow': p => `In Expectation you reflect only ${p} of the areas. A big circle's number comes up that much more often, so it pulls the average harder.`,
+      'm.aHigh': p => `In Expectation you reflect ${p} of the areas. The big circles pull you too much.`,
+      'r.m.ai': 'area reflected', 'r.e.ai': ['plain average of numbers', 'just right', 'pulled by big circles'],
+      'ty.e5': 'Expectation · 5 circles', 'ty.e6': 'Expectation · 6 circles', 'ty.e7': 'Expectation · 7 circles', 'ty.rMid': 'Correlation · ambiguous cloud',
+      'prompt.assoc': 'Mark the strength of the association', 'spec.share': 'area = share', 'hint.aKeys': v => `strength = <b>${v}</b> · Enter to submit`, 'assoc.none': 'overall share',
+      'fb.bLow': p => `Width reflected ${p} · you took the column widths too lightly`, 'fb.bHigh': p => `Width reflected ${p} · the column widths pulled you too much`,
+      'fb.vWeak': (a, b) => `You read it weaker than it is · ${a} → ${b}`, 'fb.vStrong': (a, b) => `You read it stronger than it is · ${a} → ${b}`,
+      'm.bLow': p => `In Association you reflect only ${p} of the column widths. A narrow column is a small group, so even a big step makes only a weak association.`,
+      'm.bHigh': p => `In Association you reflect ${p} of the column widths. The widths pull you too much.`,
+      'r.m.bi': 'width reflected', 'r.e.bi': ['ignores width', 'just right', 'pulled by width'],
+      'ty.a1': 'Association · two similar columns', 'ty.a2': 'Association · two uneven columns', 'ty.a3': 'Association · three columns',
+      'btn.submit': 'Submit', 'btn.next': 'Next', 'btn.result': 'Result', 'btn.again': 'Play again',
+      grade: ['Spot on', 'Good', 'Close', 'Off'],
+      'res.err': (g, e, s) => `<b>${g}</b> · error ${e} · +${s}`, 'res.corr': (g, a, b, s) => `<b>${g}</b> · actual r ${a} · yours ${b} · +${s}`,
+      'res.total': n => `Total <b>${n}</b>`,
+      'sum.newBest': 'NEW BEST', 'sum.err': 'avg error', 'sum.bias': (d, p) => `drifting ${d} by <b>${p}</b>`, 'sum.noBias': 'hardly any drift', 'sum.best': v => `best <b>${v}</b>`, 'sum.first': 'first game', 'sum.strip': 'Totals of finished games on this plate',
+      'fb.wLow': p => `Weight reflected ${p} · you took the dark dots too lightly`, 'fb.wHigh': p => `Weight reflected ${p} · you leaned too far toward the dark dots`,
+      'fb.tLow': p => `Outliers reflected ${p} · you took the far dots too lightly`, 'fb.tHigh': p => `Outliers reflected ${p} · the far dots pulled you too much`,
+      'fb.cSign': 'Wrong sign · rising to the right is +',
+      'fb.cOutIgn': (a, b) => `You ignored the outliers · without them r is ${a}, with them ${b}`, 'fb.cOutOver': 'The outliers swayed you too much',
+      'fb.cWeak': (a, b) => `You read it weaker than it is · ${a} → ${b}`, 'fb.cStrong': 'You read it stronger than it is · the line lies flatter than the cloud',
+      'fb.adjBetter': (a, b) => `Fine-tuning helped · ${a} → ${b}`, 'fb.adjWorse': (a, b) => `Your first instinct was better · ${a} → ${b}`,
+      'fb.habit': d => `Drifted ${d}, as usual`, 'fb.good': 'Spot on · keep this feeling!',
+      'm.bias': (d, p, s, o) => `Your marks drift ${d} by ${p} on average. ${s}% of your error comes from this habit. After you mark, nudge ${o} a little.`,
+      'm.wLow': p => `In weighted rounds you reflect only ${p} of the weight. Count a dark dot as several light ones.`,
+      'm.wHigh': p => `In weighted rounds you reflect ${p} of the weight. The dark dots pull you too far.`,
+      'm.tLow': p => `You reflect only ${p} of the far-off dots (outliers). Dense areas pull you in. One outlier moves the mean by its distance divided by the number of dots.`,
+      'm.tHigh': p => `You react to far-off dots at ${p}. Outliers pull you too much.`,
+      'm.cbLow': p => `You read correlations at ${p} of their real strength. The thinner the cloud, the larger r.`,
+      'm.cbHigh': p => `You read correlations at ${p} of their real strength. The answer line lies flatter than the cloud.`,
+      'm.oiLow': p => `In Correlation you reflect only ${p} of the outliers. A single far-off dot can move r a lot.`,
+      'm.oiHigh': p => `In Correlation the outliers sway you too much (${p}).`,
+      'm.sign': p => `You picked the wrong sign in ${p} of Correlation rounds. Decide the direction before the steepness.`,
+      'm.adjWorse': (n, w) => `Your first instinct is better. In ${n} adjusted rounds, ${w} got worse. Don't move far from your first mark.`,
+      'm.adjBetter': p => `Fine-tuning works for you. Adjusting cut your error by ${p}% on average.`,
+      'm.weak': (n, e, b, p) => `Your weakest type is '${n}': average error ${e}, ${p}% higher than your average for that plate (${b}).`,
+      'r.src': 'Records stay in this browser. You can open them in the middle of a game.',
+      'r.empty': 'No records yet. Finish a game and they will gather here.',
+      'r.k.games': 'games finished', 'r.k.recent10': 'last 10 games avg', 'r.k.best': 'best score', 'r.k.avg': n => `avg, last ${n} rounds`,
+      'r.locked': 'Opens after 5 games',
+      'r.n1': 'Coach notes and metrics open after you finish 5 games of that plate. Unfinished games are never kept.',
+      'r.n2': "Each round is worth 100. An error equal to a skilled player's error scores 80, four times that scores 60, a quarter of it scores 91. The reference errors are tuned with a model of a first-time player, so a newcomer averages about 60 on every plate.",
+      'r.n3': 'On the Centroid plate your marks are gathered around the answer at the center. Drift is how far you miss the same way; scatter is how much you vary from round to round. Distances are % of plate height.',
+      'r.n4': 'Reflected % is how far you moved from a naive mark toward the answer: the unweighted mean for weight, the median for outliers, the plain average of the numbers for area, the strength as if all columns were equally wide for width. 100% is exact; inside the middle band is good enough. Correlation strength sense is how many times the real r you tend to choose (outlier plates excluded).',
+      'r.n5': "Average error by problem type over the last 100 rounds. A type is marked weak when it is more than 25% above that plate's average with at least 3 rounds.",
+      'r.n6': "Only your first and last marks are compared. Moving more than half the reference error counts as an adjustment. 'First instinct → after fine-tuning' measures the same reflected % at your first and your last mark.",
+      'r.f.none': 'No records on this plate yet.', 'r.f.lock': n => `Metrics open after 5 games · ${n} so far`, 'r.f.line': (b, a, n) => `best ${b} · last ${n} games avg ${a}`,
+      'btn.start': 'Start', 'i.hint': 'Click the plate name above anytime to read the notes again.',
+      'i.centroid': 'Dots are scattered on the plate; darker dots are heavier. Find the one point where the plate balances: the mean position. Click to mark and press Enter.',
+      'i.expect': "Circles hang from a rod; the bigger the circle, the more often its number comes up (string length doesn't matter). Find where the rod hangs level: the expected value. Click to set the hanging point, then press Enter.",
+      'i.corr': 'A cloud of dots shows how two values move together. Tilt the line through the center to the correlation r. Click toward the edge to turn the line (farther out is finer), then press Enter.',
+      'i.assoc': "Column width is the size of each group; the gold height is the share of 'yes' in it. The more the gold heights differ, the stronger the association. Mark its strength (0–1) on the scale below and press Enter.",
+      'x.h1': 'WHAT IT MEASURES', 'x.h2': 'READING THE PICTURE', 'x.h3': 'WHERE THE EYE SLIPS', 'x.h4': 'WHERE IT IS USED',
+      'x.h0': 'BEFORE YOU START', 'x.lad': 'Click a step or an underlined word to open its note.', 'x.here': 'THIS PLATE', 'n.next': 'Next step',
+      'n.mean': { h: 'Mean', p: 'Add everything up and divide by how many there are. It is the point that keeps the dots from tipping to one side.', ex: '1, 3, 5 → (1 + 3 + 5) ÷ 3 = 3', fig: 'mean' },
+      'n.wmean': { h: 'Weighted mean', p: 'Multiply each value by its weight, add them up, then divide by the total weight. Heavier values pull the mean harder.', ex: '2 (×1) and 5 (×2) → (2 + 10) ÷ 3 = 4', fig: 'wmean' },
+      'n.outlier': { h: 'Outlier', p: 'A dot far from the others. Even one pulls the mean by its distance ÷ the number of dots.', ex: '1 of 10 dots sits 5 units away → the mean moves 0.5' },
+      'n.prob': { h: 'Probability', p: 'The share of times something happens if you try many times. It runs from 0 to 1, and all cases add up to 1. On the expectation plate it is the area of a circle.', ex: 'A quarter of all the circle area → 0.25 → about 25 times in 100' },
+      'n.spread': { h: 'Spread (standard deviation)', r: 'Spread', p: 'How far the dots usually sit from the mean: square the distances, average them, take the square root.', ex: '2, 4, 6 → mean 4, distances 2 · 0 · 2 → √((4 + 0 + 4) ÷ 3) ≈ 1.6' },
+      'n.z': { h: 'Standard score', p: 'The distance from the mean divided by the spread, so values in different units share one ruler. The correlation plate is drawn on this scale.', ex: 'The 6 in 2, 4, 6 → (6 − 4) ÷ 1.6 ≈ 1.2' },
+      'n.together': { h: 'Moving together', p: 'If both values of a dot are off the mean in the same direction (both above or both below), it counts +; opposite directions count −.', ex: 'Around the center cross: upper right and lower left are +, the rest −', fig: 'quad' },
+      'n.prop': { h: 'Proportion', p: "The share of 'yes' in the whole. On the association plate it is the height of the gold in a column.", ex: "7 'yes' out of 10 → 0.7 → 70% of the column" },
+      'n.norel': { h: 'Overall share', p: "The 'yes' share with all columns mixed together: the dashed line on the association plate. With no relation, every column's gold sits on this line.", ex: 'Both columns at 50% → line at 50% → association 0' },
+      'n.c.centroid': { h: 'How the centroid is computed', p: "Multiply each dot's position by its weight (×1 · ×2 · ×4), add them up, and divide by the total weight.", ex: 'Across: 2 (×1) and 5 (×2) → (2 + 10) ÷ 3 = 4; the same up and down' },
+      'n.c.expect': { h: 'How the expected value is computed', p: "Multiply each number by its circle's area (probability) and add them up. The areas add up to 1, so there is no dividing. It is where the rod hangs level.", ex: '1 at 0.25 and 5 at 0.75 → 0.25 + 3.75 = 4' },
+      'n.c.corr': { h: 'How r is computed', p: "Multiply each dot's two standard scores and average the products. On the correlation plate, the slope of the line is r.", ex: 'Three dots in a line → products 1.5 · 0 · 1.5 → mean 1 → r = 1' },
+      'n.c.assoc': { h: 'How the association is computed', p: "Measure how far each column's gold sits from the dashed line (the 'yes' share with everything mixed), weight wide columns more, and average. All on the line gives 0; columns split into 0% or 100% give 1.", ex: 'Two equal columns at 70% and 30% → 0.4' },
+      'x.centroid': { what: 'The one point that sums up many dots: the mean position. When dots have different weights, a heavy dot counts as several light ones (a weighted mean).', trick: 'The eye drifts to where dots crowd together, but the mean is pulled by far-off dots too. It is also easy to miss that one dark dot pulls as hard as several light ones.', use: 'Weighted averages are everywhere: grade point averages, price indexes, weighted polls.', cap: ['Equal weights: the middle of the dots', 'A dark dot counts several times', 'Far dots pull the mean too'] },
+      'x.expect': { what: "The average number you would get if you repeated the draw many times. A circle's area is the probability of its number, and the expected value is where the rod of circles hangs level.", trick: 'It is tempting to pick the middle of the numbers, but a big circle comes up more often and pulls the average harder. The eye also tends to underrate differences in circle area.', use: 'Insurance premiums, the expected return of a lottery ticket, game rewards: anything where chance decides the outcome.', cap: ['Equal circles: the middle of the numbers', 'Hung at the middle, it tips toward the big circle', 'Where the rod hangs level is the expected value'] },
+      'x.corr': { what: 'How closely two values move together, from −1 to 1. A cloud rising to the right is +, falling to the right is −.', trick: 'Ambiguous clouds tend to look weaker than they are, and a single far-off dot can move r a lot.', use: 'Height and weight, study time and scores: whenever you ask how closely two things go together. Moving together does not mean one causes the other.', cap: ['Round cloud: r = 0', 'The longer the cloud, the larger r', 'Almost a line: r ≈ 1'] },
+      'x.assoc': { what: 'How strongly two yes/no traits appear together, from 0 to 1. It is the correlation for data that comes in categories.', trick: 'It is easy to look only at the step height, but a narrow column is a small group, so even a big step makes only a weak association.', use: 'Vaccinated or not and infected or not, saw the ad or not and bought or not: data split into categories. It uses the same table as the chi-square test.', cap: ['Same heights: association 0', 'The bigger the step, the stronger', 'A narrow column counts for less'] },
+      'd.link': 'Make a records link', 'd.linkNote': 'Opening this link carries all your records over.', 'd.linked': n => `Added ${n} games from the link`, 'd.linkBad': 'Could not read the records in the link.', 'inst': 'BROWSER APP', 'inst.safari': 'In Safari, choose File → Add to Dock to install', 'inst.done': 'Installed as an app','r.noMemo': 'No clear weakness yet.', 'r.trendFew': 'Finish two games to see the trend.', 'r.none': 'none yet', 'r.ma': '5-game moving average',
+      'r.g.bias': 'drift · how far you miss the same way', 'r.g.scatter': 'scatter · how much you vary', 'r.g.share': 'share of error from drift',
+      'r.g.big': 'fixing the habit alone helps a lot', 'r.g.small': 'mostly random error', 'r.g.none': 'hardly any',
+      'r.g.cap': 'The center is the answer; each dot is one round’s miss, direction and distance. The line shows your average drift. Distances are % of plate height.',
+      'r.m.wi': 'weight reflected', 'r.m.ti': 'outliers reflected', 'r.m.cb': 'correlation strength sense', 'r.m.oi': 'correlation outliers reflected',
+      'r.e.wi': ['too little', 'just right', 'too much'], 'r.e.ti': ['pulled by dense areas', 'just right', 'pulled by far dots'],
+      'r.e.cb': ['reads weaker', 'just right', 'reads stronger'], 'r.e.oi': ['ignores outliers', 'just right', 'swayed by outliers'],
+      'r.m.n': n => `${n} rounds`,
+      'r.m.cap': 'Reflected % is how far you moved from a naive mark toward the answer: the unweighted mean for weight, the median for outliers, the plain average of the numbers for area, the strength as if all columns were equally wide for width. 100% is exact; inside the middle band is good enough.',
+      'r.m.sign': (p, n) => ` In Correlation you picked the wrong sign in ${p} (${n} rounds).`,
+      'r.weak': 'WEAK',
+      'r.proc.adj': (s, b, w, r, up) => `<b>Fine-tuning</b> · You adjusted your first mark in ${s}% of rounds; ${b} got better and ${w} got worse. On average your error ${up ? 'dropped' : 'rose'} ${r}% from the first mark.`,
+      'r.proc.noAdj': '<b>Fine-tuning</b> · You haven’t adjusted a first mark yet.', 'r.proc.first': x => `<b>First instinct → after fine-tuning</b> · ${x}`,
+      'd.copySum': 'Copy summary', 'd.copyAll': 'Copy all records', 'd.import': 'Import records', 'd.wipe': 'Erase records', 'd.merge': 'Merge', 'd.close': 'Close',
+      'd.wipeQ': n => `All ${n} games will be erased. Erase?`, 'd.wipeGo': 'Erase', 'd.wipeCancel': 'Cancel',
+      'd.cap': 'Paste the copied summary into a Claude chat for a deeper read.',
+      'd.copied': 'Copied', 'd.copiedAll': n => `Copied · ${n} games`, 'd.blocked': 'Automatic copy is blocked. Copy the text below by hand.',
+      'd.bad': "That doesn't look right. Paste the whole text from 'Copy all records' or a records link.", 'd.merged': n => `Merged ${n} games.`, 'd.nothing': 'Nothing new to merge.', 'd.wiped': 'All records erased.',
+      'd.ph': "Paste the text from 'Copy all records' or a records link",
+      'ty.c1': 'Centroid · one cluster', 'ty.c2': 'Centroid · two clusters', 'ty.cOut': 'Centroid · outliers', 'ty.cW': 'Centroid · weighted',
+      'ty.rPlain': 'Correlation · clear cloud', 'ty.rSparse': 'Correlation · few dots', 'ty.rOut': 'Correlation · outliers', 'ty.rClus': 'Correlation · two clumps',
+      'x.head': (g, r, n) => `Dot Sense summary (${g} games finished, ${r} rounds; metrics from the last ${n} rounds)`,
+      'x.recent': (a, b) => `Last 10 games avg total: ${a} / best ${b}`, 'x.bias': (d, p, s) => `Drift: ${d} ${p} / scatter: ${s}`,
+      'x.kind': (m, e, n) => `${m} avg error: ${e} (${n} rounds)`, 'x.adj': (n, b, w, r) => `Fine-tuning: ${n} adjusted, ${b} better, ${w} worse, avg change ${r}`,
+      'x.types': 'By type', 'x.memo': 'Coach', 'x.none': 'no data', 'x.sign': 'wrong sign'
+    }
+  };
+  const t = (k, ...a) => { let v = I[lang][k]; if (v === undefined) v = I.ko[k]; if (v === undefined) return k; return typeof v === 'function' ? v(...a) : v; };
+  const modeName = m => NAMES[m][lang === 'ko' ? 'ko' : 'en'];
+  const modeSub = m => (lang === 'ko' ? NAMES[m].en : NAMES[m].fr).toUpperCase();
+
+  // ───────── helpers ─────────
+  const R = (a, b) => a + Math.random() * (b - a);
+  const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+  function gauss() { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function store(k, v) { try { localStorage.setItem(k, String(v)); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  const r3 = v => Math.round(v * 1000) / 1000;
+  const r4 = v => Math.round(v * 10000) / 10000;
+  const pct = d => (d * 100).toFixed(1) + '%';
+  const ipct = v => (v < -0.005 ? '−' : '') + Math.abs(Math.round(v * 100)) + '%';
+  const avg = a => a.length ? a.reduce((x, y) => x + y, 0) / a.length : null;
+  const median = a => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+  const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+  const fmtR = v => (v < 0 ? '−' : '') + Math.abs(v).toFixed(2);
+  const fmtE = (k, v) => k === 'corr' ? 'Δr ' + v.toFixed(2) : k === 'expect' || k === 'assoc' ? v.toFixed(2) : pct(v);
+  const FONT_D = 'Oswald, "Arial Narrow", sans-serif';
+  const FONT_UI = '"Public Sans", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif';
+  // 칸 위 숫자 색: 잉크와 종이색 중 칸 색과 밝기 차이가 큰 쪽
+  const lum = hex => { const h = String(hex).replace('#', '').trim(); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(c => c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4).reduce((s, c, i) => s + c * [0.2126, 0.7152, 0.0722][i], 0); };
+  const textOn = (bg, C) => Math.abs(lum(bg) - lum(C.ink)) >= Math.abs(lum(bg) - lum(C.field)) ? C.ink : C.field;
+  const scoreOf = (k, e) => Math.round(100 * Math.exp(-0.223 * Math.pow(Math.max(0, e) / E80[k], 0.6)));
+  const gradeOf = sc => t('grade')[sc >= 90 ? 0 : sc >= 80 ? 1 : sc >= 60 ? 2 : 3];
+  // 무게 색: ×1 핑크 · ×2 핫핑크 · ×4 듀보이스 진홍. 겹치면 무거운 점이 위로 (그리는 순서로 처리)
+  const wCol = (C, w) => w >= 4 ? C.d4 : w >= 2 ? C.d2 : C.d1;
+  function dirPhrase(x, y) {
+    const h = Math.abs(x) > Math.abs(y) * 0.4 ? Math.sign(x) : 0, v = Math.abs(y) > Math.abs(x) * 0.4 ? Math.sign(y) : 0;
+    if (lang === 'en') {
+      const hw = h > 0 ? 'right' : h < 0 ? 'left' : '', vw = v > 0 ? 'lower' : v < 0 ? 'upper' : '';
+      if (hw && vw) return `toward the ${vw} ${hw}`;
+      if (hw) return `toward the ${hw}`;
+      if (vw) return v > 0 ? 'downward' : 'upward';
+      return 'nowhere in particular';
+    }
+    const p = []; if (h) p.push(h > 0 ? '오른쪽' : '왼쪽'); if (v) p.push(v > 0 ? '아래' : '위');
+    const w = p.join(' ') || '가운데';
+    return /쪽$/.test(w) ? w + '으로' : w + '로';
+  }
+  const firstSentence = s => { const i = s.indexOf('. '); return i > 0 ? s.slice(0, i + 1) : s; };
+
+  // ───────── 문제: 무게중심 (단계별) ─────────
+  // 1단계: 무게 없음 · 이상치 없음 / 2단계: ×1과 ×2 / 3단계: ×1 · ×2 · ×4. 이상치는 2·3단계에서만.
+  // 너무 몰린(쉬운) 판은 버린다: 정답에서 점까지의 (가중) RMS 거리가 MIN_SPREAD 미만이면 다시 뽑음.
+  const MIN_SPREAD = 0.13;
+  function genCentroidOnce(a, tier) {
+    const levels = tier === 1 ? [1] : tier === 2 ? [1, 2] : [1, 2, 4];
+    const heavyShare = R(0.25, 0.45);
+    const w = () => (levels.length === 1 || Math.random() > heavyShare) ? 1 : levels[1 + Math.floor(Math.random() * (levels.length - 1))];
+    const k = Math.random() < 0.5 ? 1 : 2;
+    const n = Math.round(R(14, 30));
+    const xf = clamp(0.5 + 0.5 * a, 0.75, 1.6);
+    const cl = [];
+    for (let i = 0; i < k; i++) cl.push({ cx: R(0.28, 0.72) * a, cy: R(0.28, 0.72), sx: R(0.08, 0.17) * xf, sy: R(0.07, 0.14), th: R(0, Math.PI) });
+    const share = k === 2 ? R(0.6, 0.8) : 1;
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const c = (k === 2 && Math.random() > share) ? cl[1] : cl[0];
+      let x, y, tt = 0;
+      do {
+        const gx = gauss() * c.sx, gy = gauss() * c.sy;
+        x = c.cx + gx * Math.cos(c.th) - gy * Math.sin(c.th);
+        y = c.cy + gx * Math.sin(c.th) + gy * Math.cos(c.th);
+      } while ((x < 0.04 || x > a - 0.04 || y < 0.04 || y > 0.96) && ++tt < 12);
+      pts.push({ x: clamp(x, 0.04, a - 0.04), y: clamp(y, 0.04, 0.96), w: w() });
+    }
+    if (tier >= 2 && Math.random() < 0.4) {
+      const m = 1 + Math.floor(Math.random() * 2);
+      for (let i = 0; i < m; i++) pts.push({ x: R(0.06, a - 0.06), y: R(0.06, 0.94), w: w(), o: 1 });
+    }
+    // 단계에서 정한 무게가 각각 적어도 2개씩은 나오게
+    for (const lv of levels) {
+      let guard = 0;
+      while (pts.filter(p => p.w === lv).length < 2 && guard++ < 50) {
+        const counts = levels.map(l => pts.filter(p => p.w === l).length), donor = levels[counts.indexOf(Math.max(...counts))];
+        const cands = pts.filter(p => p.w === donor);
+        cands[Math.floor(Math.random() * cands.length)].w = lv;
+      }
+    }
+    let sw = 0, sx = 0, sy = 0;
+    for (const p of pts) { sw += p.w; sx += p.x * p.w; sy += p.y * p.w; }
+    const truth = { x: sx / sw, y: sy / sw };
+    let v = 0;
+    for (const p of pts) v += p.w * ((p.x - truth.x) ** 2 + (p.y - truth.y) ** 2);
+    return { kind: 'centroid', a, tier, weighted: tier > 1, levels, k, pts, truth, spread: Math.sqrt(v / sw) };
+  }
+  function genCentroid(a, tier) {
+    for (let i = 0; i < 60; i++) { const P = genCentroidOnce(a, tier); if (P.spread >= MIN_SPREAD || i === 59) return P; }
+  }
+
+  // ───────── 문제: 상관계수 (단계별) ─────────
+  // 1단계: 점 많고 깨끗함 / 2단계: 점 적음 / 3단계: 이상치 또는 두 덩어리
+  // 점을 표준화(평균 0, 표준편차 1)해서 그리면 원점을 지나는 회귀선의 기울기가 정확히 r이 된다.
+  function corrOf(xs, ys) {
+    const mx = avg(xs), my = avg(ys); let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < xs.length; i++) { const dx = xs[i] - mx, dy = ys[i] - my; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+    return sxy / Math.sqrt(sxx * syy);
+  }
+  function genCorrOnce(a, tier) {
+    // 1단계: 뚜렷한 구름(|r| 0.75 이상 또는 0.15 이하, 점 60~120) / 2단계: 애매한 구름(|r| 0.3~0.7, 점 30~50)
+    // 3단계: 모양이 속이는 구름(이상치가 r을 0.2 이상 바꾸거나, 덩어리 안 기울기와 전체 기울기가 반대)
+    const sh = tier === 1 ? 'plain' : tier === 2 ? 'mid' : (Math.random() < 0.5 ? 'outlier' : 'clusters');
+    const sgn = Math.random() < 0.5 ? -1 : 1;
+    const rho = sgn * (tier === 1 ? (Math.random() < 0.5 ? R(0.8, 0.95) : R(0, 0.1)) : tier === 2 ? R(0.35, 0.65) : R(0.3, 0.8));
+    const bv = (n, r, cx = 0, cy = 0, sd = 1) => { const out = []; for (let i = 0; i < n; i++) { const g1 = gauss(), g2 = gauss(); out.push([cx + sd * g1, cy + sd * (r * g1 + Math.sqrt(1 - r * r) * g2)]); } return out; };
+    let raw, core = null, cdir = 0;
+    if (sh === 'plain') raw = bv(Math.round(R(60, 120)), rho);
+    else if (sh === 'mid') raw = bv(Math.round(R(30, 50)), rho);
+    else if (sh === 'outlier') {
+      core = bv(Math.round(R(30, 70)), rho * R(0.2, 1)); raw = core.slice();
+      const m = 1 + Math.floor(Math.random() * 3), dir = Math.random() < 0.5 ? 1 : -1;
+      for (let i = 0; i < m; i++) { const s0 = Math.random() < 0.5 ? 1 : -1, tq = R(2.6, 3.6); raw.push([s0 * tq + gauss() * 0.2, dir * s0 * tq + gauss() * 0.2]); }
+    } else {
+      // 두 덩어리는 대각선으로 놓고, 덩어리 안의 기울기는 반대로
+      cdir = sgn; const th = R(0.35, 1.2), d = R(0.9, 1.4), sd = R(0.45, 0.65), n = Math.round(R(25, 45)), rin = -cdir * R(0.3, 0.7);
+      raw = bv(n, rin, Math.cos(th) * d, cdir * Math.sin(th) * d, sd).concat(bv(n, rin, -Math.cos(th) * d, -cdir * Math.sin(th) * d, sd));
+    }
+    const xs = raw.map(q => q[0]), ys = raw.map(q => q[1]), mx = avg(xs), my = avg(ys);
+    const sx = Math.sqrt(avg(xs.map(v => (v - mx) ** 2))), sy = Math.sqrt(avg(ys.map(v => (v - my) ** 2)));
+    const z = raw.map(([x, y]) => [(x - mx) / sx, (y - my) / sy]);
+    const r = avg(z.map(([u, v]) => u * v));
+    const sd = Math.min(0.5, a / 2) / 3.4;
+    const pts = z.map(([u, v]) => ({ x: a / 2 + u * sd, y: 0.5 - v * sd }));
+    const strips = [];
+    for (let c = -2.25; c <= 2.26; c += 0.75) {
+      const inS = z.filter(([u]) => u >= c - 0.375 && u < c + 0.375);
+      if (inS.length >= 3) strips.push({ x: a / 2 + avg(inS.map(q => q[0])) * sd, y: 0.5 - avg(inS.map(q => q[1])) * sd });
+    }
+    const zmax = Math.max(...z.map(q => Math.max(Math.abs(q[0]), Math.abs(q[1]))));
+    return { kind: 'corr', a, tier, sh, sd, pts, r, rc: core ? corrOf(core.map(q => q[0]), core.map(q => q[1])) : null, strips, dir: cdir, ok: zmax <= 3.3, truth: { r } };
+  }
+  function genCorr(a, tier) {
+    let P = null;
+    for (let i = 0; i < 80; i++) {
+      P = genCorrOnce(a, tier);
+      if (!P.ok || Math.abs(P.r) > 0.97) continue;
+      const ar = Math.abs(P.r);
+      if (P.sh === 'plain' && !(ar >= 0.75 || ar <= 0.15)) continue;
+      if (P.sh === 'mid' && (ar < 0.3 || ar > 0.7)) continue;
+      if (P.sh === 'outlier' && Math.abs(P.r - P.rc) < 0.2) continue;
+      if (P.sh === 'clusters' && (Math.sign(P.r) !== P.dir || ar < 0.2)) continue;
+      break;
+    }
+    delete P.ok;
+    return P;
+  }
+
+  // ───────── 문제: 기댓값 (단계별) ─────────
+  // 1단계: 칸 5개 / 2단계: 6개 / 3단계: 7개. 숫자는 1~8에서 서로 다르게 골라 왼쪽부터 시계 방향으로 작은 수 → 큰 수.
+  // 칸 넓이(각도) = 확률, 칸마다 최소 7%. 숫자 단순 평균과 기댓값이 0.45 이상 벌어진 판만 (넓이를 봐야 맞힐 수 있게)
+  function genExpect(a, tier) {
+    const k = tier === 1 ? 5 : tier === 2 ? 6 : 7, MINP = 0.07;
+    let best = null;
+    for (let tries = 0; tries < 200; tries++) {
+      const vals = shuffle([1, 2, 3, 4, 5, 6, 7, 8]).slice(0, k).sort((x, y) => x - y);
+      const w = vals.map(() => Math.pow(-Math.log(1 - Math.random()), 1.5)), sw = w.reduce((x, y) => x + y, 0);
+      const p = w.map(x => MINP + (1 - MINP * k) * x / sw);
+      const ev = vals.reduce((s0, v, i) => s0 + v * p[i], 0), mv = avg(vals);
+      const P = { kind: 'expect', a, tier, cells: vals.map((v, i) => ({ v, p: p[i] })), ev, mv, truth: { v: ev } };
+      P.pts = P.cells;                                   // 판이 시작될 때 칸이 하나씩 찍히듯 나타나게
+      if (Math.abs(ev - mv) >= 0.45) { P.drop = hangDrops(P); return P; }
+      if (!best || Math.abs(ev - mv) > Math.abs(best.ev - best.mv)) best = P;
+    }
+    best.drop = hangDrops(best);
+    return best;
+  }
+  // 모빌: 원끼리 겹치지 않게 실 길이를 고름 (판 높이 단위). 후보를 섞어서 시도해 판마다 모양이 달라지게
+  function hangDrops(P) {
+    const G = mobGeom(P), placed = [], out = [], cands = [0.03, 0.06, 0.1, 0.14, 0.18, 0.23, 0.28, 0.33, 0.38, 0.43];
+    for (const c of P.cells) {
+      const r = G.k * Math.sqrt(c.p), x = G.xv(c.v), maxD = 0.95 - G.ry - 2 * r;
+      const opts = shuffle(cands.filter(d => d <= maxD)); if (!opts.length) opts.push(Math.max(0.02, maxD));
+      let pick = opts[0], bestGap = -Infinity;
+      for (const d of opts) {
+        const y = G.ry + d + r, gap = placed.length ? Math.min(...placed.map(q => Math.hypot(q.x - x, q.y - y) - q.r - r)) : 1;
+        if (gap >= 0.035) { pick = d; break; }
+        if (gap > bestGap) { bestGap = gap; pick = d; }
+      }
+      placed.push({ x, y: G.ry + pick + r, r }); out.push(pick);
+    }
+    return out;
+  }
+
+  // ───────── 문제: 연관 (단계별) ─────────
+  // 판 전체 = 한 무리 사람들, 세로 칸 = 집단(폭 = 사람 수), 칸 아래쪽 금색 = 그중 '예'의 비율.
+  // 답 = 관계의 세기 0~1 (두 칸이면 |φ|, 세 칸이면 크라메르 V). 세기² = 칸 차이가 '예/아니오'를 설명하는 몫.
+  // 1단계: 폭이 비슷한 두 칸(세기 ≈ 계단 높이) / 2단계: 폭이 크게 다른 두 칸 / 3단계: 칸 세 개.
+  // 2·3단계는 폭을 무시하고(칸을 같은 폭으로 보고) 잰 세기와 실제 세기가 0.08 이상 다른 판만
+  function assocV(w, p) {
+    const P = w.reduce((s0, x, i) => s0 + x * p[i], 0);
+    const between = w.reduce((s0, x, i) => s0 + x * (p[i] - P) ** 2, 0);
+    return { V: Math.sqrt(between / Math.max(1e-9, P * (1 - P))), P };
+  }
+  function genAssoc(a, tier) {
+    const k = tier === 3 ? 3 : 2;
+    let best = null, bestGap = -1;
+    for (let tries = 0; tries < 400; tries++) {
+      let w;
+      if (tier === 1) { const x = R(0.4, 0.6); w = [x, 1 - x]; }
+      else if (tier === 2) { const x = R(0.1, 0.28); w = Math.random() < 0.5 ? [x, 1 - x] : [1 - x, x]; }
+      else { const nw = R(0.08, 0.2), x = R(0.3, 0.7) * (1 - nw); w = shuffle([nw, x, 1 - nw - x]); }   // 칸 세 개: 하나는 좁게
+      const p = w.map(() => R(0.06, 0.94));
+      const { V, P } = assocV(w, p);
+      if (P < 0.15 || P > 0.85 || V < 0.08 || V > 0.85) continue;
+      const nv = assocV(w.map(() => 1 / k), p).V, gap = Math.abs(V - nv);
+      const Pz = { kind: 'assoc', a, tier, w, p, V, nv, P, truth: { v: V } };
+      Pz.pts = w.map((x, i) => ({ w: x, p: p[i] }));   // 판이 시작될 때 칸이 하나씩 나타나게
+      const ok = tier === 1 ? Math.abs(V - Math.abs(p[0] - p[1])) < 0.06 : gap >= 0.08;
+      if (ok) return Pz;
+      if (tier > 1 && gap > bestGap) { best = Pz; bestGap = gap; }
+    }
+    return best || genAssoc(a, 1);
+  }
+
+  // ───────── 진단 (pure) ─────────
+  // A(아무 생각 없이 찍었을 자리) → B(정답) 위로 내 답 G를 투영. 0이면 A 그대로, 1이면 정답만큼 반영.
+  function projIndex(G, A, B) {
+    const vx = B.x - A.x, vy = B.y - A.y, L2 = vx * vx + vy * vy;
+    if (Math.sqrt(L2) < 0.015) return null;
+    return { i: ((G.x - A.x) * vx + (G.y - A.y) * vy) / L2, vx, vy };
+  }
+  function wmedian(vals, ws) {
+    const idx = vals.map((_, i) => i).sort((a, b) => vals[a] - vals[b]);
+    const tot = ws.reduce((a, b) => a + b, 0); let c = 0;
+    for (const i of idx) { c += ws[i]; if (c >= tot / 2) return vals[i]; }
+    return vals[idx[idx.length - 1]];
+  }
+  const ix = (rec, o, ik, p) => { rec[ik] = o ? r3(o.i) : null; rec[p + 'x'] = o ? r4(o.vx) : null; rec[p + 'y'] = o ? r4(o.vy) : null; };
+  function baseRec(P, d, dx, dy, d0, tr, adj) {
+    return { k: P.kind, a: r3(P.a || 1), tier: P.tier || null, d: r4(d), dx: dx == null ? null : r4(dx), dy: dy == null ? null : r4(dy),
+      sc: scoreOf(P.kind, d), adj, d0: d0 == null ? null : r4(d0), tr };
+  }
+  // 첫 자리와 마지막 자리만 남김. '고쳤나'는 횟수가 아니라 움직인 거리로 판단해서 마우스와 키보드가 같게
+  const trailXY = (trail, G) => { const tr = trail.length ? trail : [G]; return (tr.length > 1 ? [tr[0], tr[tr.length - 1]] : [tr[0]]).map(p => [r3(p.x), r3(p.y)]); };
+  function makeCentroidRecord(P, G, trail) {
+    const T = P.truth, dx = G.x - T.x, dy = G.y - T.y, f = trail.length ? trail[0] : G;
+    const rec = baseRec(P, Math.hypot(dx, dy), dx, dy, trail.length ? dist(f, T) : null, trailXY(trail, G), dist(f, G) >= ADJ * E80.centroid ? 1 : 0);
+    const U = { x: avg(P.pts.map(p => p.x)), y: avg(P.pts.map(p => p.y)) };
+    const ws = P.pts.map(p => p.w), M = { x: wmedian(P.pts.map(p => p.x), ws), y: wmedian(P.pts.map(p => p.y), ws) };
+    Object.assign(rec, { n: P.pts.length, w: P.weighted ? 1 : 0, lv: P.levels.length, hv: P.pts.filter(p => p.w > 1).length,
+      cl: P.k || 1, ol: P.pts.filter(p => p.o).length, sp: r3(P.spread || 0) });
+    ix(rec, P.weighted ? projIndex(G, U, T) : null, 'wi', 'wv');
+    ix(rec, projIndex(G, M, T), 'ti', 'tv');
+    if (trail.length) { const w0 = P.weighted ? projIndex(f, U, T) : null, t0 = projIndex(f, M, T); rec.wi0 = w0 ? r3(w0.i) : null; rec.ti0 = t0 ? r3(t0.i) : null; }   // 첫 감의 반영률
+    return rec;
+  }
+  function makeCorrRecord(P, G, trail) {
+    const t0 = trail.length ? trail : [G], f = t0[0];
+    const tr = (t0.length > 1 ? [f, t0[t0.length - 1]] : [f]).map(q => [r3(q.r), 0]);
+    const rec = baseRec(P, Math.abs(G.r - P.r), null, null, trail.length ? Math.abs(f.r - P.r) : null, tr, Math.abs(f.r - G.r) >= ADJ * E80.corr ? 1 : 0);
+    Object.assign(rec, { n: P.pts.length, sh: P.sh, rr: r3(P.r), re: r3(G.r), re0: trail.length ? r3(f.r) : null, rc: P.rc == null ? null : r3(P.rc) });
+    return rec;
+  }
+  function makeExpectRecord(P, G, trail) {
+    const t0 = trail.length ? trail : [G], f = t0[0];
+    const tr = (t0.length > 1 ? [f, t0[t0.length - 1]] : [f]).map(q => [r3(q.v), 0]);
+    const rec = baseRec(P, Math.abs(G.v - P.ev), null, null, trail.length ? Math.abs(f.v - P.ev) : null, tr, Math.abs(f.v - G.v) >= ADJ * E80.expect ? 1 : 0);
+    const gap = P.ev - P.mv;   // 넓이 반영률: 숫자 단순 평균(mv)에서 기댓값(ev)까지 몇 %를 갔나
+    Object.assign(rec, { n: P.cells.length, ev: r3(P.ev), gv: r3(G.v), mv: r3(P.mv), ai: Math.abs(gap) >= 0.15 ? r3((G.v - P.mv) / gap) : null, ai0: trail.length && Math.abs(gap) >= 0.15 ? r3((f.v - P.mv) / gap) : null, avx: r3(gap) });
+    return rec;
+  }
+  function makeAssocRecord(P, G, trail) {
+    const t0 = trail.length ? trail : [G], f = t0[0];
+    const tr = (t0.length > 1 ? [f, t0[t0.length - 1]] : [f]).map(q => [r3(q.v), 0]);
+    const rec = baseRec(P, Math.abs(G.v - P.V), null, null, trail.length ? Math.abs(f.v - P.V) : null, tr, Math.abs(f.v - G.v) >= ADJ * E80.assoc ? 1 : 0);
+    const gap = P.V - P.nv;   // 폭 반영률: 칸을 같은 폭으로 보고 잰 세기(nv)에서 실제 세기까지 몇 %를 갔나
+    Object.assign(rec, { n: P.w.length, av: r3(P.V), gv: r3(G.v), nv: r3(P.nv), bi: Math.abs(gap) >= 0.08 ? r3((G.v - P.nv) / gap) : null, bi0: trail.length && Math.abs(gap) >= 0.08 ? r3((f.v - P.nv) / gap) : null, bvx: r3(gap) });
+    return rec;
+  }
+  const FB_GAP = 0.03;
+  const showIdx = v => ipct(clamp(v, 0, 3));
+
+  // ───────── 분석 (pure) · 끝낸 판만 ─────────
+  const TYPES = [
+    ['ty.c1', r => r.k === 'centroid' && r.cl === 1 && !r.ol && !r.w, 'centroid'],
+    ['ty.c2', r => r.k === 'centroid' && r.cl === 2, 'centroid'],
+    ['ty.cOut', r => r.k === 'centroid' && r.ol > 0, 'centroid'],
+    ['ty.cW', r => r.k === 'centroid' && !!r.w, 'centroid'],
+    ['ty.e5', r => r.k === 'expect' && r.n === 5, 'expect'],
+    ['ty.e6', r => r.k === 'expect' && r.n === 6, 'expect'],
+    ['ty.e7', r => r.k === 'expect' && r.n === 7, 'expect'],
+    ['ty.rPlain', r => r.k === 'corr' && r.sh === 'plain', 'corr'],
+    ['ty.a1', r => r.k === 'assoc' && r.tier === 1, 'assoc'],
+    ['ty.a2', r => r.k === 'assoc' && r.tier === 2, 'assoc'],
+    ['ty.a3', r => r.k === 'assoc' && r.tier === 3, 'assoc'],
+    ['ty.rMid', r => r.k === 'corr' && r.sh === 'mid', 'corr'],
+    ['ty.rSparse', r => r.k === 'corr' && r.sh === 'sparse', 'corr'],
+    ['ty.rOut', r => r.k === 'corr' && r.sh === 'outlier', 'corr'],
+    ['ty.rClus', r => r.k === 'corr' && r.sh === 'clusters', 'corr']
+  ];
+  function analyze(H) {
+    const games = H.filter(g => g.done && g.rounds && g.rounds.length === ROUNDS);
+    const rounds = []; for (const g of games) for (const r of g.rounds) rounds.push(r);
+    const A = { nGames: games.length, nRounds: rounds.length, games, bestBy: {}, gamesBy: {}, kindAvg: {}, types: [] };
+    for (const m of MODES) { const gs = games.filter(g => g.mode === m); A.gamesBy[m] = gs.length; A.bestBy[m] = gs.length ? Math.max(...gs.map(g => g.total)) : null; }
+    A.open = m => (A.gamesBy[m] || 0) >= 5;
+    A.anyOpen = MODES.some(A.open);
+    A.best = games.reduce((m, g) => Math.max(m, g.total), 0);
+    A.last = games[games.length - 1] || null;
+    const r10 = games.slice(-10); A.recent10 = r10.length ? avg(r10.map(g => g.total)) : null;
+    if (!rounds.length) return A;
+    const recent = rounds.slice(-100); A.recent = recent;
+    // 치우침·탄착군은 위치를 찍는 판만
+    const spatial = recent.filter(r => r.dx != null && r.dy != null); A.spatial = spatial;
+    const bx = spatial.length ? avg(spatial.map(r => r.dx)) : 0, by = spatial.length ? avg(spatial.map(r => r.dy)) : 0;
+    A.bias = spatial.length ? { x: bx, y: by, m: Math.hypot(bx, by) } : null;
+    A.scatter = spatial.length ? Math.sqrt(avg(spatial.map(r => (r.dx - bx) ** 2 + (r.dy - by) ** 2))) : null;
+    // 반영률: 최근 300라운드를 간격²으로 가중해 합치고, 습관 치우침이 그 방향으로 보탠 몫은 뺀다
+    const deep = rounds.slice(-300);
+    const pool = (f, ik, p) => {
+      let num = 0, den = 0, n = 0;
+      for (const r of deep) {
+        const vx = r[p + 'x'], vy = r[p + 'y'];
+        if (!f(r) || r[ik] == null || vx == null || vy == null) continue;
+        const g2 = vx * vx + vy * vy; if (!g2) continue;
+        num += r[ik] * g2 - (bx * vx + by * vy); den += g2; n++;
+      }
+      return { v: den ? num / den : null, n };
+    };
+    A.wi = pool(r => r.k === 'centroid' && r.w, 'wi', 'wv');
+    A.ti = pool(r => r.k === 'centroid', 'ti', 'tv');
+    // 넓이 반영률(기댓값): 간격²으로 가중 (한 방향 값이라 위치 습관 보정은 없음)
+    let an = 0, ad = 0, ac = 0;
+    for (const r of deep) { if (r.k !== 'expect' || r.ai == null || !r.avx) continue; const g2 = r.avx * r.avx; an += r.ai * g2; ad += g2; ac++; }
+    A.ai = { v: ad ? an / ad : null, n: ac };
+    // 폭 반영률(연관)
+    let bn = 0, bd = 0, bc = 0;
+    for (const r of deep) { if (r.k !== 'assoc' || r.bi == null || !r.bvx) continue; const g2 = r.bvx * r.bvx; bn += r.bi * g2; bd += g2; bc++; }
+    A.bi = { v: bd ? bn / bd : null, n: bc };
+    const cr = recent.filter(r => r.k === 'corr' && r.rr != null && r.re != null);
+    let cn = 0, cd = 0, cc = 0;
+    for (const r of cr) { if (r.sh === 'outlier') continue; cn += r.re * r.rr; cd += r.rr * r.rr; cc++; }
+    A.cb = { v: cd ? cn / cd : null, n: cc };
+    let on = 0, od = 0, oc = 0;
+    for (const r of cr) { if (r.rc == null || Math.abs(r.rr - r.rc) < 0.1) continue; const v = r.rr - r.rc; on += (r.re - r.rc) * v; od += v * v; oc++; }
+    A.oi = { v: od ? on / od : null, n: oc };
+    const sg = cr.filter(r => Math.abs(r.rr) >= 0.2);
+    A.sign = sg.length ? { n: sg.length, rate: sg.filter(r => r.re * r.rr < 0).length / sg.length } : null;
+    // 첫 감 → 다듬은 뒤: 같은 반영률을 첫 자리와 마지막 자리에서 (첫 자리가 있는 라운드만, 5라운드 이상)
+    const fpair = (rows, g2f, i1, i0, of) => { let a1 = 0, a0 = 0, d = 0; for (const r of rows) { const g2 = g2f(r); if (!g2) continue; const o = of ? of(r) : 0; a1 += i1(r) * g2 - o; a0 += i0(r) * g2 - o; d += g2; } return d && rows.length >= 5 ? { f: a0 / d, l: a1 / d, n: rows.length } : null; };
+    A.first = [
+      ['wi', 'centroid', fpair(deep.filter(r => r.k === 'centroid' && r.w && r.wi != null && r.wi0 != null && r.wvx != null), r => r.wvx ** 2 + r.wvy ** 2, r => r.wi, r => r.wi0, r => bx * r.wvx + by * r.wvy)],
+      ['ti', 'centroid', fpair(deep.filter(r => r.k === 'centroid' && r.ti != null && r.ti0 != null && r.tvx != null), r => r.tvx ** 2 + r.tvy ** 2, r => r.ti, r => r.ti0, r => bx * r.tvx + by * r.tvy)],
+      ['ai', 'expect', fpair(deep.filter(r => r.k === 'expect' && r.ai != null && r.ai0 != null && r.avx), r => r.avx ** 2, r => r.ai, r => r.ai0)],
+      ['cb', 'corr', fpair(deep.filter(r => r.k === 'corr' && r.sh !== 'outlier' && r.re != null && r.re0 != null && Math.abs(r.rr || 0) > 0.05), r => r.rr ** 2, r => r.re / r.rr, r => r.re0 / r.rr)],
+      ['bi', 'assoc', fpair(deep.filter(r => r.k === 'assoc' && r.bi != null && r.bi0 != null && r.bvx), r => r.bvx ** 2, r => r.bi, r => r.bi0)]
+    ].filter(x => x[2]);
+    // 미세조정: 판마다 단위가 달라서 '첫 오차 대비 몇 % 줄었나'
+    const adj = recent.filter(r => r.d0 != null && r.adj > 0);
+    const rel = r => (r.d0 - r.d) / Math.max(r.d0, ADJ * E80[r.k]);
+    A.adj = adj.length ? { n: adj.length, rel: avg(adj.map(rel)), better: adj.filter(r => rel(r) > 0.1).length, worse: adj.filter(r => rel(r) < -0.1).length, share: adj.length / recent.length } : null;
+    for (const k of MODES) { const g = recent.filter(r => r.k === k); if (g.length) A.kindAvg[k] = { d: avg(g.map(r => r.d)), n: g.length }; }
+    A.types = TYPES.map(([key, f, kind]) => { const g = recent.filter(f); return { key, kind, n: g.length, d: g.length ? avg(g.map(r => r.d)) : null }; }).filter(x => x.n > 0);
+    A.weak = null;
+    for (const x of A.types) {
+      const base = A.kindAvg[x.kind]; if (x.n < 3 || !base || base.n < 6) continue;
+      if (x.d - base.d < (x.kind === 'corr' || x.kind === 'assoc' ? 0.03 : x.kind === 'expect' ? 0.08 : 0.006)) continue;
+      const ratio = x.d / base.d;
+      if (ratio > 1.25 && (!A.weak || ratio > A.weak.ratio)) A.weak = { ...x, ratio, base: base.d };
+    }
+    return A;
+  }
+  // 라운드 하나에 대한 즉시 피드백 (최대 2줄)
+  function coachRound(rec, A) {
+    const L = []; let adjShown = false;
+    const big = (ik, p) => rec[ik] != null && Math.hypot(rec[p + 'x'] || 0, rec[p + 'y'] || 0) >= FB_GAP;
+    if (rec.k === 'centroid') {
+      if (big('wi', 'wv')) { if (rec.wi < 0.6) L.push(t('fb.wLow', showIdx(rec.wi))); else if (rec.wi > 1.4) L.push(t('fb.wHigh', showIdx(rec.wi))); }
+      if (big('ti', 'tv') && L.length < 2) { if (rec.ti < 0.6) L.push(t('fb.tLow', showIdx(rec.ti))); else if (rec.ti > 1.4) L.push(t('fb.tHigh', showIdx(rec.ti))); }
+    } else if (rec.k === 'corr') {
+      const mag = (Math.sign(rec.rr) || 1) * (rec.re - rec.rr);
+      if (Math.abs(rec.rr) >= 0.2 && rec.re * rec.rr < 0) L.push(t('fb.cSign'));
+      else if (rec.rc != null && Math.abs(rec.rr - rec.rc) >= 0.1) {
+        const oi = (rec.re - rec.rc) / (rec.rr - rec.rc);
+        if (oi < 0.4) L.push(t('fb.cOutIgn', fmtR(rec.rc), fmtR(rec.rr))); else if (oi > 1.6) L.push(t('fb.cOutOver'));
+      }
+      if (L.length < 2 && Math.abs(rec.rr) >= 0.15 && rec.re * rec.rr >= 0) {
+        if (mag < -0.1) L.push(t('fb.cWeak', fmtR(rec.rr), fmtR(rec.re))); else if (mag > 0.1) L.push(t('fb.cStrong'));
+      }
+    }
+    if (rec.k === 'expect' && rec.ai != null && Math.abs(rec.avx || 0) >= 0.3) {
+      if (rec.ai < 0.6) L.push(t('fb.aLow', showIdx(rec.ai))); else if (rec.ai > 1.4) L.push(t('fb.aHigh', showIdx(rec.ai)));
+    }
+    if (rec.k === 'assoc') {
+      if (rec.bi != null && Math.abs(rec.bvx || 0) >= 0.08) { if (rec.bi < 0.6) L.push(t('fb.bLow', showIdx(rec.bi))); else if (rec.bi > 1.4) L.push(t('fb.bHigh', showIdx(rec.bi))); }
+      if (!L.length && rec.av != null && rec.gv != null) {
+        const m = rec.gv - rec.av;
+        if (m < -0.12) L.push(t('fb.vWeak', rec.av.toFixed(2), rec.gv.toFixed(2))); else if (m > 0.12) L.push(t('fb.vStrong', rec.av.toFixed(2), rec.gv.toFixed(2)));
+      }
+    }
+    if (L.length < 2 && rec.d0 != null && rec.adj > 0) {
+      const tiny = ADJ * E80[rec.k];
+      const fd = v => rec.k === 'centroid' ? pct(v) : v.toFixed(2);
+      if (rec.d0 - rec.d > tiny) { L.push(t('fb.adjBetter', fd(rec.d0), fd(rec.d))); adjShown = true; }
+      else if (rec.d - rec.d0 > tiny) { L.push(t('fb.adjWorse', fd(rec.d0), fd(rec.d))); adjShown = true; }
+    }
+    if (L.length < 2 && rec.dx != null && A && A.open('centroid') && A.bias && A.spatial && A.spatial.length >= 10 && A.bias.m > 0.007) {
+      const e = Math.hypot(rec.dx, rec.dy), cos = (rec.dx * A.bias.x + rec.dy * A.bias.y) / ((e * A.bias.m) || 1);
+      if (e > 0.01 && cos > 0.7) L.push(t('fb.habit', dirPhrase(A.bias.x, A.bias.y)));
+    }
+    if (!L.length && rec.sc >= 90) L.push(t('fb.good'));
+    const out = L.slice(0, 2); out.adj = adjShown;
+    return out;
+  }
+  // 누적 기록 기반 코치 메모. 그 도판을 5판 끝내야 열림. k는 어느 도판 얘기인지
+  function coachItems(A) {
+    const out = [];
+    if (!A.nRounds || !A.recent || !A.anyOpen) return out;
+    const lo = v => ipct(Math.max(0, v));
+    if (A.open('centroid') && A.bias && A.spatial.length >= 8) {
+      const tot = Math.sqrt(A.bias.m ** 2 + A.scatter ** 2), share = A.bias.m / (tot || 1);
+      if (A.bias.m > 0.007 && share > 0.3) out.push({ k: 'centroid', s: share * 2, t: t('m.bias', dirPhrase(A.bias.x, A.bias.y), pct(A.bias.m), Math.round(share * share * 100), dirPhrase(-A.bias.x, -A.bias.y)) });
+    }
+    if (A.open('centroid')) {
+      if (A.wi.n >= 4 && Math.abs(A.wi.v - 1) > 0.25) out.push({ k: 'centroid', s: Math.abs(A.wi.v - 1) * 1.5, t: A.wi.v < 1 ? t('m.wLow', lo(A.wi.v)) : t('m.wHigh', ipct(A.wi.v)) });
+      if (A.ti.n >= 6 && Math.abs(A.ti.v - 1) > 0.3) out.push({ k: 'centroid', s: Math.abs(A.ti.v - 1), t: A.ti.v < 1 ? t('m.tLow', lo(A.ti.v)) : t('m.tHigh', ipct(A.ti.v)) });
+    }
+    if (A.open('corr')) {
+      if (A.cb.n >= 6 && A.cb.v != null && Math.abs(A.cb.v - 1) > 0.2) out.push({ k: 'corr', s: Math.abs(A.cb.v - 1) * 5, t: A.cb.v < 1 ? t('m.cbLow', lo(A.cb.v)) : t('m.cbHigh', ipct(A.cb.v)) });
+      if (A.oi.n >= 3 && A.oi.v != null && Math.abs(A.oi.v - 1) > 0.35) out.push({ k: 'corr', s: Math.abs(A.oi.v - 1) * 1.5, t: A.oi.v < 1 ? t('m.oiLow', lo(A.oi.v)) : t('m.oiHigh', ipct(A.oi.v)) });
+      if (A.sign && A.sign.n >= 5 && A.sign.rate > 0.1) out.push({ k: 'corr', s: A.sign.rate * 4, t: t('m.sign', ipct(A.sign.rate)) });
+    }
+    if (A.open('expect') && A.ai.n >= 6 && A.ai.v != null && Math.abs(A.ai.v - 1) > 0.25) out.push({ k: 'expect', s: Math.abs(A.ai.v - 1) * 1.5, t: A.ai.v < 1 ? t('m.aLow', lo(A.ai.v)) : t('m.aHigh', ipct(A.ai.v)) });
+    if (A.open('assoc') && A.bi.n >= 6 && A.bi.v != null && Math.abs(A.bi.v - 1) > 0.25) out.push({ k: 'assoc', s: Math.abs(A.bi.v - 1) * 1.5, t: A.bi.v < 1 ? t('m.bLow', lo(A.bi.v)) : t('m.bHigh', ipct(A.bi.v)) });
+    if (A.adj && A.adj.n >= 5) {
+      if (A.adj.rel < -0.1) out.push({ k: '*', s: 1, t: t('m.adjWorse', A.adj.n, A.adj.worse) });
+      else if (A.adj.rel > 0.15) out.push({ k: '*', s: 0.8, t: t('m.adjBetter', Math.round(A.adj.rel * 100)) });
+    }
+    if (A.weak && A.open(A.weak.kind)) out.push({ k: A.weak.kind, s: Math.min(1.2, (A.weak.ratio - 1) * 2), t: t('m.weak', t(A.weak.key), fmtE(A.weak.kind, A.weak.d), fmtE(A.weak.kind, A.weak.base), Math.round((A.weak.ratio - 1) * 100)) });
+    return out.sort((a, b) => b.s - a.s);
+  }
+  const coachMemo = A => coachItems(A).slice(0, 3).map(o => o.t);
+  function coachFor(A, mode) {
+    const it = coachItems(A);
+    const pick = it.find(x => x.k === mode) || it.find(x => x.k === '*');
+    return pick ? pick.t : '';
+  }
+  function summaryText(A) {
+    const L = [t('x.head', A.nGames, A.nRounds, A.recent ? A.recent.length : 0)];
+    if (A.recent10 != null) L.push(t('x.recent', Math.round(A.recent10), A.best));
+    if (A.bias) L.push(t('x.bias', dirPhrase(A.bias.x, A.bias.y), pct(A.bias.m), pct(A.scatter)));
+    for (const k of MODES) if (A.kindAvg[k]) L.push(t('x.kind', modeName(k), fmtE(k, A.kindAvg[k].d), A.kindAvg[k].n));
+    const fm = m => m && m.v != null && m.n ? `${ipct(m.v)} (${m.n})` : t('x.none');
+    const met = [];
+    if (A.wi && A.wi.n) met.push(`${t('r.m.wi')}: ${fm(A.wi)}`);
+    if (A.ti && A.ti.n) met.push(`${t('r.m.ti')}: ${fm(A.ti)}`);
+    if (A.cb && A.cb.n) met.push(`${t('r.m.cb')}: ${fm(A.cb)}`);
+    if (A.oi && A.oi.n) met.push(`${t('r.m.oi')}: ${fm(A.oi)}`);
+    if (A.ai && A.ai.n) met.push(`${t('r.m.ai')}: ${fm(A.ai)}`);
+    if (A.bi && A.bi.n) met.push(`${t('r.m.bi')}: ${fm(A.bi)}`);
+    if (A.sign) met.push(`${t('x.sign')}: ${ipct(A.sign.rate)} (${A.sign.n})`);
+    if (met.length) L.push(met.join(' / '));
+    if (A.adj) L.push(t('x.adj', A.adj.n, A.adj.better, A.adj.worse, (A.adj.rel >= 0 ? '−' : '+') + Math.round(Math.abs(A.adj.rel) * 100) + '%'));
+    if (A.types.length) L.push(t('x.types') + ': ' + A.types.map(x => `${t(x.key)} ${fmtE(x.kind, x.d)}(${x.n})`).join(', '));
+    const memo = coachMemo(A); if (memo.length) L.push(t('x.memo') + ': ' + memo.join(' / '));
+    return L.join('\n');
+  }
+
+  // ───────── 기록: 이 브라우저에만 ─────────
+  // 4-b에서 점수 기준을 바꾸기 전 기록은 한 번만 지움 (이 표시가 없는 브라우저 = 예전 기록이 있을 수 있는 곳)
+  const KEY_RESET = 'dotsense2-reset';
+  if (load(KEY_RESET) !== '4b') { try { localStorage.removeItem(KEY_HIST); } catch (e) {} store(KEY_RESET, '4b'); }
+  let H = (() => { try { const a = JSON.parse(load(KEY_HIST) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } })();
+  function saveLocal() { try { localStorage.setItem(KEY_HIST, JSON.stringify(H.slice(-1000))); } catch (e) {} }
+  function curGame(create) {
+    let g = H.find(x => x.id === S.gid);
+    if (!g && create) { g = { id: S.gid, t: Date.now(), mode: S.mode, rounds: [], total: 0, done: false }; H.push(g); }
+    return g;
+  }
+  // 끝내지 않은 판은 어디에도 남기지 않음
+  function dropUnfinished() { const n = H.length; H = H.filter(g => g.done); if (H.length !== n) saveLocal(); }
+  const NUM_KEYS = ['a', 'tier', 'd', 'dx', 'dy', 'sc', 'adj', 'd0', 'n', 'w', 'lv', 'hv', 'cl', 'ol', 'sp', 'wi', 'wvx', 'wvy', 'ti', 'tvx', 'tvy', 'rr', 're', 'rc', 'ev', 'gv', 'mv', 'ai', 'avx', 'av', 'nv', 'bi', 'bvx', 'wi0', 'ti0', 're0', 'ai0', 'bi0'];
+  const SHAPES = ['plain', 'mid', 'sparse', 'outlier', 'clusters'];
+  function cleanGame(g) {
+    if (!g || typeof g.id !== 'string' || !/^[A-Za-z0-9_.~:@+-]{1,60}$/.test(g.id) || !Array.isArray(g.rounds) || !MODES.includes(g.mode)) return null;
+    const rounds = g.rounds.slice(0, ROUNDS).map(r => {
+      if (!r || !MODES.includes(r.k)) return null;
+      const o = { k: r.k };
+      for (const key of NUM_KEYS) { const v = r[key]; o[key] = (v == null || !isFinite(+v)) ? null : +v; }
+      o.sh = SHAPES.includes(r.sh) ? r.sh : null;
+      o.tr = Array.isArray(r.tr) ? r.tr.slice(0, 12).filter(p => Array.isArray(p) && isFinite(+p[0]) && isFinite(+p[1])).map(p => [+p[0], +p[1]]) : [];
+      return o;
+    }).filter(Boolean);
+    const done = !!g.done && rounds.length === ROUNDS;
+    return done ? { id: g.id, t: +g.t || Date.now(), mode: g.mode, rounds, total: rounds.reduce((s, r) => s + (r.sc || 0), 0), done } : null;
+  }
+
+  // ───────── 상태 ─────────
+  const S = { mode: 'centroid', round: 0, total: 0, hist: [], puz: null, guess: null, phase: 'idle', last: null, gid: null, trail: [], coach: [] };
+  let view = 'menu', busy = false, recOpen = false, langOpen = false, entering = false, introOpen = false;
+  let anim = 1, VW = 0, VH = 0, dpr = 1, F = { x: 0, y: 0, h: 1, a: 1 };
+  let hover = null, dragging = false, touch = null, dab = null;
+
+  // ───────── 게임 진행 ─────────
+  function newGame() {
+    S.round = 0; S.total = 0; S.hist = []; S.last = null;
+    S.gid = 'g' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    hideSummary();
+    nextRound(true);
+  }
+  function nextRound(first) {
+    S.round++;
+    const tier = tierOf(S.round), gen = a => S.mode === 'corr' ? genCorr(a, tier) : S.mode === 'expect' ? genExpect(a, tier) : S.mode === 'assoc' ? genAssoc(a, tier) : genCentroid(a, tier);
+    S.puz = gen(targetAspect());
+    S.guess = null; S.phase = 'guess'; S.last = null; S.coach = []; S.showFirst = false; anim = 1; hover = null; S.trail = [];
+    if (first) dab = { pending: true };
+    sync();
+    // 이번 라운드 글자가 들어간 뒤의 빈자리 비율로 다시 맞춤 (첫 라운드에 판이 좁아지지 않게)
+    const a2 = targetAspect();
+    if (Math.abs(a2 - S.puz.a) > 0.01) { S.puz = gen(a2); sync(); }
+    fit();
+  }
+  // 처음 찍은 자리와 마지막 자리만 기억 (중간 경로는 버림)
+  function pushTrail() {
+    const g = S.guess; if (!g) return;
+    const last = S.trail[S.trail.length - 1];
+    const p = 'r' in g ? { r: g.r } : 'v' in g ? { v: g.v } : { x: g.x, y: g.y };
+    const same = last && ('r' in g ? Math.abs(last.r - g.r) <= 1e-4 : 'v' in g ? Math.abs(last.v - g.v) <= 1e-4 : Math.abs(last.x - g.x) <= 1e-4 && Math.abs(last.y - g.y) <= 1e-4);
+    if (same) return;
+    if (S.trail.length < 2) S.trail.push(p); else S.trail[1] = p;
+  }
+  function submit() {
+    if (S.phase !== 'guess' || !S.guess) return;
+    pushTrail();
+    const P = S.puz;
+    const trail = S.trail;   // 네 판 모두 클릭으로 시작하니 첫 자리가 늘 첫 감
+    const rec = P.kind === 'corr' ? makeCorrRecord(P, S.guess, trail) : P.kind === 'expect' ? makeExpectRecord(P, S.guess, trail) : P.kind === 'assoc' ? makeAssocRecord(P, S.guess, trail) : makeCentroidRecord(P, S.guess, trail);
+    S.total += rec.sc;
+    S.hist.push({ k: rec.k, d: rec.d, dx: rec.dx, dy: rec.dy, sc: rec.sc });
+    S.last = { k: rec.k, d: rec.d, sc: rec.sc, rr: rec.rr, re: rec.re, ev: rec.ev, gv: rec.gv, av: rec.av };
+    const g = curGame(true); g.rounds.push(rec); g.total = S.total; saveLocal();
+    S.coach = coachRound(rec, analyze(H)); S.showFirst = !!S.coach.adj;
+    S.phase = 'reveal'; hover = null; cv.style.cursor = 'default';
+    sync(); reveal();
+  }
+  function next() { if (S.phase !== 'reveal') return; closeNote(); if (S.round < ROUNDS) nextRound(false); else finish(); }
+  function finish() {
+    S.phase = 'done';
+    const g = curGame(false);
+    if (g) { g.done = g.rounds.length === ROUNDS; saveLocal(); }
+    renderSummary(analyze(H)); sync(); draw();
+  }
+  function reveal() {
+    if (reduce) { anim = 1; draw(); return; }
+    anim = 0; const t0 = performance.now();
+    const step = now => { anim = Math.min(1, (now - t0) / 340); draw(); if (anim < 1 && S.phase === 'reveal') requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  // 판이 시작될 때 점들이 붓으로 톡톡 찍히듯 나타남 (라운드 사이엔 없음)
+  function startDab() {
+    const n = S.puz ? S.puz.pts.length : 0;
+    if (reduce || !n) { dab = null; busy = false; draw(); return; }
+    const order = shuffle([...Array(n).keys()]), rank = new Array(n);
+    order.forEach((idx, r) => { rank[idx] = r; });
+    dab = { t0: performance.now(), rank, n, dur: 420 };
+    busy = true;
+    const step = now => {
+      draw();
+      if (dab && now - dab.t0 < dab.dur + 130) requestAnimationFrame(step);
+      else { dab = null; busy = false; draw(); }
+    };
+    requestAnimationFrame(step);
+  }
+  const dabA = i => !dab ? 1 : dab.pending ? 0 : clamp((performance.now() - dab.t0 - dab.rank[i] / dab.n * dab.dur) / 110, 0, 1);
+
+  // ───────── 글자 줄 ─────────
+  function specHTML(P) {
+    const it = (s, sw) => `<span class="it">${sw ? `<i class="sw" style="background:${sw}"></i>` : ''}<span>${s}</span></span>`;
+    if (P.kind === 'corr') return it(t('spec.dots', P.pts.length)) + it(t('spec.diag'));
+    if (P.kind === 'expect') return it(t('spec.circles', P.cells.length)) + it(t('spec.area')) + it(t('spec.hang'));
+    if (P.kind === 'assoc') return it(t('spec.cells', P.w.length)) + it(t('spec.share'));
+    if (!P.weighted) return it(t('spec.dots', P.pts.length));
+    const C = colors();
+    return it(t('spec.dots', P.pts.length)) + P.levels.map(w => it('×' + w, wCol(C, w))).join('');
+  }
+  function hintHTML(P) {
+    if (!P) return '';
+    if (P.kind === 'corr') return S.guess ? t('hint.cKeys', fmtR(S.guess.r)) : t('hint.cNone');
+    if (P.kind === 'expect') return S.guess ? t('hint.eKeys', S.guess.v.toFixed(2)) : t('hint.eNone');
+    if (P.kind === 'assoc') return S.guess ? t('hint.aKeys', S.guess.v.toFixed(2)) : t('hint.eNone');
+    return S.guess ? t('hint.keys') : t('hint.click');
+  }
+  function sync() {
+    const P = S.puz;
+    els.plateLab.textContent = `PLATE ${PLATE[S.mode]} · ${NAMES[S.mode].en.toUpperCase()}`;
+    const done = S.phase === 'guess' ? S.round - 1 : S.round;
+    const pg = curGame(false), prs = pg ? pg.rounds : [];
+    [...els.prog.children].forEach((el, i) => { el.classList.toggle('on', i < done); el.classList.toggle('good', i < done && !!prs[i] && prs[i].sc >= 80); });
+    if (P) {
+      els.prompt.textContent = P.kind === 'centroid' ? t(P.weighted ? 'prompt.centroidW' : 'prompt.centroid') : t('prompt.' + P.kind);
+      els.spec.innerHTML = specHTML(P);
+    }
+    const a = els.act;
+    a.hidden = S.phase === 'done';
+    if (S.phase === 'guess') { a.textContent = t('btn.submit'); a.disabled = !S.guess; els.result.innerHTML = hintHTML(P); }
+    else if (S.phase === 'reveal') {
+      a.textContent = t(S.round < ROUNDS ? 'btn.next' : 'btn.result'); a.disabled = false;
+      const L = S.last;
+      els.result.innerHTML = L.k === 'corr' ? t('res.corr', gradeOf(L.sc), fmtR(L.rr), fmtR(L.re), L.sc) : L.k === 'expect' ? t('res.exp', gradeOf(L.sc), L.ev.toFixed(2), L.gv.toFixed(2), L.sc) : L.k === 'assoc' ? t('res.exp', gradeOf(L.sc), L.av.toFixed(2), L.gv.toFixed(2), L.sc) : t('res.err', gradeOf(L.sc), pct(L.d), L.sc);
+    } else if (S.phase === 'done') els.result.innerHTML = t('res.total', S.total);
+    // 피드백 줄 자리는 늘 비워 둬서, 정답 공개 때 판이 움직이지 않게
+    const show = S.phase === 'reveal' && S.coach && S.coach.length;
+    const raw = show ? S.coach.map(x => `<li>${x}</li>`).join('') : '';
+    if (els.coach.dataset.raw !== raw + lang) {   // 같은 내용이면 다시 그리지 않음 (열린 쪽지가 붙은 낱말 유지)
+      els.coach.dataset.raw = raw + lang; els.coach.innerHTML = raw;
+      if (raw) markTerms(els.coach, [...(CAUSE[lang][S.mode] || []), ...TERMS[lang]]);
+    }
+  }
+  // 지난 판 점 한 줄: 이 도판에서 끝낸 판들의 합계. 이번 판은 크고 진하게, 겹치면 위로 쌓음
+  function stripSVG(A, mode, gid) {
+    const gs = A ? A.games.filter(g => g.mode === mode).slice(-60) : [];
+    if (gs.length < 2) return '';
+    const vals = gs.map(g => g.total);
+    const lo = Math.max(0, Math.floor((Math.min(...vals) - 30) / 100) * 100), hi = Math.min(1000, Math.ceil((Math.max(...vals) + 30) / 100) * 100);
+    const W = 300, pl = 12, pr = 12, base = 38, X = v => pl + (W - pl - pr) * (v - lo) / Math.max(1, hi - lo);
+    const cur = gs.find(g => g.id === gid), placed = [];
+    let s = `<svg viewBox="0 0 ${W} ${base + 16}" role="img" aria-label="${t('sum.strip')}"><line class="s-ink" x1="${pl}" x2="${W - pr}" y1="${base + 5}" y2="${base + 5}" stroke-width="1"/>`;
+    for (const g of gs.filter(g => g !== cur).sort((a, b) => a.total - b.total)) {
+      const x = X(g.total); let lv = 0;
+      while (lv < 4 && placed.some(q => q.lv === lv && Math.abs(q.x - x) < 6.5)) lv++;
+      placed.push({ x, lv });
+      s += `<circle class="f-ink" cx="${x.toFixed(1)}" cy="${base - lv * 6.5}" r="2.8" opacity=".38"/>`;
+    }
+    if (cur) s += `<circle class="f-ink" cx="${X(cur.total).toFixed(1)}" cy="${base}" r="5"/>`;
+    for (const [v, an] of [[lo, 'start'], [hi, 'end']]) s += `<text class="t-cap" x="${X(v).toFixed(1)}" y="${base + 16}" text-anchor="${an}">${v}</text>`;
+    return s + '</svg>';
+  }
+  function renderSummary(A) {
+    els.sPlate.textContent = `PLATE ${PLATE[S.mode]} · RESULT`;
+    // 그 판의 지난 기록과 견줌: 첫 기록은 잉크, 최근 5판 평균 위면 연한 초록, 최고 기록을 넘으면 진한 초록 + 신기록
+    const prev = H.filter(g => g.done && g.mode === S.mode && g.id !== S.gid);
+    let gcls = '';
+    if (prev.length) { const best = Math.max(...prev.map(g => g.total)), ra = avg(prev.slice(-5).map(g => g.total)); gcls = S.total > best ? 'gbest' : S.total > ra ? 'gup' : ''; }
+    els.sTotal.className = 's-total' + (gcls ? ' ' + gcls : '');
+    els.sTotal.innerHTML = `${S.total}<small>/ 1000</small>` + (gcls === 'gbest' ? `<em class="nb">${t('sum.newBest')}</em>` : '');
+    const ds = S.hist.map(h => h.d);
+    const l1 = ds.length ? [`${t('sum.err')} <b>${fmtE(S.mode, avg(ds))}</b>`] : [];
+    const sp = S.hist.filter(h => h.dx != null);
+    if (sp.length) {
+      const bx = avg(sp.map(h => h.dx)), by = avg(sp.map(h => h.dy)), bm = Math.hypot(bx, by);
+      l1.push(bm > 0.004 ? t('sum.bias', dirPhrase(bx, by), pct(bm)) : t('sum.noBias'));
+    }
+    els.sLine1.innerHTML = l1.join(' · ');
+    els.sLine2.innerHTML = A && A.bestBy[S.mode] && A.gamesBy[S.mode] > 1 ? t('sum.best', A.bestBy[S.mode]) : t('sum.first');
+    els.sStrip.innerHTML = stripSVG(A, S.mode, S.gid);
+    const line = A ? coachFor(A, S.mode) : '';
+    els.sCoach.textContent = line ? firstSentence(line) : '';
+    els.again.textContent = t('btn.again');
+    els.dim.hidden = false; els.summary.hidden = false;
+  }
+  function hideSummary() { els.dim.hidden = true; els.summary.hidden = true; }
+
+  // ───────── 배치와 그리기 ─────────
+  function colors() {
+    const cs = getComputedStyle(document.documentElement), g = n => cs.getPropertyValue(n).trim();
+    return { no: g('--mosno'), bg: g('--bg'), gridout: g('--gridout'), field: g('--field'), grid: g('--grid'), ink: g('--ink'), d1: g('--d1'), d2: g('--d2'), d4: g('--d4'), ans: g('--ans'), gold: g('--gold'), rr: [0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => i ? g('--r' + i) : '') };
+  }
+  function avail() {
+    const top = els.hudTop.offsetHeight, bot = els.hudBot.offsetHeight, side = Math.max(16, Math.round(VW * 0.025));
+    return { x: side, y: top + 8, w: Math.max(60, VW - side * 2), h: Math.max(60, VH - top - bot - 16) };
+  }
+  function targetAspect() { const r = avail(); return clamp(r.w / r.h, 0.55, 2.2); }
+  function layoutField(a) { const r = avail(), h = Math.min(r.h, r.w / a); F = { x: r.x + (r.w - h * a) / 2, y: r.y + (r.h - h) / 2, h, a }; }
+  function fit() {
+    VW = window.innerWidth; VH = window.innerHeight; dpr = window.devicePixelRatio || 1;
+    cv.width = Math.round(VW * dpr); cv.height = Math.round(VH * dpr);
+    if (view === 'game' && S.puz) layoutField(S.puz.a || 1);
+    draw();
+  }
+  function gridLines(col, cell, ox, oy, alpha) {
+    ctx.globalAlpha = alpha; ctx.strokeStyle = col; ctx.lineWidth = 1;
+    ctx.beginPath();
+    for (let x = ox - Math.ceil(ox / cell) * cell; x <= VW; x += cell) { const X = Math.round(x) + 0.5; ctx.moveTo(X, 0); ctx.lineTo(X, VH); }
+    for (let y = oy - Math.ceil(oy / cell) * cell; y <= VH; y += cell) { const Y = Math.round(y) + 0.5; ctx.moveTo(0, Y); ctx.lineTo(VW, Y); }
+    ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  const clipField = () => { ctx.beginPath(); ctx.rect(F.x, F.y, F.h * F.a, F.h); ctx.clip(); };
+  let FIELD = '#eadcbd', RS = 1;   // RS: 큰 판에서 고리도 같이 커지게
+  function ring(x, y, col, alpha) {
+    const r = 5 * RS;
+    ctx.globalAlpha = alpha == null ? 1 : alpha;
+    ctx.strokeStyle = FIELD; ctx.lineWidth = 3.8 * RS; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();   // 종이색 테두리: 점과 겹쳐도 구분
+    ctx.strokeStyle = col; ctx.lineWidth = 1.3 * RS; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, 1.5 * RS, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+  function draw() {
+    if (!VW) return;
+    const C = colors(); FIELD = C.field; RS = clamp(F.h / 640, 1, 1.6);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalAlpha = 1; ctx.setLineDash([]);
+    ctx.fillStyle = C.bg; ctx.fillRect(0, 0, VW, VH);
+    const inGame = view === 'game' && S.puz && !entering;
+    // 바깥 격자: 메뉴에선 화면 가운데 기준, 게임에선 판 칸에 맞춤. 장면이 바뀔 땐 서로 겹쳐 사라지고 나타남
+    const gp = gridP(), cell = F.h / 10;
+    if (gp < 1) gridLines(C.gridout, Math.max(28, Math.round(VH * 0.072)), VW / 2, VH / 2, 1 - gp);
+    if (gp > 0 && F.h > 1) gridLines(C.gridout, cell, F.x, F.y, gp);
+    if (!inGame) return;
+    const P = S.puz, FW = F.h * F.a, rev = S.phase !== 'guess';
+    const X = u => F.x + u * F.h, Y = v => F.y + v * F.h;
+    const rb = clamp(F.h / 120, 3.2, 9);
+    ctx.fillStyle = C.field; ctx.fillRect(F.x, F.y, FW, F.h);
+    ctx.save(); clipField(); gridLines(C.grid, cell, F.x, F.y, 1); ctx.restore();
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.strokeRect(Math.round(F.x) + 0.5, Math.round(F.y) + 0.5, Math.round(FW) - 1, Math.round(F.h) - 1);
+    if (P.kind === 'corr') { drawCorr(P, C, X, Y, rb); return; }
+    if (P.kind === 'expect') { drawExpect(P, C, X, Y); return; }
+    if (P.kind === 'assoc') { drawAssoc(P, C, X, Y); return; }
+    // 가벼운 점부터 그려서, 겹치면 무거운 점이 위로
+    const order = P.pts.map((p, i) => i).sort((i, j) => P.pts[i].w - P.pts[j].w);
+    for (const i of order) { const p = P.pts[i], al = dabA(i); if (!al) continue; ctx.globalAlpha = al; ctx.fillStyle = wCol(C, p.w); ctx.beginPath(); ctx.arc(X(p.x), Y(p.y), rb, 0, Math.PI * 2); ctx.fill(); }
+    ctx.globalAlpha = 1;
+    // 정답 공개 때: 고친 효과가 피드백으로 뜬 라운드만, 처음 찍은 자리를 연한 점 하나로
+    const tr = S.trail;
+    if (rev && S.showFirst && tr && tr.length > 1 && 'x' in tr[0]) {
+      ctx.globalAlpha = 0.45 * anim; ctx.fillStyle = C.ink;
+      ctx.beginPath(); ctx.arc(X(tr[0].x), Y(tr[0].y), 2.6, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    if (rev && S.guess) {
+      const g = S.guess, T = P.truth, ex = g.x + (T.x - g.x) * anim, ey = g.y + (T.y - g.y) * anim;
+      ctx.strokeStyle = C.ans; ctx.lineWidth = 1.2; ctx.setLineDash([3, 3]);
+      ctx.beginPath(); ctx.moveTo(X(g.x), Y(g.y)); ctx.lineTo(X(ex), Y(ey)); ctx.stroke(); ctx.setLineDash([]);
+      ring(X(T.x), Y(T.y), C.ans, anim);
+    }
+    if (S.guess) ring(X(S.guess.x), Y(S.guess.y), C.ink);
+    if (hover && S.phase === 'guess') ring(hover.x, hover.y, C.ink, 0.55);
+  }
+  // 상관 판: 원점(평균)을 지나는 축, r=±1을 뜻하는 45° 점선, 점, 내 선. 공개 때 실제 선과 세로 띠별 평균.
+  function drawCorr(P, C, X, Y, rb) {
+    const ox = P.a / 2;
+    const lineAt = m => { ctx.beginPath(); ctx.moveTo(X(0), Y(0.5 + m * ox)); ctx.lineTo(X(P.a), Y(0.5 - m * ox)); ctx.stroke(); };
+    ctx.save(); clipField();
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.globalAlpha = 0.45;
+    ctx.beginPath(); ctx.moveTo(X(0), Y(0.5)); ctx.lineTo(X(P.a), Y(0.5)); ctx.moveTo(X(ox), Y(0)); ctx.lineTo(X(ox), Y(1)); ctx.stroke();
+    ctx.setLineDash([2, 6]); ctx.globalAlpha = 0.3; lineAt(1); lineAt(-1); ctx.setLineDash([]);
+    ctx.fillStyle = C.d1;
+    P.pts.forEach((p, i) => { const al = dabA(i); if (!al) return; ctx.globalAlpha = al; ctx.beginPath(); ctx.arc(X(p.x), Y(p.y), rb * 0.85, 0, Math.PI * 2); ctx.fill(); });
+    ctx.globalAlpha = 1;
+    const tr = S.trail;
+    if (S.phase !== 'guess') {
+      if (S.showFirst && tr && tr.length > 1 && 'r' in tr[0] && Math.abs(tr[0].r - S.guess.r) > 0.005) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.setLineDash([8, 6]); ctx.globalAlpha = 0.5 * anim; lineAt(tr[0].r); ctx.setLineDash([]); }
+      ctx.globalAlpha = anim; ctx.strokeStyle = C.ans; ctx.lineWidth = 2; lineAt(P.r);
+      ctx.fillStyle = C.ans;
+      for (const q of P.strips) { const cx = X(q.x), cy = Y(q.y); ctx.beginPath(); ctx.moveTo(cx, cy - 5); ctx.lineTo(cx + 5, cy); ctx.lineTo(cx, cy + 5); ctx.lineTo(cx - 5, cy); ctx.closePath(); ctx.fill(); }
+      ctx.globalAlpha = 1;
+    }
+    if (hover && S.phase === 'guess' && !dragging) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.globalAlpha = 0.35; ctx.setLineDash([7, 6]); lineAt(slopeAt(toUraw(hover.x, hover.y))); ctx.setLineDash([]); ctx.globalAlpha = 1; }
+    if (S.guess) { ctx.strokeStyle = C.ink; ctx.lineWidth = 1.75; lineAt(S.guess.r); }
+    ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(X(ox), Y(0.5), 3, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+    if (hover && S.phase === 'guess') ring(hover.x, hover.y, C.ink, 0.55);
+  }
+  // 기댓값 판: 모빌. 1~8 눈금이 있는 막대에 원을 매달고(원의 넓이 = 확률, 실 길이는 상관없음), 막대가 수평으로 매달리는 자리를 찍음
+  function mobGeom(P) {
+    const a = P.a, cx = a / 2, L = Math.min(0.92, (a - 0.36) / 2), ry = 0.2;
+    return { cx, L, ry, k: 0.21, xv: v => cx - L + (v - 0.5) / 8 * 2 * L, vx: x => 0.5 + (x - (cx - L)) / (2 * L) * 8 };
+  }
+  function drawExpect(P, C, X, Y) {
+    const G = mobGeom(P), h = F.h, rev = S.phase !== 'guess', fs = clamp(h * 0.028, 10, 22);
+    const ry = Y(G.ry), x0 = X(G.cx - G.L), x1 = X(G.cx + G.L), top = Y(0), drop = P.drop || P.cells.map(() => 0.1);
+    P.cells.forEach((c, i) => {
+      const al = dabA(i); if (!al) return;
+      const x = X(G.xv(c.v)), r = G.k * Math.sqrt(c.p) * h, d = drop[i] * h;
+      ctx.globalAlpha = al; ctx.strokeStyle = C.ink; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(x, ry); ctx.lineTo(x, ry + d); ctx.stroke();
+      ctx.beginPath(); ctx.arc(x, ry + d + r, r, 0, Math.PI * 2); ctx.fillStyle = C.rr[c.v]; ctx.fill(); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = C.ink; ctx.lineWidth = Math.max(2.5, h * 0.006); ctx.beginPath(); ctx.moveTo(x0, ry); ctx.lineTo(x1, ry); ctx.stroke();
+    ctx.lineWidth = 1; ctx.fillStyle = C.ink; ctx.font = `400 ${Math.max(10, fs * 0.8)}px ${FONT_D}`; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    for (let v = 1; v <= 8; v++) {
+      const x = X(G.xv(v)); ctx.beginPath(); ctx.moveTo(x, ry - 6); ctx.lineTo(x, ry); ctx.stroke();
+      ctx.globalAlpha = 0.7; ctx.fillText(String(v), x, ry - 9); ctx.globalAlpha = 1;
+    }
+    // 매다는 실: 판 위에서 막대까지, 막대에 고리
+    const hang = (v, col, al, w) => { const x = X(G.xv(v)); ctx.globalAlpha = al; ctx.strokeStyle = col; ctx.lineWidth = w; ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, ry); ctx.stroke(); ctx.globalAlpha = 1; ring(x, ry, col, al); };
+    if (rev) {
+      const tr = S.trail;
+      if (S.showFirst && tr && tr.length > 1 && 'v' in tr[0]) { ctx.globalAlpha = 0.45 * anim; ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(X(G.xv(tr[0].v)), ry, 2.6, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; }
+      hang(P.ev, C.ans, anim, 1.6);
+    }
+    if (S.guess) hang(S.guess.v, C.ink, 1, 1.2);
+    if (hover && S.phase === 'guess') { const u = toUraw(hover.x, hover.y); hang(clamp(G.vx(u.x), 1, 8), C.ink, 0.4, 1); }
+  }
+  // 연관 판: 모자이크(세로 칸 폭 = 사람 수, 금색 = '예'의 비율)와 그보다 조금 넓은 0~1 눈금
+  function mosGeom(P) {
+    const a = P.a, top = 0.1, H = 0.5, W = Math.min(a - 0.44, 1.0), cx = a / 2, L = 0.55 * W;
+    return { top, H, W, cx, x0: cx - W / 2, yl: top + H + 0.17, L, gap: 0.012, xv: v => cx - L + v * 2 * L, vx: x => (x - (cx - L)) / (2 * L) };
+  }
+  // 칸 자리: 폭 = 무리의 크기, 칸 사이에 종이색 틈
+  function mosCols(P, G) { const n = P.w.length, Wn = G.W - G.gap * (n - 1); let x = G.x0; return P.w.map(w => { const c = { x, w: w * Wn }; x += w * Wn + G.gap; return c; }); }
+  function drawAssoc(P, C, X, Y) {
+    const G = mosGeom(P), h = F.h, rev = S.phase !== 'guess', fs = clamp(h * 0.028, 10, 22);
+    const bx = X(G.x0), by = Y(G.top), bw = G.W * h, bh = G.H * h, cols = mosCols(P, G);
+    // 칸마다 위('아니오')는 연한 갈색, 아래('예')는 금색으로 꽉 채우고 테두리
+    P.w.forEach((w, i) => {
+      const al = dabA(i); if (!al) return;
+      const cx0 = X(cols[i].x), cw = cols[i].w * h, yg = Y(G.top + G.H * (1 - P.p[i]));
+      ctx.globalAlpha = al;
+      ctx.fillStyle = C.no; ctx.fillRect(cx0, by, cw, yg - by);
+      ctx.fillStyle = C.gold; ctx.fillRect(cx0, yg, cw, by + bh - yg);
+      ctx.strokeStyle = C.ink; ctx.lineWidth = 1; ctx.strokeRect(cx0, by, cw, bh);
+    });
+    ctx.globalAlpha = 1;
+    const x0 = X(G.cx - G.L), x1 = X(G.cx + G.L), yl = Y(G.yl);
+    ctx.strokeStyle = C.ink; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(x0, yl); ctx.lineTo(x1, yl); ctx.stroke();
+    ctx.lineWidth = 1; ctx.fillStyle = C.ink; ctx.font = `400 ${Math.max(10, fs * 0.8)}px ${FONT_D}`; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    for (let i = 0; i <= 10; i++) {
+      const x = X(G.xv(i / 10)), big = i % 2 === 0;
+      ctx.beginPath(); ctx.moveTo(x, yl - (big ? 4 : 2.5)); ctx.lineTo(x, yl + (big ? 4 : 2.5)); ctx.stroke();
+      if (big) { ctx.globalAlpha = 0.7; ctx.fillText(i === 0 ? '0' : i === 10 ? '1' : (i / 10).toFixed(1), x, yl + h * 0.03); ctx.globalAlpha = 1; }
+    }
+    if (rev) {
+      // 정답 공개: '관계가 없다면' 모든 칸의 금색 높이가 이 점선(전체 '예' 비율)에 맞춰져요. 점선에서 벗어난 만큼이 관계
+      const yP = Y(G.top + G.H * (1 - P.P));
+      ctx.globalAlpha = anim; ctx.strokeStyle = C.ink; ctx.lineWidth = 1.4; ctx.setLineDash([6, 4]);
+      ctx.beginPath(); ctx.moveTo(bx - 6, yP); ctx.lineTo(bx + bw + 6, yP); ctx.stroke(); ctx.setLineDash([]);
+      ctx.globalAlpha = 0.75 * anim; ctx.fillStyle = C.ink; ctx.font = `400 ${Math.max(11, fs * 0.82)}px ${FONT_UI}`; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(t('assoc.none'), bx + bw + 12, yP);
+      ctx.globalAlpha = 1;
+      const ax = X(G.xv(P.V));
+      if (S.guess) {
+        const gx = X(G.xv(S.guess.v));
+        ctx.strokeStyle = C.ans; ctx.lineWidth = 1.4; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.moveTo(gx, yl); ctx.lineTo(gx + (ax - gx) * anim, yl); ctx.stroke(); ctx.setLineDash([]);
+      }
+      const tr = S.trail;
+      if (S.showFirst && tr && tr.length > 1 && 'v' in tr[0]) { ctx.globalAlpha = 0.45 * anim; ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(X(G.xv(tr[0].v)), yl, 2.6, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; }
+      ring(ax, yl, C.ans, anim);
+    }
+    if (S.guess) ring(X(G.xv(S.guess.v)), yl, C.ink);
+    if (hover && S.phase === 'guess') { const u = toUraw(hover.x, hover.y); ring(X(G.xv(clamp(G.vx(u.x), 0, 1))), yl, C.ink, 0.45); }
+  }
+  let rafPending = false;
+  const req = () => { if (rafPending) return; rafPending = true; requestAnimationFrame(() => { rafPending = false; draw(); }); };
+  let gmix = null;
+  function gridP() {
+    if (gmix) { const k = clamp((performance.now() - gmix.t0) / gmix.dur, 0, 1); return gmix.from + (gmix.to - gmix.from) * k * k * (3 - 2 * k); }
+    return view === 'game' && S.puz ? 1 : 0;
+  }
+  function runGrid(from, to, dur) {
+    if (reduce) { gmix = null; draw(); return; }
+    gmix = { from, to, t0: performance.now(), dur };
+    const step = now => { draw(); if (gmix && now - gmix.t0 < gmix.dur) requestAnimationFrame(step); else { gmix = null; draw(); } };
+    requestAnimationFrame(step);
+  }
+
+  // ───────── 입력 ─────────
+  const toUraw = (cx, cy) => ({ x: (cx - F.x) / F.h, y: (cy - F.y) / F.h });
+  const toU = e => toUraw(e.clientX, e.clientY);
+  const inField = (x, y) => x >= F.x && x <= F.x + F.h * F.a && y >= F.y && y <= F.y + F.h;
+  const canPlay = () => view === 'game' && !busy && !recOpen && !langOpen && !introOpen && S.phase === 'guess' && !!S.puz;
+  function slopeAt(u) { const dx = u.x - S.puz.a / 2, dy = 0.5 - u.y; return Math.abs(dx) < 0.03 ? null : clamp(dy / dx, -1, 1); }
+  function setR(v) { if (v == null) return; S.guess = { r: Math.round(clamp(v, -1, 1) * 1000) / 1000 }; sync(); req(); }
+  function setV(v) { if (v == null || !isFinite(v)) return; S.guess = { v: Math.round(clamp(v, 1, 8) * 100) / 100 }; sync(); req(); }
+  function setA(v) { if (v == null || !isFinite(v)) return; S.guess = { v: Math.round(clamp(v, 0, 1) * 100) / 100 }; sync(); req(); }
+  function setFromPointer(e) {
+    const P = S.puz, u = toU(e);
+    if (P.kind === 'corr') { setR(slopeAt(u)); return; }
+    if (P.kind === 'expect') { setV(mobGeom(P).vx(u.x)); return; }
+    if (P.kind === 'assoc') { setA(mosGeom(P).vx(u.x)); return; }
+    S.guess = { x: clamp(u.x, 0, P.a), y: clamp(u.y, 0, 1) };
+    sync(); req();
+  }
+  // 터치(태블릿): 첫 탭은 그 자리에, 그다음부터는 드래그한 만큼의 절반만 따라옴
+  const FINE = 0.5;
+  cv.addEventListener('pointerdown', e => {
+    if (!canPlay() || !inField(e.clientX, e.clientY)) return;
+    try { cv.setPointerCapture(e.pointerId); } catch (_) {}
+    const P = S.puz;
+    if (e.pointerType === 'touch' && S.guess) {
+      if (P.kind === 'corr') touch = { corr: true, y0: e.clientY, r0: S.guess.r, moved: false, aim: slopeAt(toU(e)) };
+      else if (P.kind === 'expect') { const G = mobGeom(P); touch = { ex: true, x0: e.clientX, v0: S.guess.v, moved: false, aim: G.vx(toU(e).x), k: 8 / (2 * G.L * F.h) }; }
+      else if (P.kind === 'assoc') { const G = mosGeom(P); touch = { ex: true, as: true, x0: e.clientX, v0: S.guess.v, moved: false, aim: G.vx(toU(e).x), k: 1 / (2 * G.L * F.h) }; }
+      else { const u = toU(e); touch = { x0: e.clientX, y0: e.clientY, g0: { ...S.guess }, moved: false, far: Math.hypot(u.x - S.guess.x, u.y - S.guess.y) * F.h > 48, u }; }
+      return;
+    }
+    dragging = true; setFromPointer(e);
+  });
+  cv.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'touch') {
+      const ok = canPlay() && inField(e.clientX, e.clientY);
+      const nh = ok ? { x: e.clientX, y: e.clientY } : null;
+      if (nh || hover) { hover = nh; req(); }
+      cv.style.cursor = ok && !(S.puz && (S.puz.kind === 'expect' || S.puz.kind === 'assoc')) ? 'none' : 'default';   // 기댓값은 표시가 수직선 위에 생기니 커서를 그대로
+    }
+    if (!canPlay()) return;
+    if (touch) {
+      if (touch.ex) { const dx = e.clientX - touch.x0; if (!touch.moved && Math.abs(dx) < 6) return; touch.moved = true; (touch.as ? setA : setV)(touch.v0 + dx * touch.k * FINE); return; }
+      if (touch.corr) { const dy = e.clientY - touch.y0; if (!touch.moved && Math.abs(dy) < 6) return; touch.moved = true; setR(touch.r0 - dy / F.h * 1.2); return; }
+      const dx = e.clientX - touch.x0, dy = e.clientY - touch.y0;
+      if (!touch.moved && Math.hypot(dx, dy) < 6) return;
+      touch.moved = true;
+      const P = S.puz;
+      S.guess = { x: clamp(touch.g0.x + dx * FINE / F.h, 0, P.a), y: clamp(touch.g0.y + dy * FINE / F.h, 0, 1) };
+      sync(); req(); return;
+    }
+    if (dragging) setFromPointer(e);
+  });
+  cv.addEventListener('pointerup', () => {
+    if (canPlay()) {
+      if (touch && touch.corr && !touch.moved) setR(touch.aim);
+      else if (touch && touch.ex && !touch.moved) (touch.as ? setA : setV)(touch.aim);
+      else if (touch && !touch.corr && !touch.ex && !touch.moved && touch.far) { const P = S.puz; S.guess = { x: clamp(touch.u.x, 0, P.a), y: clamp(touch.u.y, 0, 1) }; sync(); req(); }
+      if (touch || dragging) pushTrail();
+    }
+    touch = null; dragging = false;
+  });
+  cv.addEventListener('pointercancel', () => { touch = null; dragging = false; });
+  cv.addEventListener('pointerleave', () => { if (hover) { hover = null; req(); } });
+
+  document.addEventListener('keydown', e => {
+    if (noteEl && e.key === 'Escape') { e.preventDefault(); closeNote(); return; }
+    if (introOpen && (e.key === 'Enter' || e.key === 'Escape')) { e.preventDefault(); closeIntro(); return; }
+    if (e.key === 'Escape') { if (recOpen) closeSheet(); return; }
+    if (view !== 'game' || busy || recOpen || langOpen) return;
+    if (e.target && e.target.closest && e.target.closest('textarea,input')) return;
+    if (e.key === 'Enter') { e.preventDefault(); if (S.phase === 'guess') { if (S.guess) submit(); } else if (S.phase === 'reveal') next(); return; }
+    // 화살표 조작은 없음: 네 판 모두 마우스로 찍고 끌어서 다듬기 (첫 감이 늘 클릭으로 남게)
+  });
+  // 버튼은 마우스로만: 눌러도 키보드 초점을 가져가지 않게
+  document.addEventListener('mousedown', e => { if (e.target.closest && e.target.closest('button')) e.preventDefault(); }, true);
+  document.addEventListener('click', () => { const a = document.activeElement; if (a && a !== document.body && a.tagName === 'BUTTON') a.blur(); }, true);
+
+  // ───────── 장면 전환 ─────────
+  function anim2(el, frames, ms, easing) {
+    if (reduce || !el.animate) return Promise.resolve();
+    const a = el.animate(frames, { duration: ms, easing: easing || 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' });
+    return a.finished.catch(() => {});
+  }
+  const clearAnims = el => { if (el.getAnimations) el.getAnimations().forEach(a => a.cancel()); };
+  const box = r => ({ left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' });
+  const fieldBox = () => ({ left: F.x, top: F.y, width: F.h * F.a, height: F.h });
+  // 커지는 도판에도 판과 같은 칸(판 높이의 1/10)을 그려 둬서, 다 커졌을 때 진짜 판과 그대로 이어지게
+  function ghostOn(r) {
+    const g = els.ghost.style;
+    g.backgroundImage = 'linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px)';
+    g.backgroundSize = `${(100 / (10 * F.a)).toFixed(3)}% 10%`;
+    Object.assign(g, box(r)); els.ghost.hidden = false;
+  }
+  function setViewClass(v) { document.body.classList.toggle('v-game', v === 'game'); document.body.classList.toggle('v-menu', v === 'menu'); }
+  // 메뉴 → 게임: 누른 작은 도판이 커지면서 판이 된다
+  async function startGame(mode, plateEl) {
+    if (busy || recOpen || langOpen || !READY[mode]) return;
+    busy = true;
+    S.mode = mode; store(KEY_MODE, mode);
+    const from = plateEl.querySelector('svg').getBoundingClientRect();
+    document.body.classList.add('hud-hide');
+    setViewClass('game'); view = 'game'; entering = true;
+    newGame();
+    const to = fieldBox();
+    ghostOn(from);
+    runGrid(0, 1, 440);
+    const fade = anim2(els.menu, [{ opacity: 1 }, { opacity: 0 }], 220, 'ease-out');
+    await anim2(els.ghost, [box(from), box(to)], 440);
+    await fade;
+    els.menu.hidden = true; clearAnims(els.menu);
+    entering = false;
+    els.ghost.hidden = true; clearAnims(els.ghost);
+    document.body.classList.remove('hud-hide');
+    if (!seenList().includes(mode)) showIntro(mode); else startDab();
+  }
+  // 처음 하는 판: 3문장 소개 (그림 읽기 → 찍을 것 → 조작). 한 번 보면 다시 안 나옴
+  const seenList = () => { try { const a = JSON.parse(load(KEY_SEEN) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } };
+  function showIntro(m) {
+    introOpen = true;
+    els.iPlate.textContent = `PLATE ${PLATE[m]} · ${NAMES[m].en.toUpperCase()}`;
+    const svg = document.querySelector(`.plate[data-mode="${m}"] svg`);
+    els.iFig.innerHTML = svg ? svg.outerHTML : '';
+    els.iName.textContent = modeName(m);
+    els.iText.textContent = t('i.' + m);
+    markTerms(els.iText, TERMS[lang], 1);
+    els.iHint.textContent = t('i.hint');
+    els.iGo.textContent = t('btn.start');
+    els.dim.hidden = false; els.intro.hidden = false;
+  }
+  function closeIntro() {
+    if (!introOpen) return;
+    closeNote();
+    introOpen = false; els.intro.hidden = true; els.dim.hidden = true;
+    const seen = seenList(); if (!seen.includes(S.mode)) { seen.push(S.mode); store(KEY_SEEN, JSON.stringify(seen)); }
+    startDab();
+  }
+  // 게임 → 메뉴: 판이 다시 작은 도판으로 줄어들며 제자리로. 끝내지 않은 판은 버림
+  async function backToMenu() {
+    if (busy || recOpen || langOpen) return;
+    closeNote();
+    busy = true;
+    const from = fieldBox();
+    hideSummary();
+    dropUnfinished();
+    S.phase = 'idle'; hover = null; touch = null; dragging = false; cv.style.cursor = 'default';
+    document.body.classList.add('hud-hide');
+    els.menu.style.opacity = '0'; els.menu.hidden = false;
+    setViewClass('menu'); view = 'menu';
+    runGrid(1, 0, 400);
+    const plate = els.menu.querySelector(`.plate[data-mode="${S.mode}"] svg`);
+    const to = plate.getBoundingClientRect();
+    ghostOn(from);
+    const fade = anim2(els.menu, [{ opacity: 0 }, { opacity: 1 }], 320, 'ease-in');
+    await anim2(els.ghost, [box(from), box(to)], 400);
+    await fade;
+    els.menu.style.opacity = ''; clearAnims(els.menu);
+    els.ghost.hidden = true; clearAnims(els.ghost);
+    document.body.classList.remove('hud-hide');
+    busy = false;
+  }
+  // 종이 한 장(리포트·설명)이 어두워진 화면 위로 아래에서 올라오고, 닫으면 다시 내려감
+  let sheetEl = null, sheetRender = null;
+  async function openSheet(sec, render) {
+    if (recOpen || busy) return;
+    closeNote();
+    recOpen = true; hover = null; req();
+    sheetEl = sec; sheetRender = render; render();
+    const paper = sec.querySelector('.paper'), dim = sec.querySelector('.sheet-dim');
+    sec.hidden = false; paper.scrollTop = 0;
+    anim2(dim, [{ opacity: 0 }, { opacity: 0.8 }], 260, 'ease-out');
+    await anim2(paper, [{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }], 380);
+    clearAnims(paper); clearAnims(dim);
+  }
+  async function closeSheet() {
+    closeNote();
+    if (!recOpen || !sheetEl) return;
+    const sec = sheetEl, paper = sec.querySelector('.paper'), dim = sec.querySelector('.sheet-dim');
+    anim2(dim, [{ opacity: 0.8 }, { opacity: 0 }], 300, 'ease-in');
+    await anim2(paper, [{ transform: 'translateY(0)' }, { transform: 'translateY(100%)' }], 320, 'cubic-bezier(.4,0,.8,.4)');
+    sec.hidden = true; clearAnims(paper); clearAnims(dim);
+    recOpen = false; sheetEl = null; sheetRender = null;
+  }
+  const openRecords = () => openSheet(els.rec, renderRecords);
+  // ───────── 도판 설명 창: 무엇을 재나 · 그림 세 장 · 눈이 속는 지점 · 어디에 쓰나 (공식 없이) ─────────
+  const svgBox = inner => `<svg viewBox="0 0 120 84" aria-hidden="true"><rect class="pf" x=".5" y=".5" width="119" height="83"/>${inner}</svg>`;
+  const ansRing = (x, y) => `<circle class="c-ans" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.4"/><circle class="c-ansd" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1"/>`;
+  function dotsFig(pts) {
+    let sw = 0, sx = 0, sy = 0, s0 = '';
+    for (const [x, y, w] of [...pts].sort((a, b) => a[2] - b[2])) s0 += `<circle class="c-d${w}" cx="${x}" cy="${y}" r="3.4"/>`;
+    for (const [x, y, w] of pts) { sw += w; sx += x * w; sy += y * w; }
+    return svgBox(s0 + ansRing(sx / sw, sy / sw));
+  }
+
+  function corrFig(rho, seed) {
+    let a = seed >>> 0;
+    const rnd = () => { a = (a + 0x6D2B79F5) >>> 0; let q = a; q = Math.imul(q ^ (q >>> 15), q | 1); q ^= q + Math.imul(q ^ (q >>> 7), q | 61); return ((q ^ (q >>> 14)) >>> 0) / 4294967296; };
+    const g = () => { let u = 0, v = 0; while (!u) u = rnd(); while (!v) v = rnd(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+    const zs = arr => { const m = avg(arr), sd = Math.sqrt(avg(arr.map(v => (v - m) ** 2))) || 1; return arr.map(v => (v - m) / sd); };
+    const n = 40, x = zs(Array.from({ length: n }, g)); let e = zs(Array.from({ length: n }, g));
+    const k0 = avg(x.map((v, i) => v * e[i])); e = zs(e.map((v, i) => v - k0 * x[i]));   // x와 겹치지 않게 → 표본 r이 정확히 rho
+    const y = x.map((v, i) => rho * v + Math.sqrt(1 - rho * rho) * e[i]);
+    let s0 = `<line class="pg" x1="60" y1="1" x2="60" y2="83"/><line class="pg" x1="1" y1="42" x2="119" y2="42"/>`;
+    x.forEach((v, i) => { s0 += `<circle class="c-d1" cx="${(60 + v * 11).toFixed(1)}" cy="${(42 - y[i] * 11).toFixed(1)}" r="2.6"/>`; });
+    return svgBox(s0 + `<line class="pl ansl" x1="20" y1="${(42 + rho * 40).toFixed(1)}" x2="100" y2="${(42 - rho * 40).toFixed(1)}"/>`);
+  }
+  function mosFig(w, p) {
+    const x0 = 16, y0 = 8, W = 88, Hh = 50, gap = 2, { V, P } = assocV(w, p), X = v => 14 + v * 92, Wn = W - gap * (w.length - 1);
+    let s0 = '', xa = x0;
+    w.forEach((wi, i) => {
+      const cw = wi * Wn, hh = p[i] * Hh;
+      s0 += `<rect class="c-no" x="${xa.toFixed(1)}" y="${y0}" width="${cw.toFixed(1)}" height="${(Hh - hh).toFixed(1)}"/><rect class="c-gold" x="${xa.toFixed(1)}" y="${(y0 + Hh - hh).toFixed(1)}" width="${cw.toFixed(1)}" height="${hh.toFixed(1)}"/>`;
+      s0 += `<rect class="pl" x="${xa.toFixed(1)}" y="${y0}" width="${cw.toFixed(1)}" height="${Hh}" style="stroke-width:1"/>`;
+      xa += cw + gap;
+    });
+    const yP = y0 + Hh * (1 - P);
+    s0 += `<line class="pl" x1="${x0 - 3}" y1="${yP.toFixed(1)}" x2="${x0 + W + 3}" y2="${yP.toFixed(1)}" style="stroke-width:1;stroke-dasharray:3 2"/>`;
+    return svgBox(s0 + `<line class="pl" x1="14" y1="72" x2="106" y2="72" style="stroke-width:1"/><circle class="c-ans" cx="${X(V).toFixed(1)}" cy="72" r="3"/>`);
+  }
+  // 설명 창 모빌 그림: 막대 x 12~108 (값 0.5~8.5). 위에서 내려온 실이 막대를 매달고, 원은 막대에서 늘어짐. tilt만큼 기운 막대도
+  function mobFig(cells, hv, tilt, blue) {
+    const xv = v => 12 + (v - 0.5) / 8 * 96, ry = 26, hx = xv(hv), c = Math.cos(tilt), sn = Math.sin(tilt);
+    const rot = x => [hx + (x - hx) * c, ry + (x - hx) * sn];
+    const [ax, ay] = rot(12), [bx, by] = rot(108);
+    let s0 = '';
+    for (const [v, pp, d] of cells) {
+      const [px, py] = rot(xv(v)), r = 18 * Math.sqrt(pp);
+      s0 += `<line class="pl" x1="${px.toFixed(1)}" y1="${py.toFixed(1)}" x2="${px.toFixed(1)}" y2="${(py + d).toFixed(1)}" style="stroke-width:.8"/><circle class="c-r${v} mb" cx="${px.toFixed(1)}" cy="${(py + d + r).toFixed(1)}" r="${r.toFixed(1)}"/>`;
+    }
+    s0 += `<line class="pl" x1="${ax.toFixed(1)}" y1="${ay.toFixed(1)}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}" style="stroke-width:2.2"/>`;
+    s0 += `<line class="pl${blue ? ' ansl' : ''}" x1="${hx.toFixed(1)}" y1="1" x2="${hx.toFixed(1)}" y2="${ry}" style="stroke-width:1"/><circle class="${blue ? 'c-ans' : 'pl'}" cx="${hx.toFixed(1)}" cy="${ry}" r="2.6" style="fill:var(--field)"/>`;
+    return svgBox(s0);
+  }
+  const FIGS = {
+    centroid: () => [dotsFig([[30, 30, 1], [50, 58, 1], [80, 26, 1], [92, 54, 1]]), dotsFig([[30, 30, 1], [50, 58, 1], [80, 26, 1], [92, 54, 4]]), dotsFig([[34, 36, 1], [42, 46, 1], [46, 34, 1], [38, 50, 1], [50, 44, 1], [104, 20, 1]])],
+    expect: () => [mobFig([[2, 1 / 3, 8], [4, 1 / 3, 14], [6, 1 / 3, 8]], 4, 0, true), mobFig([[2, 0.2, 8], [4, 0.2, 14], [6, 0.6, 6]], 4, 0.13, false), mobFig([[2, 0.2, 8], [4, 0.2, 14], [6, 0.6, 6]], 4.8, 0, true)],
+    corr: () => [corrFig(0, 7), corrFig(0.6, 11), corrFig(0.95, 5)],
+    assoc: () => [mosFig([0.55, 0.45], [0.45, 0.45]), mosFig([0.55, 0.45], [0.7, 0.2]), mosFig([0.88, 0.12], [0.7, 0.2])]
+  };
+  // ───────── 낱말 쪽지 · 계단 ─────────
+  // 계단: 이 판 앞에 알아 둘 개념 순서. 마지막 칸은 이 판(그 판의 계산 쪽지)
+  const LADDER = { centroid: ['mean', 'wmean'], expect: ['mean', 'wmean', 'prob'], corr: ['mean', 'spread', 'z', 'together'], assoc: ['prop', 'norel'] };
+  // 밑줄 칠 낱말 → 쪽지. 앞에 있을수록 먼저 (가중 평균이 평균보다 먼저). 한 화면에서 같은 쪽지는 처음 한 번만
+  const TERMS = {
+    ko: [['가중 평균', 'wmean'], ['이상치', 'outlier'], ['표준편차', 'spread'], ['확률', 'prob'], ['비율', 'prop'], ['기댓값', 'c.expect'], ['상관계수', 'c.corr'], ['평균', 'mean']],
+    en: [['weighted mean', 'wmean'], ['weighted average', 'wmean'], ['outlier', 'outlier'], ['standard deviation', 'spread'], ['probability', 'prob'], ['proportion', 'prop'], ['expected value', 'c.expect'], ['correlation', 'c.corr'], ['mean position', 'mean'], ['average', 'mean']]
+  };
+  // 코치 문장: 빗나간 원인 낱말 → 그 원인을 설명하는 쪽지
+  const CAUSE = {
+    ko: { centroid: [['진한 점', 'wmean'], ['멀리 있는 점', 'outlier']], expect: [['큰 원', 'c.expect']], corr: [['이상치', 'outlier'], ['부호', 'together']], assoc: [['칸 폭', 'c.assoc']] },
+    en: { centroid: [['dark dots', 'wmean'], ['far dots', 'outlier']], expect: [['big circles', 'c.expect']], corr: [['outliers', 'outlier'], ['sign', 'together']], assoc: [['column', 'c.assoc']] }
+  };
+  function markTerms(root, pairs, max) {
+    if (!root) return;
+    const used = new Set(); let n = 0;
+    for (const [word, key] of pairs) {
+      if (n >= (max || Infinity)) break;
+      if (used.has(key)) continue;
+      const re = new RegExp((lang === 'en' ? '\\b' : '') + word + (lang === 'en' ? '\\b' : ''), lang === 'en' ? 'i' : '');
+      const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: nd => nd.parentElement.closest('.term, svg, h2, h3, .cap, .sub, .xfig, .ladder, .lad-cap') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+      let nd;
+      while ((nd = walk.nextNode())) {
+        const m = re.exec(nd.nodeValue); if (!m) continue;
+        const mid = nd.splitText(m.index); mid.splitText(m[0].length);
+        const s = document.createElement('span'); s.className = 'term'; s.dataset.note = key; s.textContent = mid.nodeValue;
+        mid.replaceWith(s); used.add(key); n++; break;
+      }
+    }
+  }
+  // 쪽지 속 작은 그림: 수직선 위 점(무게 색)과 정답 고리, 또는 십자선 네 칸
+  function noteLine(pts, ring) {
+    const X = v => 14 + v / 6 * 232;
+    let s = `<svg viewBox="0 0 260 56" aria-hidden="true"><line class="pl" x1="10" y1="36" x2="250" y2="36" style="stroke-width:1"/>`;
+    for (let v = 0; v <= 6; v++) s += `<line class="pl" x1="${X(v)}" y1="33" x2="${X(v)}" y2="39" style="stroke-width:1"/><text class="nt" x="${X(v)}" y="52">${v}</text>`;
+    for (const [v, w] of [...pts].sort((a, b) => a[1] - b[1])) s += `<circle class="c-d${w}" cx="${X(v)}" cy="21" r="5"/>` + (w > 1 ? `<text class="nt" x="${X(v)}" y="10">×${w}</text>` : '');
+    return s + `<circle cx="${X(ring)}" cy="36" r="5" fill="none" stroke="var(--field)" stroke-width="4"/><circle class="c-ans" cx="${X(ring)}" cy="36" r="5"/><circle class="c-ansd" cx="${X(ring)}" cy="36" r="1.6"/></svg>`;
+  }
+  const NFIG = {
+    mean: () => noteLine([[1, 1], [3, 1], [5, 1]], 3),
+    wmean: () => noteLine([[2, 1], [5, 2]], 4),
+    quad: () => `<svg viewBox="0 0 260 108" aria-hidden="true"><rect class="pf" x="70.5" y="3.5" width="119" height="101"/><line class="pg" x1="130" y1="4" x2="130" y2="104"/><line class="pg" x1="71" y1="54" x2="189" y2="54"/>`
+      + [['+', 178, 22], ['+', 82, 98], ['−', 82, 22], ['−', 178, 98]].map(([c, x, y]) => `<text class="nq" x="${x}" y="${y}">${c}</text>`).join('')
+      + [[146, 40], [164, 30], [156, 46], [114, 66], [100, 78], [122, 60], [140, 70], [118, 38]].map(([x, y]) => `<circle class="c-d1" cx="${x}" cy="${y}" r="3.4"/>`).join('') + '</svg>'
+  };
+  let noteEl = null, noteFrom = null, eatClick = false;
+  function closeNote() {
+    if (!noteEl) return;
+    noteEl.remove(); noteEl = null;
+    if (noteFrom) noteFrom.classList.remove('on'); noteFrom = null;
+  }
+  function openNote(key, from) {
+    closeNote();
+    const N = t('n.' + key); if (!N || typeof N !== 'object' || !from) return;
+    const lad = LADDER[S.mode] ? [...LADDER[S.mode], 'c.' + S.mode] : [];
+    const i = lad.indexOf(key), nx = i >= 0 && i < lad.length - 1 ? lad[i + 1] : null;
+    const el = document.createElement('div'); el.className = 'note'; el.setAttribute('role', 'dialog');
+    el.innerHTML = `<div class="nh"><b>${N.h}</b>${N.s ? `<span>${N.s}</span>` : ''}</div><p>${N.p}</p>${N.fig ? NFIG[N.fig]() : ''}${N.ex ? `<p class="ex">${N.ex}</p>` : ''}`
+      + (nx ? `<div class="nx">${t('n.next')} · <button data-note="${nx}" tabindex="-1">${nx === 'c.' + S.mode ? modeName(S.mode) : (t('n.' + nx).r || t('n.' + nx).h)}</button></div>` : '');
+    document.body.appendChild(el); noteEl = el; noteFrom = from; from.classList.add('on');
+    placeNote();
+  }
+  function placeNote() {
+    if (!noteEl) return;
+    if (!noteFrom.isConnected) { closeNote(); return; }
+    const r = noteFrom.getBoundingClientRect(), w = noteEl.offsetWidth, h = noteEl.offsetHeight;
+    const x = clamp(r.left + r.width / 2 - 40, 12, window.innerWidth - w - 12);
+    const below = r.bottom + 12 + h <= window.innerHeight - 8 || r.top - 12 - h < 8;
+    noteEl.classList.toggle('up', !below);
+    noteEl.style.left = x + 'px'; noteEl.style.top = (below ? r.bottom + 12 : r.top - 12 - h) + 'px';
+    noteEl.style.setProperty('--ax', (clamp(r.left + r.width / 2 - x, 16, w - 16) - 6) + 'px');
+  }
+  // 누르면 열기 · 같은 것을 다시 누르면 닫기 · 쪽지 밖을 누르면 닫기 (판이나 어두운 바탕을 누른 건 닫기만)
+  document.addEventListener('pointerdown', e => {
+    if (!noteEl || noteEl.contains(e.target) || (e.target.closest && e.target.closest('[data-note]'))) return;
+    closeNote();
+    if (e.target === cv || (e.target.closest && e.target.closest('.sheet-dim'))) { eatClick = true; e.stopPropagation(); }
+  }, true);
+  document.addEventListener('click', e => {
+    if (eatClick) { eatClick = false; e.stopPropagation(); return; }
+    const tg = e.target.closest && e.target.closest('[data-note]'); if (!tg) return;
+    e.stopPropagation();
+    const k = tg.dataset.note;
+    if (noteEl && noteEl.contains(tg)) { const rung = document.querySelector(`.sheet:not([hidden]) .rung[data-note="${k}"]`); openNote(k, rung || noteFrom); }
+    else if (noteFrom === tg) closeNote();
+    else openNote(k, tg);
+  }, true);
+  window.addEventListener('resize', closeNote);
+  document.addEventListener('scroll', closeNote, true);
+  function ladderSec(m) {
+    const ks = [...LADDER[m], 'c.' + m], n = ks.length;
+    const rung = (k, i) => {
+      const here = i === n - 1, N = t('n.' + k);
+      const op = here ? 1 : 0.15 + 0.45 * i / Math.max(1, n - 2);
+      return `<button class="rung${here ? ' here' : ''}" data-note="${k}" tabindex="-1"><span class="rb"><b>${here ? modeName(m) : (N.r || N.h)}</b>${lang === 'ko' ? `<span>${here ? t('x.here') : N.s}</span>` : ''}</span><i style="opacity:${op.toFixed(2)}"></i></button>`;
+    };
+    return sec(t('x.h0'), `<div class="ladder">${ks.map(rung).join('<span class="ar">→</span>')}</div><p class="lad-cap">${t('x.lad')}</p>`);
+  }
+  function renderExplain() {
+    const m = S.mode, X = t('x.' + m), figs = FIGS[m]();
+    let h = `<header class="rec-head"><p class="cap">PLATE ${PLATE[m]} · ${NAMES[m].en.toUpperCase()}</p><h2 class="x-name">${modeName(m)}.</h2><p class="sub">${modeSub(m)}</p></header>`;
+    h += ladderSec(m);
+    h += sec(t('x.h1'), `<p class="x-p">${X.what}</p>`);
+    h += sec(t('x.h2'), `<div class="xfigs">${figs.map((f, i) => `<div class="xfig">${f}<p>${X.cap[i]}</p></div>`).join('')}</div>`);
+    h += sec(t('x.h3'), `<p class="x-p">${X.trick}</p>`);
+    h += sec(t('x.h4'), `<p class="x-p">${X.use}</p>`);
+    els.expIn.innerHTML = h;
+    markTerms(els.expIn, TERMS[lang]);
+  }
+  const openExplain = () => { if (view === 'game' && !introOpen) openSheet(els.exp, renderExplain); };
+  const closeRecords = closeSheet;
+  function setLang(l) {
+    lang = l === 'en' ? 'en' : 'ko'; store(KEY_LANG, lang);
+    document.documentElement.lang = lang;
+    applyStatic();
+    if (view === 'game') sync();
+    if (S.phase === 'done' && !els.summary.hidden) renderSummary(analyze(H));
+    if (recOpen && sheetRender) sheetRender();
+    req();
+  }
+  // 메뉴 도판: 위는 고른 언어, 아래는 두 번째 언어 (한국어 화면은 영어, 영어 화면은 프랑스어 — 듀보이스 도판처럼)
+  function applyStatic() {
+    els.tagMain.textContent = t('tagMain'); els.tagSub.textContent = t('tagSub');
+    document.querySelectorAll('.plate').forEach(b => {
+      const m = b.dataset.mode;
+      b.querySelector('.pname').textContent = modeName(m);
+      b.querySelector('.sub').textContent = modeSub(m);
+      b.querySelector('.psoon').textContent = READY[m] ? '' : t('soon');
+      b.querySelector('.pbar').style.opacity = STEP[m];
+      b.classList.toggle('off', !READY[m]);
+      b.setAttribute('aria-disabled', String(!READY[m]));
+    });
+    document.querySelectorAll('[data-g]').forEach(el => { el.textContent = GROUPS[el.dataset.g][lang === 'ko' ? 'ko' : 'en']; });
+    document.querySelectorAll('[data-gs]').forEach(el => { const G = GROUPS[el.dataset.gs]; el.textContent = (lang === 'ko' ? G.en : G.fr).toUpperCase(); });
+    document.querySelectorAll('.langs button').forEach(b => b.setAttribute('aria-current', String(b.dataset.lang === lang)));
+    els.again.textContent = t('btn.again');
+    els.inst.textContent = t('inst');
+  }
+
+  // ───────── RECORDS (임시: 3-a에서 리포트지로 다시 만듦) ─────────
+  const stat = (v, k) => `<div class="stat"><span class="v">${v}</span><span class="k">${k}</span></div>`;
+  const sec = (title, body, n) => `<section class="sec"><h3>${title}${n ? `<sup>${n}</sup>` : ''}</h3>${body}</section>`;
+  const locked = () => `<p class="locked">${t('r.locked')}</p>`;
+  function bestRow(m, v) {
+    const w = v != null ? Math.max(2, v / 10) : 0;
+    return `<div class="row"><span>${modeName(m)}</span><div class="track">${v != null
+      ? `<i class="fill" style="width:${w}%"></i><span class="val" style="left:min(${w}%, calc(100% - 44px))">${v}</span>`
+      : `<i class="fill none"></i><span class="val" style="left:0;opacity:.6">${t('r.none')}</span>`}</div></div>`;
+  }
+  function trendSVG(games) {
+    const tr = games.slice(-40), n = tr.length; if (n < 2) return '';
+    const W = 600, Hh = 150, pl = 28, pr = 8, pt = 8, pb = 20;
+    const X = i => pl + (W - pl - pr) * i / (n - 1), Y = v => pt + (Hh - pt - pb) * (1 - v / 100);
+    let s = `<svg class="chart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="TREND">`;
+    for (const v of [0, 50, 100]) s += `<line class="s-grid" x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}"/><text class="t-cap" x="${pl - 6}" y="${Y(v) + 3}" text-anchor="end">${v}</text>`;
+    const vals = tr.map(g => g.total / ROUNDS), ma = vals.map((_, i) => avg(vals.slice(Math.max(0, i - 4), i + 1)));
+    s += `<polyline class="s-grow" fill="none" stroke-width="1.5" stroke-linejoin="round" points="${ma.map((v, i) => X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join(' ')}"/>`;
+    tr.forEach((g, i) => { s += `<circle class="f-ink" cx="${X(i).toFixed(1)}" cy="${Y(vals[i]).toFixed(1)}" r="${i === n - 1 ? 4.5 : 3.2}" opacity="${STEP[g.mode] || 1}"/>`; });
+    return s + '</svg>';
+  }
+  function groupSVG(rs, bias) {
+    const c = 120, Rr = 104, lim = 0.08, sc = v => clamp(v, -lim, lim) / lim * Rr;
+    let s = `<svg class="chart" viewBox="0 0 240 240" role="img" aria-label="GROUPING">`;
+    s += `<line class="s-grid" x1="${c}" y1="${c - Rr}" x2="${c}" y2="${c + Rr}"/><line class="s-grid" x1="${c - Rr}" y1="${c}" x2="${c + Rr}" y2="${c}"/>`;
+    for (const [v, lab] of [[0.02, '2%'], [0.05, '5%'], [0.08, '8%']]) { const rr = v / lim * Rr; s += `<circle class="s-grid" fill="none" cx="${c}" cy="${c}" r="${rr}"/><text class="t-cap" x="${c + rr * 0.72 + 3}" y="${c - rr * 0.72 - 3}">${lab}</text>`; }
+    const r60 = rs.slice(-60);
+    r60.forEach((r, i) => { s += `<circle class="f-dot" cx="${(c + sc(r.dx)).toFixed(1)}" cy="${(c + sc(r.dy)).toFixed(1)}" r="3.4" opacity="${(0.35 + 0.6 * (i + 1) / r60.length).toFixed(2)}"/>`; });
+    const bx = c + sc(bias.x), by = c + sc(bias.y);
+    s += `<line class="s-ink" stroke-width="1.5" stroke-linecap="round" x1="${c}" y1="${c}" x2="${bx.toFixed(1)}" y2="${by.toFixed(1)}"/><circle class="f-ink" cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="4"/>`;
+    return s + '</svg>';
+  }
+  function meterRow(label, m, lo, hi, ends) {
+    const ok = m && m.v != null && m.n > 0, pos = ok ? clamp((m.v - lo) / (hi - lo), 0, 1) * 100 : 50;
+    return `<div class="mrow"><div class="mh"><span>${label}</span><span class="mv">${ok ? ipct(m.v) : '–'}<small>${t('r.m.n', m ? m.n : 0)}</small></span></div>`
+      + `<div class="track2"><span class="zone"></span><span class="mid"></span>${ok ? `<span class="dot" style="left:${pos.toFixed(1)}%"></span>` : ''}</div>`
+      + `<div class="ends"><span>${ends[0]}</span><span>${ends[1]}</span><span>${ends[2]}</span></div></div>`;
+  }
+  // 지금(또는 마지막으로 한) 도판의 약점을 맨 위에
+  function focusSec(A, m) {
+    if (!m) return '';
+    const gs = A.games.filter(g => g.mode === m), r5 = gs.slice(-5);
+    let body;
+    if (!gs.length) body = `<p class="p c">${t('r.f.none')}</p>`;
+    else if (!A.open(m)) body = `<p class="f-memo">${t('r.f.lock', gs.length)}</p>`;
+    else { const it = coachItems(A).find(x => x.k === m); body = `<p class="f-memo">${it ? it.t : t('r.noMemo')}</p>`; }
+    const line = gs.length ? `<p class="p c">${t('r.f.line', A.bestBy[m], Math.round(avg(r5.map(g => g.total))), r5.length)}</p>` : '';
+    return `<section class="focus"><p class="cap">PLATE ${PLATE[m]} · ${NAMES[m].en.toUpperCase()}</p><p class="f-name">${modeName(m)}</p>${body}${line}</section>`;
+  }
+  function renderRecords() {
+    const A = analyze(H);
+    let h = `<header class="rec-head"><h2 class="rec-title">RECORDS.</h2><p class="rec-src">${t('r.src')}</p></header>`;
+    if (!A.nGames) { h += `<p class="empty">${t('r.empty')}</p>` + dataSec(A); els.recIn.innerHTML = h; bindData(A); return; }
+    h += focusSec(A, view === 'game' ? S.mode : (A.last ? A.last.mode : null));
+    h += `<div class="stats">` + stat(A.nGames, t('r.k.games')) + stat(A.recent10 != null ? Math.round(A.recent10) : '–', t('r.k.recent10'))
+      + stat(A.best, t('r.k.best')) + stat(Math.round(avg(A.recent.map(r => r.sc))), t('r.k.avg', A.recent.length)) + `</div>`;
+    const memo = coachMemo(A);
+    h += sec('COACH', !A.anyOpen ? locked() : memo.length ? `<ol class="memo">${memo.map(x => `<li><span>${x}</span></li>`).join('')}</ol>` : `<p class="p c">${t('r.noMemo')}</p>`, 1);
+    h += sec('BEST BY PLATE', `<div class="best">${MODES.map(m => bestRow(m, A.bestBy[m])).join('')}</div>`, 2);
+    const ts = trendSVG(A.games);
+    h += sec('TREND', ts ? ts + `<div class="legend">${MODES.filter(m => A.gamesBy[m]).map(m => `<span><i style="opacity:${STEP[m]}"></i>${modeName(m)}</span>`).join('')}<span><i style="border-radius:1px;height:2px;width:14px"></i>${t('r.ma')}</span></div>` : `<p class="p c">${t('r.trendFew')}</p>`);
+    if (A.gamesBy.centroid) {
+      if (!A.open('centroid') || !A.bias) h += sec('GROUPING', locked(), 3);
+      else {
+        const share = A.bias.m / (Math.sqrt(A.bias.m ** 2 + A.scatter ** 2) || 1), s2 = share * share;
+        h += sec('GROUPING', `<div class="grp">${groupSVG(A.spatial, A.bias)}<dl class="kv">`
+          + `<div><dt>${t('r.g.bias')}</dt><dd>${pct(A.bias.m)}<small>${A.bias.m > 0.004 ? dirPhrase(A.bias.x, A.bias.y) : t('r.g.none')}</small></dd></div>`
+          + `<div><dt>${t('r.g.scatter')}</dt><dd>${pct(A.scatter)}</dd></div>`
+          + `<div><dt>${t('r.g.share')}</dt><dd>${Math.round(s2 * 100)}%<small>${t(s2 > 0.2 ? 'r.g.big' : 'r.g.small')}</small></dd></div>`
+          + `</dl></div>`, 3);
+      }
+    }
+    // 감각 지표: 도판 순서대로
+    const mr = [];
+    if (A.open('centroid')) {
+      if (A.wi.n) mr.push(meterRow(t('r.m.wi'), A.wi, 0, 2, t('r.e.wi')));
+      if (A.ti.n) mr.push(meterRow(t('r.m.ti'), A.ti, 0, 2, t('r.e.ti')));
+    }
+    if (A.open('expect') && A.ai.n) mr.push(meterRow(t('r.m.ai'), A.ai, 0, 2, t('r.e.ai')));
+    if (A.open('corr')) {
+      if (A.cb.n) mr.push(meterRow(t('r.m.cb'), A.cb, 0, 2, t('r.e.cb')));
+      if (A.oi.n) mr.push(meterRow(t('r.m.oi'), A.oi, 0, 2, t('r.e.oi')));
+    }
+    if (A.open('assoc') && A.bi.n) mr.push(meterRow(t('r.m.bi'), A.bi, 0, 2, t('r.e.bi')));
+    const signLine = A.open('corr') && A.sign ? `<p class="p">${t('r.m.sign', ipct(A.sign.rate), A.sign.n).trim()}</p>` : '';
+    h += sec('SENSE', mr.length ? `<div class="meters">${mr.join('')}</div>${signLine}` : locked(), 4);
+    const openTypes = A.types.filter(x => A.open(x.kind));
+    const maxD = {}; for (const x of openTypes) maxD[x.kind] = Math.max(maxD[x.kind] || 0, x.d);
+    h += sec('BY TYPE', !openTypes.length ? locked() : `<div class="tbl-wrap"><table class="types"><tbody>` + openTypes.map(x => {
+      const weak = A.weak && A.weak.key === x.key;
+      return `<tr><td>${t(x.key)}${weak ? `<span class="weak">${t('r.weak')}</span>` : ''}</td><td class="n">${x.n}</td><td class="e">${fmtE(x.kind, x.d)}</td><td class="b"><span class="bar" style="width:${(x.d / (maxD[x.kind] || 1) * 100).toFixed(0)}%;opacity:${weak ? 1 : 0.45}"></span></td></tr>`;
+    }).join('') + `</tbody></table></div>`, 5);
+    const fl = (A.first || []).filter(x => A.open(x[1]));
+    const firstLine = fl.length ? `<p class="p">${t('r.proc.first', fl.map(([k, , v]) => `${t('r.m.' + k)} ${ipct(v.f)} → ${ipct(v.l)}`).join(' · '))}</p>` : '';
+    h += sec('PROCESS', !A.anyOpen ? locked() : (A.adj ? `<p class="p">${t('r.proc.adj', Math.round(A.adj.share * 100), A.adj.better, A.adj.worse, Math.round(Math.abs(A.adj.rel) * 100), A.adj.rel >= 0)}</p>` : `<p class="p">${t('r.proc.noAdj')}</p>`) + firstLine, 6);
+    // 주석: 각 지표를 어떻게 재는지 (공식 없이)
+    h += `<section class="sec"><h3>NOTES</h3><ol class="fn">${[1, 2, 3, 4, 5, 6].map(i => `<li>${t('r.n' + i)}</li>`).join('')}</ol></section>`;
+    h += dataSec(A);
+    els.recIn.innerHTML = h; bindData(A);
+  }
+  // ───────── 기록 링크: 끝낸 판을 압축해서 주소 뒤(#records=)에 담음 ─────────
+  const b64u = bytes => { let s0 = ''; for (let i = 0; i < bytes.length; i += 0x8000) s0 += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000)); return btoa(s0).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+  const unb64u = str => { const s0 = atob(str.replace(/-/g, '+').replace(/_/g, '/')); const b = new Uint8Array(s0.length); for (let i = 0; i < s0.length; i++) b[i] = s0.charCodeAt(i); return b; };
+  const packGames = gs => gs.map(g => ({ i: g.id, t: g.t, m: g.mode, r: g.rounds.map(r => { const o = { k: r.k }; for (const key of NUM_KEYS) if (r[key] != null) o[key] = r[key]; if (r.sh) o.sh = r.sh; return o; }) }));
+  const unpackGames = arr => Array.isArray(arr) ? arr.map(g => g && cleanGame({ id: g.i, t: g.t, mode: g.m, done: true, rounds: g.r })).filter(Boolean) : [];
+  async function encodeRecords() {
+    const bytes = new TextEncoder().encode(JSON.stringify(packGames(H.filter(g => g.done))));
+    if (window.CompressionStream) {
+      try { const cs = new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw')); return 'z' + b64u(new Uint8Array(await new Response(cs).arrayBuffer())); } catch (e) {}
+    }
+    return 'j' + b64u(bytes);
+  }
+  async function decodeRecords(code) {
+    const bytes = unb64u(code.slice(1));
+    let txt;
+    if (code[0] === 'z') { const ds = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw')); txt = await new Response(ds).text(); }
+    else txt = new TextDecoder().decode(bytes);
+    return unpackGames(JSON.parse(txt));
+  }
+  function mergeGames(list) {
+    let added = 0;
+    for (const g of list) { if (!g || H.some(x => x.id === g.id)) continue; H.push(g); added++; }
+    if (added) { H.sort((a, b) => a.t - b.t); saveLocal(); }
+    return added;
+  }
+  const linkCode = text => { const m = /#records=([A-Za-z0-9_-]+)/.exec(text || ''); return m ? m[1] : null; };
+  // 메뉴 아래 한 줄 알림 (기록 링크 · 앱 설치)
+  function note(msg, ms) {
+    els.notice.textContent = msg; els.notice.hidden = false;
+    clearTimeout(note.tm); note.tm = setTimeout(() => { els.notice.hidden = true; }, ms || 6000);
+  }
+  // 기록 링크 받기: 처음 열 때의 주소, 열린 창에 붙여 넣은 주소(hashchange), 설치한 앱으로 연 주소(launchQueue)
+  let lastCode = '';
+  async function importFromHash(src) {
+    const code = linkCode(src || location.hash); if (!code || code === lastCode) return;
+    lastCode = code;
+    if (linkCode(location.hash)) try { history.replaceState(null, '', location.href.split('#')[0]); } catch (e) {}
+    let added = 0, ok = true;
+    try { added = mergeGames(await decodeRecords(code)); } catch (e) { ok = false; }
+    note(ok ? t('d.linked', added) : t('d.linkBad'));
+    if (recOpen && sheetRender) sheetRender();
+  }
+  function dataSec(A) {
+    return sec('DATA', `<div class="actions">`
+      + `<button class="tbtn" id="linkBtn" tabindex="-1" ${A.nGames ? '' : 'disabled'}>${t('d.link')}</button>`
+      + `<button class="tbtn" id="cpSum" tabindex="-1" ${A.nRounds ? '' : 'disabled'}>${t('d.copySum')}</button>`
+      + `<button class="tbtn" id="cpAll" tabindex="-1" ${A.nRounds ? '' : 'disabled'}>${t('d.copyAll')}</button>`
+      + `<button class="tbtn" id="impBtn" tabindex="-1">${t('d.import')}</button>`
+      + `<button class="tbtn warn" id="wipeBtn" tabindex="-1" ${H.length ? '' : 'disabled'}>${t('d.wipe')}</button></div>`
+      + `<div class="linkbox" id="linkBox" hidden><input id="linkOut" readonly aria-label="link"><p class="p c">${t('d.linkNote')}</p></div>`
+      + `<div class="imp" id="impBox" hidden><textarea id="impText" placeholder="${t('d.ph')}"></textarea><div class="actions"><button class="tbtn" id="impGo" tabindex="-1">${t('d.merge')}</button><button class="tbtn" id="impCancel" tabindex="-1">${t('d.close')}</button></div></div>`
+      + `<div class="confirm" id="wipeBox" hidden><span>${t('d.wipeQ', H.length)}</span><button class="tbtn warn" id="wipeGo" tabindex="-1">${t('d.wipeGo')}</button><button class="tbtn" id="wipeCancel" tabindex="-1">${t('d.wipeCancel')}</button></div>`
+      + `<textarea id="cpFallback" hidden readonly></textarea>`
+      + `<p class="msg" id="dataMsg" aria-live="polite"></p><p class="p c">${t('d.cap')}</p>`);
+  }
+  function bindData(A) {
+    const msg = x => { const m = $('dataMsg'); if (m) m.textContent = x; };
+    const copy = async (text, ok) => {
+      const fb = $('cpFallback');
+      try { await navigator.clipboard.writeText(text); fb.hidden = true; msg(ok); }
+      catch (e) { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); msg(t('d.blocked')); }
+    };
+    const on = (id, f) => { const b = $(id); if (b) b.onclick = f; };
+    on('cpSum', () => copy(summaryText(A), t('d.copied')));
+    on('cpAll', () => copy(JSON.stringify({ app: 'dotsense2', v: 1, games: H.filter(g => g.done) }), t('d.copiedAll', H.filter(g => g.done).length)));
+    on('impBtn', () => { $('impBox').hidden = false; $('impText').focus(); });
+    on('impCancel', () => { $('impBox').hidden = true; });
+    on('linkBtn', async () => {
+      const base = HOME && !location.href.startsWith(HOME) ? HOME : location.href.split('#')[0];
+      const url = base + '#records=' + await encodeRecords();
+      const box = $('linkBox'), out = $('linkOut'); if (!box || !out) return;
+      box.hidden = false; out.value = url;
+      try { await navigator.clipboard.writeText(url); msg(t('d.copied')); } catch (e) { out.focus(); out.select(); msg(t('d.blocked')); }
+    });
+    on('impGo', async () => {
+      const txt = $('impText').value, code = linkCode(txt);
+      let list;
+      if (code) { try { list = await decodeRecords(code); } catch (e) { msg(t('d.bad')); return; } }
+      else {
+        let obj; try { obj = JSON.parse(txt); } catch (e) { msg(t('d.bad')); return; }
+        const arr = Array.isArray(obj) ? obj : (obj && Array.isArray(obj.games) ? obj.games : null);
+        if (!arr) { msg(t('d.bad')); return; }
+        list = arr.map(cleanGame);
+      }
+      const added = mergeGames(list);
+      renderRecords(); const m = $('dataMsg'); if (m) m.textContent = added ? t('d.merged', added) : t('d.nothing');
+    });
+    on('wipeBtn', () => { $('wipeBox').hidden = false; });
+    on('wipeCancel', () => { $('wipeBox').hidden = true; });
+    on('wipeGo', () => {
+      H = H.filter(g => !g.done && g.id === S.gid); saveLocal();
+      renderRecords(); const m = $('dataMsg'); if (m) m.textContent = t('d.wiped');
+    });
+  }
+
+  // ───────── 버튼 (마우스로만) ─────────
+  document.querySelectorAll('.plate').forEach(b => b.addEventListener('click', () => startGame(b.dataset.mode, b)));
+  els.recFromMenu.addEventListener('click', openRecords);
+  els.recFromGame.addEventListener('click', openRecords);
+  els.sToRec.addEventListener('click', openRecords);
+  document.querySelectorAll('[data-close], .sheet-dim').forEach(el => el.addEventListener('click', () => closeSheet()));
+  els.toMenu.addEventListener('click', backToMenu);
+  els.plateLab.addEventListener('click', openExplain);
+  els.iGo.addEventListener('click', closeIntro);
+  els.sToMenu.addEventListener('click', backToMenu);
+  document.querySelectorAll('.langs button').forEach(b => b.addEventListener('click', () => { if (!busy && b.dataset.lang !== lang) setLang(b.dataset.lang); }));
+  els.act.addEventListener('click', () => { if (busy || recOpen) return; if (S.phase === 'guess') submit(); else if (S.phase === 'reveal') next(); });
+  els.again.addEventListener('click', () => { if (busy || recOpen) return; newGame(); startDab(); });
+
+  window.addEventListener('resize', fit);
+  const ro = new ResizeObserver(() => { if (view === 'game' && S.phase !== 'reveal') fit(); });
+  ro.observe(els.hudTop); ro.observe(els.hudBot);
+  const onTheme = () => { if (view === 'game' && S.puz) sync(); draw(); };
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', onTheme);
+  new MutationObserver(onTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (view === 'game') fit(); else draw(); });
+  window.addEventListener('hashchange', () => importFromHash());
+  if ('launchQueue' in window) try { window.launchQueue.setConsumer(p => { if (p && p.targetURL) importFromHash(p.targetURL); }); } catch (e) {}
+
+  // ───────── 앱 설치 (웹사이트에서만: manifest가 있을 때) ─────────
+  // Chrome · Edge는 설치 창을 띄우고, Mac Safari는 메뉴 위치를 알려 줌. 이미 앱으로 열었거나 Claude 앱 안이면 숨김
+  const hasManifest = !!document.querySelector('link[rel="manifest"]');
+  const standalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  const UA = navigator.userAgent;
+  const safariMac = /Macintosh/.test(UA) && /Version\/[\d.]+.*Safari\//.test(UA) && !/Chrome|Chromium|Edg|OPR|Firefox/.test(UA) && navigator.maxTouchPoints < 2;
+  let bip = null;
+  // BROWSER APP: 웹사이트에서 설치할 수 있을 때. WINDOWS: Windows 컴퓨터에서 (설치한 앱 안 · 휴대폰 · Mac은 숨김)
+  const winOK = /Windows NT/.test(UA) && !/Electron/.test(UA) && !standalone();
+  const winDl = $('winDl'), instSep = $('instSep'); winDl.href = WIN_EXE;
+  const instShow = () => {
+    const app = hasManifest && !standalone() && !!(bip || safariMac);
+    els.inst.hidden = !app; winDl.hidden = !winOK; instSep.hidden = !(app && winOK);
+    els.instRow.hidden = !(app || winOK);
+  };
+  window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); bip = e; instShow(); });
+  window.addEventListener('appinstalled', () => { bip = null; instShow(); note(t('inst.done')); });
+  els.inst.addEventListener('click', async () => {
+    if (bip) {
+      const p = bip; bip = null;
+      try { await p.prompt(); const c = await p.userChoice; if (c && c.outcome === 'accepted') { instShow(); return; } } catch (e) {}
+      instShow();
+    } else if (safariMac) note(t('inst.safari'), 9000);
+  });
+  instShow();
+
+  function start(data) {
+    const saved = load(KEY_LANG);
+    // 저장한 언어가 없으면 브라우저 언어로: 한국어 브라우저는 한국어, 그 밖은 영어
+    const nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'ko';
+    lang = saved === 'en' || saved === 'ko' ? saved : (/^ko/i.test(nav) ? 'ko' : 'en');
+    document.documentElement.lang = lang;
+    applyStatic();
+    if (isPhone) { els.phone.hidden = false; els.menu.hidden = true; }
+    VW = window.innerWidth; VH = window.innerHeight;
+    if (data && data.view === 'game' && data.S && data.S.puz && READY[data.S.mode]) {
+      Object.assign(S, data.S);
+      els.menu.hidden = true; setViewClass('game'); view = 'game';
+      sync(); fit();
+      if (S.phase === 'done') renderSummary(analyze(H));
+    } else { dropUnfinished(); setViewClass('menu'); view = 'menu'; if (!isPhone) els.menu.hidden = false; fit(); }
+    importFromHash();
+  }
+  try { window.claude?.hot?.snapshot?.(() => ({ S: JSON.parse(JSON.stringify(S)), view })); } catch (e) {}
+  window.claude?.hot?.ready ? window.claude.hot.ready(start) : start(window.claude?.hot?.data ?? {});
+})();
+</script>
+<script>
+// 오프라인 실행과 앱 설치를 위한 서비스 워커 (https 또는 localhost에서만)
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname))) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+}
+</script>
+</body>
+</html>
